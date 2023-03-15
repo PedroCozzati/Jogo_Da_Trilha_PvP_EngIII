@@ -9,7 +9,8 @@ import { Logger } from 'nestjs-pino';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  cors: false
+  cors: false,
+  transports: ['polling', 'websocket'],
 })
 export class JogadorGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
