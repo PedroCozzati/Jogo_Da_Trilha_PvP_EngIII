@@ -10,6 +10,8 @@ async function bootstrap() {
 
   app.useLogger(app.get(Logger));
 
+  app.enableCors();
+
   await app.listen(90);
 }
 bootstrap();

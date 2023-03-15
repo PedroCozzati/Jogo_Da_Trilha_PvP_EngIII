@@ -16,14 +16,11 @@ export class TransacaoController {
   @Post()
   async post(@Body() params: TransacaoDto, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
-      this._logger.log("starting morgana request")
+      this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json({
-        data: await this.transacaoService.registraTransacao(params),
-        tipoApresentacao: "objeto",
-      })
+      return response.status(HttpStatus.OK).json(await this.transacaoService.registraTransacao(params))
     } catch (exception) {
-      this._logger.error("error on morgana request", { ...exception })
+      this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
   }
