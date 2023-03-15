@@ -4,3 +4,4 @@ docker-compose.yml
 /trilha.web/.angular
 /trilha.web/node_modules
 /trilha/node_modules
+/trilha.web/dist
