@@ -27,20 +27,4 @@ export class JogadorController {
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
   }
-
-  @Span()
-  @Get()
-  async get(@Res() response: Response, @Req() request: Request): Promise<any> {
-    try {
-      this._logger.log("starting morgana request")
-
-      return response.status(HttpStatus.OK).json({
-        data: await this.jogadorService.consultaJogadorAtual(),
-        tipoApresentacao: "objeto",
-      })
-    } catch (exception) {
-      this._logger.error("error on morgana request", { ...exception })
-      return response.status(HttpStatus.BAD_REQUEST).json(exception)
-    }
-  }
 }

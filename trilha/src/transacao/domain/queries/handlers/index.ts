@@ -1,5 +1,1 @@
-import { ConsultaTransacaoAtualHandler } from "./consulta-transacao-atual.handler";
-
-export const QueryHandlers = [
-    ConsultaTransacaoAtualHandler
-];
+export const QueryHandlers = [];
