@@ -9,7 +9,7 @@ import { Logger } from 'nestjs-pino';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  cors: false,
+  cors: { origin: '*'},
   transports: ['polling', 'websocket'],
 })
 export class JogadorGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
@@ -33,6 +33,6 @@ export class JogadorGateway implements OnGatewayInit, OnGatewayConnection, OnGat
   }
 
   afterInit(server: Server) {
-    this._logger.log("hub inicializado");
+    this._logger.log("gateway inicializado");
   }
 }
