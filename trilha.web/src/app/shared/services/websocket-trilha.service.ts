@@ -11,7 +11,7 @@ export class SocketTrilha extends Socket {
 @Injectable()
 export class WebSocketTrilhaService {
 
-  novoJogadorRegistrado$ = this.socket.fromEvent<any>('spotifyAtualizado');
+  novoJogadorRegistrado$ = this.socket.fromEvent<any>('jogadorRegistrado');
 
   constructor(private socket: SocketTrilha) {}
 }
