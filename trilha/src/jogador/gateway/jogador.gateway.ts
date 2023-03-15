@@ -8,7 +8,7 @@ import { Logger } from 'nestjs-pino';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  cors: '*'
+  cors: false
 })
 export class JogadorGateway implements OnGatewayInit, OnGatewayConnection {
   @WebSocketServer()
