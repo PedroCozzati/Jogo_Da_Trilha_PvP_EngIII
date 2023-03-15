@@ -3,6 +3,7 @@ import {
   WebSocketServer,
   OnGatewayInit,
   OnGatewayConnection,
+  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Logger } from 'nestjs-pino';
 import { Server, Socket } from 'socket.io';
@@ -10,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: false
 })
-export class JogadorGateway implements OnGatewayInit, OnGatewayConnection {
+export class JogadorGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
@@ -24,6 +25,10 @@ export class JogadorGateway implements OnGatewayInit, OnGatewayConnection {
 
   async handleConnection(client: Socket, ...args: any[]) {
     this._logger.log("cliente conectado", { client_id: client.id });
+  }
+
+  async handleDisconnect(client: any) {
+    this._logger.log("cliente desconectado", { client_id: client.id });
   }
 
   afterInit(server: Server) {
