@@ -1,0 +1,11 @@
+groups:
+  - name: TrilhaInstanceAlerts
+    rules:
+      - alert: InstanceDown
+        expr: up{job="trilha/services"} < 1
+        for: 1m
+        labels:
+          severity: error
+        annotations:
+          description: "A instância {{ $labels.instance }} do job {{ $labels.job }} está há um minuto fora do ar."
+          summary: "Instancia {{ $labels.instance }} fora do ar"
