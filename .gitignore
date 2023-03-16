@@ -1,5 +1,4 @@
 /volumes
-docker-compose.yml
 /.vscode
 /trilha.web/.angular
 /trilha.web/node_modules

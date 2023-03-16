@@ -4,7 +4,7 @@ import { Socket } from "ngx-socket-io";
 @Injectable()
 export class SocketTrilha extends Socket {
   constructor() {
-    super({ url: 'https://4809-177-62-115-13.ngrok.io', options: {  } });
+    super({ url: 'http://localhost:90', options: {  } });
   }
 }
 
