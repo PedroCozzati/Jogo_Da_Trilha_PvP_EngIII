@@ -1,0 +1,43 @@
+global:
+  resolve_timeout: 5m
+  slack_api_url: https://hooks.slack.com/services/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
+
+route:
+  group_by: ["alertname", "severity", "instance"]
+  group_wait: 0s
+  group_interval: 1m
+  repeat_interval: 1h
+  receiver: "default-catchall-slack"
+  routes:
+    - match:
+        severity: error
+        alertname: InstanceDown
+      receiver: instance-down-prometheus
+
+receivers:
+  - name: "default-catchall-slack"
+    slack_configs:
+      - send_resolved: true
+        channel: "#alertas"
+        title: '{{ if eq .Status "firing" }}:fire:{{ else }}:white_check_mark:{{ end }} [{{ .Status | toUpper }}] {{ .CommonAnnotations.summary }} (catchall)'
+        text: >-
+          {{ range .Alerts }}
+            *Descrição:* {{ .Annotations.description }}
+            *Priority:* `{{ .Labels.severity | toUpper }}`
+            *Instance:* {{ .Labels.instance }}
+          {{ end }}
+
+  - name: "instance-down-prometheus"
+    slack_configs:
+      - send_resolved: true
+        channel: "#alertas"
+        title: '[{{ if eq .Status "firing" }}URGENTE{{ else }}RESOLVIDO{{ end }}] {{ .CommonAnnotations.summary }}'
+        text: >-
+          {{ range .Alerts }}
+            *Descricao*: {{ .Annotations.description }}
+            *Prioridade*: `{{ .Labels.severity | toUpper }}`
+            *Instância*: {{ .Labels.instance }}
+            *Detalhes:*
+            {{ range .Labels.SortedPairs }} - *{{ .Name }}:* `{{ .Value }}`
+            {{ end }}
+          {{ end }}

@@ -1,0 +1,21 @@
+#
+# automatically configure the loki datasource in grafana
+# https://cylab.be/blog/241/use-loki-to-monitor-the-logs-of-your-docker-
+# compose-application
+#
+
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    uid: prometheus
+    access: proxy
+    orgId: 1
+    url: http://prometheus:9090
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      httpMethod: GET

@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+  external_labels:
+    cluster: trilha-gabriel-cora
+    namespace: trilha-gabriel-cora
+
+rule_files:
+  - alert.yml
+
+# Alerting specifies settings related to the Alertmanager
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        # Alertmanager's default port is 9093
+        - alertmanager:9093
+
+scrape_configs:
+  - job_name: trilha/services
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - "trilha:3090"
+          - "tempo:3100"
+          - "loki:3100"
+          - "volume_exporter:9888"
