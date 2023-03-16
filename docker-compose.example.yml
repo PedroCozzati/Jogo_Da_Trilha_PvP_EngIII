@@ -24,6 +24,15 @@ x-minio-common:
     retries: 3
 
 services:
+  trilha-web:
+    container_name: trilha-web
+    image: trilha-web
+    build: ./trilha.web
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+      
   trilha:
     container_name: trilha
     image: trilha

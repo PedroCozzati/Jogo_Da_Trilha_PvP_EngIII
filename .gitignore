@@ -3,5 +3,5 @@ docker-compose.yml
 /.vscode
 /trilha.web/.angular
 /trilha.web/node_modules
-/trilha/node_modules
 /trilha.web/dist
+/trilha/node_modules
