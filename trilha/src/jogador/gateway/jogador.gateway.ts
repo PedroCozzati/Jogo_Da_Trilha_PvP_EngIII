@@ -10,7 +10,6 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: { origin: '*'},
-  transports: ['polling', 'websocket'],
 })
 export class JogadorGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
