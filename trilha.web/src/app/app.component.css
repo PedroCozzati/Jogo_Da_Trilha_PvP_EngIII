@@ -1,4 +1,4 @@
-.home{
+/* .home{
     display: flex;
     align-items: flex;
     justify-content: space-between;
@@ -11,6 +11,17 @@
 
 
 
+.bg
+{
+    
+ margin:0px;
+ height:100%;
+ width:100%;
+ background:url("/assets/bg_2.png"); 
+ background-repeat: no-repeat;
+ background-size:cover;
+ opacity: 0.2;
+}
 
 
 
@@ -51,24 +62,6 @@
     align-items: flex-start;
 }
 
-.parent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-weight: bold;
-    font-size: x-large;
-    width: 40%;
-    height: 300px;
-    border: 2px solid rgb(80, 9, 111);
-    border-radius: 20px;
-    background-color: rgb(254, 255, 255);
-    align-self: center;
-    align-items: center;
-    text-align: center;
-    justify-content: space-around;
-    
-}
 
 .parent2 {
     display: flex;
@@ -188,4 +181,122 @@
 
 .test{
 
+} */
+
+.c1{
+    border: 4px solid rgb(48, 24, 136);
+        border-radius: 30px;
+    display: flex;
+    height: 200px;
+    align-items: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.c2{
+    border: 4px solid rgb(48, 24, 136);
+        border-radius: 30px;
+    display: flex;
+    height: 200px;
+    align-items: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.c3{
+    border: 4px solid rgb(48, 24, 136);
+        border-radius: 30px;
+    display: flex;
+    height: 200px;
+    width: 200px;
+    align-items: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .bt{
+
+    border: 4px solid rgb(48, 24, 136);
+    border-radius: 30px;
+    position: absolute;
+    height: 200px;
+    width: 220px;
+    display: flex;
+    align-items: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-start;
+    
+} */
+
+/* .alert{
+   
+
+        border: 4px solid rgb(48, 24, 136);
+        border-radius: 30px;
+        position: relative;
+        height: 200px;
+        width: 220px;
+        display: flex;
+        align-items: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: flex-start;
+        
+    
+} */
+.bt1{
+    width: 150px;
+    height: 30px;
+    position: relative;
+    margin: 30px;
+}
+
+.txt{
+    margin-left: 30px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.page{
+    margin: 30px;
+}
+
+html,
+body {
+  margin: 0px;
+  height: 100%;
+}
+
+.box {
+  background: red;
+  height: 100%;
+}
+
+.box {
+    background:url("/assets/bg.png"); 
+ background-repeat: no-repeat;
+ background-size:100% 100%;
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+  }
+
+  .main{
+    opacity: 100%;
+  }
+
+  .flex {
+    display: flex;
+    margin-top: 40px;
+    flex-direction: row;
+    
+    height: 500px;
+    justify-content: space-around;
+   
+   
+    
 }

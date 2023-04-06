@@ -1,67 +1,57 @@
-<h1></h1>
-
-<div class="home">
-
-  <div class="page_title">TRILHA</div>
-
-  <div class="main">
-    <div class="parent">
-      <div>LOGIN</div>
-
-      <div class="textfield">
-        <div>
-          <input class="text" type="text" name="name" id="name" />
-        </div>
-        <div>
-          <input class="text" type="text" name="name" id="name" />
-        </div>
-      </div>
-
-
-      <div class="flex">
-        <div class="child_1">
-          <app-button title="ENTRAR"></app-button>
-        </div>
-        <div class="child_2">
-          <app-button title="SAIR"></app-button>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="parent2">
-      <div>REGRAS</div>
-
-
-      <div class=slides>
-        <ul class="slider">
-          <li>
-            <input type="radio" id="slide1" name="slide" checked>
-            <label for="slide1"></label>
-            <img src="../assets/R.jpeg" />
-          </li>
-          <li>
-            <input type="radio" id="slide2" name="slide">
-            <label for="slide2"></label>
-            <img src="../assets/R2.jpeg" />
-          </li>
-          <li>
-            <input type="radio" id="slide3" name="slide">
-            <label for="slide3"></label>
-            <img src="../assets/R3.jpeg" />
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-  <div class="test">TESTE
-
-      <div class="child_3">
-        <app-button title="JOGAR"></app-button>
-      </div>
-     
+<div class="box">
+  <div class="page">
+    <h1>Trilha - Componentes</h1>
+    <h3>Uma demonstração dos componentes que serão utilizados no desenvolvimento do site "Trilha"</h3>
     
+    <div class="flex">
+      <div class="c1">
+        <div class="bt">
+          <div class="txt">Botão:</div>
+          <div class="bt1">
+            <app-button height="20px" title="ENTRAR"></app-button>
+          </div>
+        </div>
+      </div>
+      <div class="c2">
+        <div class="alert">
+          <div class="txt">Textbox:</div>
+          <div class="tb1">
+            <textbox title="Senha"></textbox>
+          </div>
+        </div>
+      </div>
+      <div class="c3">
+        <div class="loader">
+          <div class="txt">Loader:</div>
+          <div class="ld1">
+            <app-loader></app-loader>
+          </div>
+        </div>
+      </div>
+      <div class="c4">
+        <div class="form">
+          <div class="txt">Form:</div>
+          <div class="ld1">
+            <app-form></app-form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  
   </div>
 </div>
+
+<!-- 
+<app-button title="ENTRAR"></app-button>
+<div class="home">
+  <div class="page_title">TRILHA - COMPONENTES</div>
+  <div class="main">
+    <div class="parent">
+      <div>Botões</div>
+      
+        <app-button title="ENTRAR"></app-button>
+      
+    </div>
+  </div>
+</div> -->

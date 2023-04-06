@@ -8,6 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ButtonComponent {
 
   constructor() {}
-
+  
   @Input() title = 'ENTRAR';
+  @Input() height = "40px";
+  style = { "height": this.height };
+
 }
