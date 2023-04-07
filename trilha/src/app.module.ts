@@ -4,8 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { JogadorModule } from './jogador/jogador.module';
 import { PecaModule } from './peca/peca.module';
 import { TransacaoModule } from './transacao/transacao.module';
-import { Tabuleiro } from './tabuleiro/domain/models/tabuleiro.model';
 import { TabuleiroModule } from './tabuleiro/tabuleiro.module';
+import { NivelModule } from './nivel/nivel.module';
 
 @Module({
   imports: [
@@ -15,6 +15,7 @@ import { TabuleiroModule } from './tabuleiro/tabuleiro.module';
     TransacaoModule,
     PecaModule,
     TabuleiroModule,
+    NivelModule
   ],
   controllers: [],
   providers: [],
