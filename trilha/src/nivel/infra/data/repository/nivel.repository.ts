@@ -47,7 +47,7 @@ export class NivelRepository {
     try {
       this._logger.log("executing repository method")
 
-      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne({ "peca_id": nivel.peca_id }, nivel))
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "peca_id": nivel.peca_id }, nivel))
 
       await nivelDeletado.deletaNivel()
 
@@ -63,7 +63,7 @@ export class NivelRepository {
     try {
       this._logger.log("executing repository method")
 
-      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne({ "tabuleiro_id": nivel.tabuleiro_id }, nivel))
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "tabuleiro_id": nivel.tabuleiro_id }, nivel))
 
       await nivelDeletado.deletaNivel()
 
