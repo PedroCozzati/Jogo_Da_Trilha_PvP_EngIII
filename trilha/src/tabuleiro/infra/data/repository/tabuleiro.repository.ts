@@ -31,9 +31,7 @@ export class TabuleiroRepository {
     try {
       this._logger.log("executing repository method")
 
-      // const tabuleiroDeletado = new Tabuleiro(await this.repositoryBase.deleteOne(tabuleiro))
-
-      const tabuleiroDeletado = tabuleiro
+      const tabuleiroDeletado = new Tabuleiro(await this.repositoryBase.deleteOne(tabuleiro))
 
       await tabuleiroDeletado.deletaTabuleiro()
 

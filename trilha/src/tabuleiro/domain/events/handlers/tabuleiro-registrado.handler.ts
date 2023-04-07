@@ -1,6 +1,6 @@
 
 import { IEventHandler, EventsHandler } from '@nestjs/cqrs';
-import { TabuleiroRegistradoEvent } from '../impl/tabuleiro-registrada.event';
+import { TabuleiroRegistradoEvent } from '../impl/tabuleiro-registrado.event';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 
