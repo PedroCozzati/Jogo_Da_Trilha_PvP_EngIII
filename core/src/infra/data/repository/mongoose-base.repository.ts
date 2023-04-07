@@ -161,6 +161,15 @@ export class MongooseBaseRepository<TDocument extends BaseModel> {
   }
 
   @Span()
+  async deleteOne(document: TDocument): Promise<TDocument> {
+    const updatedDocument = await this.connection
+      .model<TDocument>(this.nomeModel)
+      .deleteOne({ _id: document._id }, document);
+
+    return document;
+  }
+
+  @Span()
   async aggregate(pipeline: PipelineStage[]): Promise<any> {
     const document = await this.connection
       .model<TDocument>(this.nomeModel)
