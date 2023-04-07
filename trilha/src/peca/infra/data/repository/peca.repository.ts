@@ -48,9 +48,9 @@ export class PecaRepository {
     try {
       this._logger.log("executing repository method")
 
-      //const pecaDeletada = new Peca(await this.repositoryBase.deleteOne(peca))
-      const pecaDeletada = peca
-      await pecaDeletada.atualizaPeca()
+      const pecaDeletada = new Peca(await this.repositoryBase.deleteOne(peca))
+
+      await pecaDeletada.deletaPeca()
 
       return pecaDeletada
     } catch (exception) {
