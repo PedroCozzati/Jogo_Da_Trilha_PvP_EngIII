@@ -164,7 +164,7 @@ export class MongooseBaseRepository<TDocument extends BaseModel> {
   async deleteOne(document: TDocument): Promise<TDocument> {
     const updatedDocument = await this.connection
       .model<TDocument>(this.nomeModel)
-      .deleteOne({ _id: document._id }, document);
+      .deleteOne(document);
 
     return document;
   }
