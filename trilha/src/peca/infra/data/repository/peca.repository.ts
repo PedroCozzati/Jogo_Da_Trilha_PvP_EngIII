@@ -44,6 +44,22 @@ export class PecaRepository {
   }
 
   @Span()
+  public async deletaPeca(peca: Peca) {
+    try {
+      this._logger.log("executing repository method")
+
+      //const pecaDeletada = new Peca(await this.repositoryBase.deleteOne(peca))
+      const pecaDeletada = peca
+      await pecaDeletada.atualizaPeca()
+
+      return pecaDeletada
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
   public async consultaPecaAtual() {
     try {
       this._logger.log("executing repository method")

@@ -5,6 +5,7 @@ import { PecaDto } from '../dto/peca.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaPecaCommand } from '../../domain/commands/impl/atualiza-peca.command';
+import { DeletaPecaCommand } from 'src/peca/domain/commands/impl/deleta-peca.command';
 
 @Injectable()
 export class PecaService {
@@ -29,6 +30,15 @@ export class PecaService {
 
     return await this.commandBus.execute(
       new AtualizaPecaCommand(peca),
+    );
+  }
+
+  @Span()
+  async deletaPeca(peca: PecaDto) {
+    this._logger.log("starting service execution")
+
+    return await this.commandBus.execute(
+      new DeletaPecaCommand(peca),
     );
   }
 }
