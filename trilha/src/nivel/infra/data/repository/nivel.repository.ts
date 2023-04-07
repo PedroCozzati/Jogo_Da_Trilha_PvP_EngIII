@@ -31,7 +31,7 @@ export class NivelRepository {
     try {
       this._logger.log("executing repository method")
 
-      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne(nivel))
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne({ "_id": nivel._id }, nivel))
 
       await nivelDeletado.deletaNivel()
 
@@ -41,6 +41,39 @@ export class NivelRepository {
       throw exception
     }
   }
+
+  @Span()
+  public async deletaNivelPorPeca(nivel: Nivel) {
+    try {
+      this._logger.log("executing repository method")
+
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne({ "peca_id": nivel.peca_id }, nivel))
+
+      await nivelDeletado.deletaNivel()
+
+      return nivelDeletado
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async deletaNivelPorTabuleiro(nivel: Nivel) {
+    try {
+      this._logger.log("executing repository method")
+
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteOne({ "tabuleiro_id": nivel.tabuleiro_id }, nivel))
+
+      await nivelDeletado.deletaNivel()
+
+      return nivelDeletado
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
 
   @Span()
   public async atualizaNivel(nivel: Nivel) {

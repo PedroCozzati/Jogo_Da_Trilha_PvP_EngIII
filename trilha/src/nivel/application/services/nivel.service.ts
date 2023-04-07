@@ -6,6 +6,8 @@ import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaNivelCommand } from '../../domain/commands/impl/atualiza-nivel.command';
 import { DeletaNivelCommand } from 'src/nivel/domain/commands/impl/deleta-nivel.command';
+import { DeletaNivelPorTabuleiroCommand } from 'src/nivel/domain/commands/impl/deleta-nivel-por-tabuleiro.command';
+import { DeletaNivelPorPecaCommand } from 'src/nivel/domain/commands/impl/deleta-nivel-por-peca.command';
 
 @Injectable()
 export class NivelService {
@@ -34,5 +36,19 @@ export class NivelService {
     this._logger.log('starting service execution');
 
     return await this.commandBus.execute(new DeletaNivelCommand(nivel));
+  }
+
+  @Span()
+  async deletaNivelPorPeca(nivel: NivelDto) {
+    this._logger.log('starting service execution');
+
+    return await this.commandBus.execute(new DeletaNivelPorPecaCommand(nivel));
+  }
+
+  @Span()
+  async deletaNivelPorTabuleiro(nivel: NivelDto) {
+    this._logger.log('starting service execution');
+
+    return await this.commandBus.execute(new DeletaNivelPorTabuleiroCommand(nivel));
   }
 }

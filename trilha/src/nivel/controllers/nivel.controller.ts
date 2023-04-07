@@ -51,4 +51,32 @@ export class NivelController {
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
   }
+
+  @Span()
+  @Delete("por-peca")
+  async deletePorPeca(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorPeca(params))
+    } catch (exception) {
+      this._logger.error(exception.message)
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Delete("por-tabuleiro")
+  async deletePorTabuleiro(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorTabuleiro(params))
+    } catch (exception) {
+      this._logger.error(exception.message)
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
 }
