@@ -161,10 +161,10 @@ export class MongooseBaseRepository<TDocument extends BaseModel> {
   }
 
   @Span()
-  async deleteOne(document: TDocument): Promise<TDocument> {
+  async deleteOne(filterQuery: FilterQuery<TDocument>, document: TDocument): Promise<TDocument> {
     const updatedDocument = await this.connection
       .model<TDocument>(this.nomeModel)
-      .deleteOne({ ...document }, document);
+      .deleteOne(filterQuery, document);
 
     return document;
   }
