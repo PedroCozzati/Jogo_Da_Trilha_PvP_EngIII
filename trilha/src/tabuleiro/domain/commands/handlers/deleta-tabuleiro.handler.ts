@@ -1,13 +1,13 @@
 import { EventPublisher, ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import { AtualizaTabuleiroCommand } from '../impl/atualiza-tabuleiro.command';
 import { Tabuleiro } from '../../models/tabuleiro.model';
 import { TabuleiroRepository } from 'src/tabuleiro/infra/data/repository/tabuleiro.repository';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
+import { DeletaTabuleiroCommand } from '../impl/deleta-tabuleiro.command';
 
-@CommandHandler(AtualizaTabuleiroCommand)
-export class AtualizaTabuleiroHandler
-  implements ICommandHandler<AtualizaTabuleiroCommand> {
+@CommandHandler(DeletaTabuleiroCommand)
+export class DeletaTabuleiroHandler
+  implements ICommandHandler<DeletaTabuleiroCommand> {
   constructor(
     private readonly repository: TabuleiroRepository,
     private readonly publisher: EventPublisher,
@@ -15,7 +15,7 @@ export class AtualizaTabuleiroHandler
   ) { }
 
   @Span()
-  async execute(command: AtualizaTabuleiroCommand) {
+  async execute(command: DeletaTabuleiroCommand) {
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
     const { tabuleiroDto } = command;

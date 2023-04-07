@@ -46,6 +46,7 @@ export class TabuleiroController {
 
       return response.status(HttpStatus.OK).json(await this.tabuleiroService.deletaTabuleiro(params))
     } catch (exception) {
+      this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
