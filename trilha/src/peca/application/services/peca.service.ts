@@ -17,20 +17,16 @@ export class PecaService {
 
   @Span()
   async registraPeca(peca: PecaDto) {
-    this._logger.log("starting service execution")
+    this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(
-      new RegistraPecaCommand(peca),
-    );
+    return await this.commandBus.execute(new RegistraPecaCommand(peca));
   }
 
   @Span()
   async atualizaPeca(peca: PecaDto) {
-    this._logger.log("starting service execution")
+    this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(
-      new AtualizaPecaCommand(peca),
-    );
+    return await this.commandBus.execute(new AtualizaPecaCommand(peca));
   }
 
   @Span()
