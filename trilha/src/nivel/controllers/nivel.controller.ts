@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Post, Put, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res } from '@nestjs/common';
 import { NivelDto } from '../application/dto/nivel.dto';
 import { NivelService } from '../application/services/nivel.service';
 import { Response, Request } from 'express'
@@ -79,4 +79,31 @@ export class NivelController {
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
   }
+
+  @Span()
+  @Get(":id")
+  async getById(@Param('id') id: string, @Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.nivelService.buscaNivelPorId(id))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Get()
+  async get(@Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.nivelService.buscaNiveis())
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
 }

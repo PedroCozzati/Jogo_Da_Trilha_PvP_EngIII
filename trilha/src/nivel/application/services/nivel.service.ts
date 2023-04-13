@@ -8,6 +8,8 @@ import { AtualizaNivelCommand } from '../../domain/commands/impl/atualiza-nivel.
 import { DeletaNivelCommand } from 'src/nivel/domain/commands/impl/deleta-nivel.command';
 import { DeletaNivelPorTabuleiroCommand } from 'src/nivel/domain/commands/impl/deleta-nivel-por-tabuleiro.command';
 import { DeletaNivelPorPecaCommand } from 'src/nivel/domain/commands/impl/deleta-nivel-por-peca.command';
+import { BuscaNivelPorIdQuery } from 'src/nivel/domain/queries/impl/busca-nivel-por-id.query';
+import { BuscaNiveisQuery } from 'src/nivel/domain/queries/impl/busca-niveis.query';
 
 @Injectable()
 export class NivelService {
@@ -16,6 +18,20 @@ export class NivelService {
     private readonly queryBus: QueryBus,
     private readonly _logger: Logger,
   ) { }
+
+  @Span()
+  async buscaNivelPorId(id: string) {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaNivelPorIdQuery(id));
+  }
+
+  @Span()
+  async buscaNiveis() {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaNiveisQuery());
+  }
 
   @Span()
   async registraNivel(nivel: NivelDto) {
@@ -51,4 +67,6 @@ export class NivelService {
 
     return await this.commandBus.execute(new DeletaNivelPorTabuleiroCommand(nivel));
   }
+
+
 }
