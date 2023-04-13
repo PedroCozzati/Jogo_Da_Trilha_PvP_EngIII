@@ -3,6 +3,7 @@ import { Tabuleiro } from 'src/tabuleiro/domain/models/tabuleiro.model';
 import { Logger } from 'nestjs-pino';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
 import { Span } from 'nestjs-otel';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class TabuleiroRepository {
@@ -67,6 +68,36 @@ export class TabuleiroRepository {
 
       if (tabuleiroAtual)
         return new Tabuleiro(tabuleiroAtual)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async buscaTabuleiroPorId(id: string) {
+    try {
+      this._logger.log("executing repository method")
+
+      const tabuleiro = await this.repositoryBase.findOneById(new Types.ObjectId(id))
+
+      if (tabuleiro)
+        return new Tabuleiro(tabuleiro)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+
+  @Span()
+  public async buscaTabuleiros() {
+    try {
+      this._logger.log("executing repository method")
+
+      const tabuleiros = await this.repositoryBase.find({})
+      return tabuleiros
+
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception

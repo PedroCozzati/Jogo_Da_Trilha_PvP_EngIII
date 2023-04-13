@@ -6,6 +6,8 @@ import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaTabuleiroCommand } from '../../domain/commands/impl/atualiza-tabuleiro.command';
 import { DeletaTabuleiroCommand } from 'src/tabuleiro/domain/commands/impl/deleta-tabuleiro.command';
+import { BuscaTabuleirosQuery } from 'src/tabuleiro/domain/queries/impl/busca-tabuleiros.query';
+import { BuscaTabuleiroPorIdQuery } from 'src/tabuleiro/domain/queries/impl/busca-tabuleiro-por-id.query';
 
 @Injectable()
 export class TabuleiroService {
@@ -14,6 +16,20 @@ export class TabuleiroService {
     private readonly queryBus: QueryBus,
     private readonly _logger: Logger,
   ) { }
+
+  @Span()
+  async buscaTabuleiroPorId(id: string) {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaTabuleiroPorIdQuery(id));
+  }
+
+  @Span()
+  async buscaTabuleiros() {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaTabuleirosQuery());
+  }
 
   @Span()
   async registraTabuleiro(tabuleiro: TabuleiroDto) {
