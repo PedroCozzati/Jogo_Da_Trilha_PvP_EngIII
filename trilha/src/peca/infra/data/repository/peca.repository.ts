@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Peca } from 'src/peca/domain/models/peca.model';
 import { Logger } from 'nestjs-pino';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
+import { Types } from 'mongoose';
 import { Span } from 'nestjs-otel';
-import { stringify } from 'querystring';
-import { json } from 'stream/consumers';
+
 
 @Injectable()
 export class PecaRepository {
@@ -62,17 +62,33 @@ export class PecaRepository {
   }
 
   @Span()
-  public async consultaPecaAtual() {
+  public async buscaPecaPorId(id: string) {
     try {
       this._logger.log("executing repository method")
 
-      const pecaAtual = await this.repositoryBase.findOne({}, { timeStamp: "desc" })
+      const peca = await this.repositoryBase.findOneById(new Types.ObjectId(id))
 
-      if (pecaAtual)
-        return new Peca(pecaAtual)
+      if (peca)
+        return new Peca(peca)
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception
     }
   }
+
+
+  @Span()
+  public async buscaPecas() {
+    try {
+      this._logger.log("executing repository method")
+
+      const pecas = await this.repositoryBase.find({})
+      return pecas
+
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
 }

@@ -6,6 +6,8 @@ import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaPecaCommand } from '../../domain/commands/impl/atualiza-peca.command';
 import { DeletaPecaCommand } from 'src/peca/domain/commands/impl/deleta-peca.command';
+import { BuscaPecaPorIdQuery } from 'src/peca/domain/queries/impl/busca-peca-por-id.query';
+import { BuscaPecasQuery } from 'src/peca/domain/queries/impl/busca-pecas.query';
 
 @Injectable()
 export class PecaService {
@@ -14,6 +16,21 @@ export class PecaService {
     private readonly queryBus: QueryBus,
     private readonly _logger: Logger,
   ) { }
+
+  @Span()
+  async buscaPecaPorId(id: string) {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaPecaPorIdQuery(id));
+  }
+
+  @Span()
+  async buscaPecas() {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaPecasQuery());
+  }
+
 
   @Span()
   async registraPeca(peca: PecaDto) {
@@ -37,4 +54,5 @@ export class PecaService {
       new DeletaPecaCommand(peca),
     );
   }
+
 }
