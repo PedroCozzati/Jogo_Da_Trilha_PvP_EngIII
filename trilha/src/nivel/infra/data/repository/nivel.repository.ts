@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Nivel } from 'src/nivel/domain/models/nivel.model';
 import { Logger } from 'nestjs-pino';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
+import { Types } from 'mongoose';
 import { Span } from 'nestjs-otel';
 
 @Injectable()
@@ -92,14 +93,29 @@ export class NivelRepository {
   }
 
   @Span()
-  public async consultaNivelAtual() {
+  public async buscaNivelPorId(id: string) {
     try {
       this._logger.log("executing repository method")
 
-      const nivelAtual = await this.repositoryBase.findOne({}, { timeStamp: "desc" })
+      const nivel = await this.repositoryBase.findOneById(new Types.ObjectId(id))
 
-      if (nivelAtual)
-        return new Nivel(nivelAtual)
+      if (nivel)
+        return new Nivel(nivel)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+
+  @Span()
+  public async buscaNiveis() {
+    try {
+      this._logger.log("executing repository method")
+
+      const niveis = await this.repositoryBase.find({})
+      return niveis
+
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception
