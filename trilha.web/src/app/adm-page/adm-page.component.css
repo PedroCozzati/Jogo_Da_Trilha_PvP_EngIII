@@ -1,0 +1,46 @@
+.box{
+    background:url("/assets/bgtest.png"); 
+ background-repeat: no-repeat;
+ background-size:cover;
+ background-repeat: repeat;
+    position:absolute;
+    background-color: rgb(48, 21, 73);
+    
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+}
+
+
+.scrollit {
+    overflow:scroll;
+    height:220px;
+}
+
+h3{
+    margin: 30px;
+    color: azure;
+}
+
+.row{
+
+    margin-left: 30px;
+    margin-right: 30px;
+    height: 300px;
+    color: azure;
+}
+
+th{
+    color: azure;
+}
+
+td{
+    color: azure;
+}
+
+
+
+.form-group{
+    margin: 70px;
+}

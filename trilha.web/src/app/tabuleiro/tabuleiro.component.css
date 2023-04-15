@@ -1,0 +1,8 @@
+.tabuleiro{
+    color: #f9fde4;
+    border: solid 5px black;
+    border-radius: 30px;
+    height: 35rem;
+    width: 37rem;
+    margin: 70px;
+}
