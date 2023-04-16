@@ -38,6 +38,18 @@ p{
 } */
 
 
+
+.slide-texto{
+font-weight: 700;
+
+}
+
+c-carousel-item{
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+}
   .text-slide2{
     padding-left: 30px;
     font-size: 15px;

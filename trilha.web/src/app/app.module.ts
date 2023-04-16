@@ -21,7 +21,8 @@ import { Carousel03Component } from './rules/rules.component';
 import { SlidesComponent } from './slides/slides.component';
 import { CarouselModule } from '@coreui/angular';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
-import {IvyCarouselModule} from 'carousel-angular';
+
+
 import { LottieModule } from 'ngx-lottie'; // add this line
 
 export function playerFactory() { // add this line
@@ -48,7 +49,7 @@ export function playerFactory() { // add this line
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),
-    IvyCarouselModule,
+   
     MdbCarouselModule,
     CarouselModule,
     BrowserModule,

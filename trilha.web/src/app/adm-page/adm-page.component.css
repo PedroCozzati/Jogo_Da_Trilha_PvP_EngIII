@@ -23,11 +23,22 @@ h3{
     color: azure;
 }
 
+h4{
+    color: azure;
+}
+
+label{
+    color: aliceblue;
+}
+.row33{
+    margin-right: 50px;
+}
 .row{
 
     margin-left: 30px;
     margin-right: 30px;
-    height: 300px;
+    margin-bottom: 80px;
+    height: 200px;
     color: azure;
 }
 
@@ -42,5 +53,22 @@ td{
 
 
 .form-group{
-    margin: 70px;
+    width: 100px;
+    margin-right: 20px;
+}
+
+
+.form-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.form-control{
+    height: 25px;
+}
+
+.btn-primary{
+
+    margin-top: 20px;
 }
