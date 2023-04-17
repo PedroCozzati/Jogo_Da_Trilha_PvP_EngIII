@@ -1,0 +1,29 @@
+<div class="row33">
+    <!-- Form -->
+    <div class="col-md-12">
+        <h4>Editar Nível</h4>
+        <div>
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" class="form-control" maxlength="20" [(ngModel)]="nivel.nome" />
+            </div>
+            <div class="form-group">
+                <label>Tabuleiro</label>
+                <select [(ngModel)]="nivel.tabuleiro_id">
+                    <option *ngFor="let tabuleiro of tabuleiros" [ngValue]="tabuleiro._id">{{tabuleiro.nome}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Peça</label>
+                <select [(ngModel)]="nivel.peca_id">
+                    <option *ngFor="let peca of pecas" [ngValue]="peca._id">{{peca.nome}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Valor de Aposta</label>
+                <input type="text" class="form-control" [(ngModel)]="nivel.valorDeAposta" />
+            </div>
+            <button type="submit" class="btn-primary" (click)="editaNivel(nivel)">Submit</button>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,5 @@
 import { EventPublisher, ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { DeletaPecaCommand } from '../impl/deleta-peca.command';
-import { Peca } from '../../models/peca.model';
 import { PecaRepository } from 'src/peca/infra/data/repository/peca.repository';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
@@ -18,10 +17,12 @@ export class DeletaPecaHandler
   async execute(command: DeletaPecaCommand) {
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
-    const { pecaDto } = command;
+    const { id } = command;
+
+    const pecaParaExclusao = await this.repository.buscaPecaPorId(id);
 
     const peca = this.publisher.mergeObjectContext(
-      await this.repository.deletaPeca(new Peca(pecaDto))
+      await this.repository.deletaPeca(pecaParaExclusao)
     );
 
     peca.commit();

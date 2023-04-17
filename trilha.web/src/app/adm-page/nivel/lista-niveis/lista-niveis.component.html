@@ -1,0 +1,50 @@
+<div class="box">
+    <h3>ADMINISTRAÇÃO</h3>
+    <div class="form-flex">
+        <div class="row">
+            <!-- Issue table -->
+            <div class="col-mds-12">
+                <div class="inner">
+                    <h4>Niveis:</h4>
+                    <button type="button" class="btn btn-success btn-sm move-right"
+                        [routerLink]="['/nivel/novo']">
+                        Novo
+                    </button>
+                    <div class="scrollit">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Tabuleiro</th>
+                                    <th scope="col">Peça</th>
+                                    <th scope="col">Valor de Aposta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let nivel of niveis">
+                                    <th scope="row">{{ nivel._id }}</th>
+                                    <td>{{ nivel.nome }}</td>
+                                    <td>{{ nivel.tabuleiro_id }}</td>
+                                    <td>{{ nivel.peca_id }}</td>
+                                    <td>{{ nivel.valorDeAposta }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm move-right"
+                                            [routerLink]="['/nivel/', nivel._id]">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="deletaNivel(nivel)">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

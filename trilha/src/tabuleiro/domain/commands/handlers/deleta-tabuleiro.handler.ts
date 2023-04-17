@@ -18,10 +18,12 @@ export class DeletaTabuleiroHandler
   async execute(command: DeletaTabuleiroCommand) {
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
-    const { tabuleiroDto } = command;
+    const { id } = command;
+
+    const tabuleiroParaExclusao = await this.repository.buscaTabuleiroPorId(id);
 
     const tabuleiro = this.publisher.mergeObjectContext(
-      await this.repository.deletaTabuleiro(new Tabuleiro(tabuleiroDto))
+      await this.repository.deletaTabuleiro(tabuleiroParaExclusao)
     );
 
     tabuleiro.commit();

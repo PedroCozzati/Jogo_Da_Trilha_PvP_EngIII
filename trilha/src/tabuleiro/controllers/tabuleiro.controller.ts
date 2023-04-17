@@ -65,12 +65,12 @@ export class TabuleiroController {
   }
 
   @Span()
-  @Delete()
-  async delete(@Body() params: TabuleiroDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Delete(":id")
+  async delete(@Param('id') id: string, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.tabuleiroService.deletaTabuleiro(params))
+      return response.status(HttpStatus.OK).json(await this.tabuleiroService.deletaTabuleiro(id))
     } catch (exception) {
       this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })

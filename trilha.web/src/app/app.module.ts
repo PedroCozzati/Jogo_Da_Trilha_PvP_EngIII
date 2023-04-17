@@ -23,7 +23,16 @@ import { CarouselModule } from '@coreui/angular';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 
 
-import { LottieModule } from 'ngx-lottie'; // add this line
+import { LottieModule } from 'ngx-lottie';
+import { NovoTabuleiroComponent } from './adm-page/tabuleiro/novo-tabuleiro/novo-tabuleiro.component';
+import { EditaTabuleiroComponent } from './adm-page/tabuleiro/edita-tabuleiro/edita-tabuleiro.component';
+import { ListaTabuleirosComponent } from './adm-page/tabuleiro/lista-tabuleiros/lista-tabuleiros.component';
+import { ListaPecasComponent } from './adm-page/peca/lista-pecas/lista-pecas.component';
+import { EditaPecaComponent } from './adm-page/peca/edita-peca/edita-peca.component';
+import { NovaPecaComponent } from './adm-page/peca/nova-peca/nova-peca.component';
+import { NovoNivelComponent } from './adm-page/nivel/novo-nivel/novo-nivel.component';
+import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.component';
+import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component'; // add this line
 
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
@@ -46,6 +55,15 @@ export function playerFactory() { // add this line
     AdmPageComponent,
     Carousel03Component,
     SlidesComponent,
+    NovoTabuleiroComponent,
+    EditaTabuleiroComponent,
+    ListaTabuleirosComponent,
+    ListaPecasComponent,
+    EditaPecaComponent,
+    NovaPecaComponent,
+    NovoNivelComponent,
+    EditaNivelComponent,
+    ListaNiveisComponent,
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),

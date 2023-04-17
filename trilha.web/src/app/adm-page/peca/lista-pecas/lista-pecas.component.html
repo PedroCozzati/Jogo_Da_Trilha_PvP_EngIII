@@ -1,0 +1,48 @@
+<div class="box">
+    <h3>ADMINISTRAÇÃO</h3>
+    <div class="form-flex">
+        <div class="row">
+            <!-- Issue table -->
+            <div class="col-mds-12">
+                <div class="inner">
+                    <h4>Peças:</h4>
+                    <button type="button" class="btn btn-success btn-sm move-right"
+                        [routerLink]="['/peca/novo']">
+                        Novo
+                    </button>
+                    <div class="scrollit">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Cor Lado A</th>
+                                    <th scope="col">Cor Lado B</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let peca of pecas">
+                                    <th scope="row">{{ peca._id }}</th>
+                                    <td>{{ peca.nome }}</td>
+                                    <td>{{ peca.corLadoA }}</td>
+                                    <td>{{ peca.corLadoB }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm move-right"
+                                            [routerLink]="['/peca/', peca._id]">
+                                            Edit
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="deletaPeca(peca)">
+                                            Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

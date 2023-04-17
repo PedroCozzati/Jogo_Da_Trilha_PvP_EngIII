@@ -21,14 +21,11 @@ export class TabuleiroSagas {
                 ofType(TabuleiroDeletadoEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    this.httpService.delete("http://localhost:90/nivel/por-tabuleiro",
+                    this.httpService.delete(`http://localhost:90/nivel/por-tabuleiro/${event.tabuleiroDto._id}`,
                         {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json'
-                            },
-                            data: {
-                                "tabuleiro_id": event.tabuleiroDto._id
                             }
                         }).subscribe()
                 })

@@ -39,12 +39,12 @@ export class NivelController {
   }
 
   @Span()
-  @Delete()
-  async delete(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Delete(":id")
+  async delete(@Param('id') id: string, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivel(params))
+      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivel(id))
     } catch (exception) {
       this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })
@@ -53,12 +53,12 @@ export class NivelController {
   }
 
   @Span()
-  @Delete("por-peca")
-  async deletePorPeca(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Delete("por-peca/:peca_id")
+  async deletePorPeca(@Param('peca_id') pecaId: string, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorPeca(params))
+      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorPeca(pecaId))
     } catch (exception) {
       this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })
@@ -67,12 +67,12 @@ export class NivelController {
   }
 
   @Span()
-  @Delete("por-tabuleiro")
-  async deletePorTabuleiro(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Delete("por-tabuleiro/:tabuleiro_id")
+  async deletePorTabuleiro(@Param('tabuleiro_id') tabuleiroId: string, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorTabuleiro(params))
+      return response.status(HttpStatus.OK).json(await this.nivelService.deletaNivelPorTabuleiro(tabuleiroId))
     } catch (exception) {
       this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })

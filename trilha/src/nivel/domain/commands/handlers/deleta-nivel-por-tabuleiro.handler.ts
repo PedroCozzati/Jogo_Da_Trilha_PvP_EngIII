@@ -18,10 +18,10 @@ export class DeletaNivelPorTabuleiroHandler
   async execute(command: DeletaNivelPorTabuleiroCommand) {
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
-    const { nivelDto } = command;
+    const { tabuleiroId } = command;
 
     const nivel = this.publisher.mergeObjectContext(
-      await this.repository.deletaNivelPorTabuleiro(new Nivel(nivelDto))
+      await this.repository.deletaNivelPorTabuleiro(tabuleiroId)
     );
 
     nivel.commit();
