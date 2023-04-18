@@ -3,11 +3,11 @@ import { Component, Input, NgZone } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BugService } from 'src/app/shared/services/bug.service';
-import { Output, EventEmitter } from '@angular/core'; 
+import { Output, EventEmitter } from '@angular/core';
 
 
 @Component({
-  selector: 'app-linha-apresentacao-nivel',
+  selector: 'tr[app-linha-apresentacao-nivel]',
   templateUrl: './linha-apresentacao-nivel.component.html',
   styleUrls: ['./linha-apresentacao-nivel.component.css']
 })
@@ -20,35 +20,37 @@ export class LinhaApresentacaoNivelComponent {
     private router: Router,
   ) { }
 
+  tabuleiro: any
+  peca: any
+  
+  @Input() nivel: any = {}
 
+  @Output()
+  nivelDeletado = new EventEmitter<string>();
 
-
-
-  // @Output() someEvent = new EventEmitter<string>();
-
-  // callParent(): void {
-  //   this.someEvent.next('somePhone');
-  // }
-
-
-
-  tabuleiro_nome: string
-  peca_nome:string
-
-  ngOnInit(): void {
-    this.consultaTabNamePorId('')
-  }
-
-  @Input() nivel = {}
-
-
-  consultaTabNamePorId(nivel: any) {
-    this.http.get(`http://localhost:90/tabuleiro/${nivel.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
+  deletaNivel(nivel: any) {
+    this.http.delete(`http://localhost:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
-        console.log(response)
+        this.nivelDeletado.emit()
       })
   }
-  
 
+  ngOnInit(): void {
+    this.consultaTabuleiroPorId(this.nivel)
+    this.consultaPecaPorId(this.nivel)
+  }
 
+  consultaTabuleiroPorId(nivel: any) {
+    this.http.get(`http://localhost:90/tabuleiro/${nivel.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+        this.tabuleiro = response
+      })
+  }
+
+  consultaPecaPorId(nivel: any) {
+    this.http.get(`http://localhost:90/peca/${nivel.peca_id}`, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+        this.peca = response
+      })
+  }
 }

@@ -23,7 +23,6 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Cor Lado A</th>
                                     <th scope="col">Cor Lado B</th>
@@ -32,8 +31,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let peca of pecas">
-                                    <th scope="row">{{ peca._id }}</th>
-                                    <td>{{ peca.nome }}</td>
+                                    <td scope="row">{{ peca.nome }}</td>
                                     <td>
                                         
                                         {{ peca.corLadoA }}
@@ -47,11 +45,11 @@
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm move-right"
                                             [routerLink]="['/peca/', peca._id]">
-                                            Edit
+                                            Editar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm"
                                             (click)="deletaPeca(peca)">
-                                            Remove
+                                            Remover
                                         </button>
                                     </td>
                                 </tr>

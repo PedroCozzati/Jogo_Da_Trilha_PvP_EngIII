@@ -23,7 +23,6 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Cor</th>
                                     <th scope="col">Operação</th>
@@ -31,8 +30,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let tabuleiro of tabuleiros">
-                                    <th scope="row">{{ tabuleiro._id }}</th>
-                                    <td>{{ tabuleiro.nome }}</td>
+                                    <td scope="row">{{ tabuleiro.nome }}</td>
                                     <td>
                                         {{ tabuleiro.cor }}
                                         <app-tabuleiro [styles]="{'background-color': tabuleiro.cor }" ></app-tabuleiro>
@@ -40,11 +38,11 @@
                                     <td>
                                         <button type="button" class="btn btn-success btn-sm move-right"
                                             [routerLink]="['/tabuleiro/', tabuleiro._id]">
-                                            Edit
+                                            Editar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm"
                                             (click)="deletaTabuleiro(tabuleiro)">
-                                            Remove
+                                            Remover
                                         </button>
                                     </td>
                                 </tr>

@@ -22,7 +22,6 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Tabuleiro</th>
                                     <th scope="col">Peça</th>
@@ -31,26 +30,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let nivel of niveis" (click)="consultaTabNamePorId(nivel)">
-                                    <!-- <app-linha-apresentacao-nivel [nivel]="nivel"
-                                        (someEvent)="deletaNivel(nivel)"></app-linha-apresentacao-nivel> -->
-                                    <th scope="row">{{ nivel._id }}</th>
-                                    <td>{{ nivel.nome }}</td>
-                                    <td>{{ nivel.tabuleiro_id }}</td>
-                                    <td>{{ nivel.peca_id }}</td>
-                                    <td>{{ nivel.valorDeAposta }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-sm move-right"
-                                            [routerLink]="['/nivel/', nivel._id]">
-                                            Edit
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm"
-                                            (click)="deletaNivel(nivel)">
-                                            Remove
-                                        </button>
-                                    </td>
-
-                                </tr>
+                                <tr *ngFor="let nivel of niveis" app-linha-apresentacao-nivel [nivel]="nivel"
+                                    (nivelDeletado)="consultaNiveis()"></tr>
                             </tbody>
                         </table>
                     </div>
