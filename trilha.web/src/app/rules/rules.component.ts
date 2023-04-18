@@ -20,7 +20,7 @@ export class Carousel03Component implements OnInit {
       src:"",
       title:`
       O tabuleiro possui 24 casas interligados horizontalmente e verticalmente.
-      Nesse jogo há 18 peças, sendo 9 vermelhas e 9 azuis.
+      Nesse jogo há 18 peças, sendo 9 para cada jogador (com cores distintas).
       `
     };
 

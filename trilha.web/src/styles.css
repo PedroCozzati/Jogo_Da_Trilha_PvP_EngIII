@@ -35,6 +35,11 @@ input:-webkit-autofill:active{
        
       background-color: #6e2beb !important;;
     }
+
+
+    ::ng-deep .table .table-bordered{
+      border-radius: 20px !important;
+    }
   
     
   

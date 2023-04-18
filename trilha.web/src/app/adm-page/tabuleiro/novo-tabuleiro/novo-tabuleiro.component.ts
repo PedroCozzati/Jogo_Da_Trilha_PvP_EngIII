@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-novo-tabuleiro',
   templateUrl: './novo-tabuleiro.component.html',
-  styleUrls: ['./novo-tabuleiro.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class NovoTabuleiroComponent {
   tabuleiro: any = {}

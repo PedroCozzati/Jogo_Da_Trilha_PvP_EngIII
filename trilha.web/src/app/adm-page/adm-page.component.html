@@ -1,189 +1,26 @@
 <div class="box">
+  <div class="form-flex3">
+
+    <ul class="menu-bar">
+      <li (click)="exitButton()">Sair</li>
+    </ul>
+
+  </div>
+
   <h3>ADMINISTRAÇÃO</h3>
+  <h5>CRUD - Jogo da Trilha</h5>
+  <p>O projeto contém 3 domínios/entidades:</p>
 
   <div class="form-flex">
 
-    <div class="row">
-      <!-- Issue table -->
-      <div class="col-mds-12">
-        <div class="inner">
-          <h4>Tabuleiros:</h4>
-
-          <div class="scrollit">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Cor</th>
-                  <th scope="col">Operação</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let issues of IssuesList">
-                  <th scope="row">{{ issues.id }}</th>
-                  <td>{{ issues.issue_name }}</td>
-                  <td>{{ issues.issue_message }}</td>
-                  <td>
-                    <button type="button" class="btn btn-success btn-sm move-right"
-                      [routerLink]="['/edit-issue/', issues.id]">
-                      Edit
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteIusse(issues)">
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <!-- Issue table -->
-      <div class="col-mds-12">
-        <div class="inner">
-          <h4>Peças:</h4>
-
-          <div class="scrollit">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Tabuleiro</th>
-                  <th scope="col">Peça</th>
-                  <th scope="col">Monetização</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let issues of IssuesList">
-                  <th scope="row">{{ issues.id }}</th>
-                  <td>{{ issues.issue_name }}</td>
-                  <td>{{ issues.issue_message }}</td>
-                  <td>
-                    <button type="button" class="btn btn-success btn-sm move-right"
-                      [routerLink]="['/edit-issue/', issues.id]">
-                      Edit
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteIusse(issues)">
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <!-- Issue table -->
-      <div class="col-mds-12">
-        <div class="inner">
-          <h4>Níveis:</h4>
-
-          <div class="scrollit">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">dd</th>
-                  <th scope="col">Monetização</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let issues of IssuesList">
-                  <th scope="row">{{ issues.id }}</th>
-                  <td>{{ issues.issue_name }}</td>
-                  <td>{{ issues.issue_message }}</td>
-                  <td>
-                    <button type="button" class="btn btn-success btn-sm move-right"
-                      [routerLink]="['/edit-issue/', issues.id]">
-                      Edit
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteIusse(issues)">
-                      Remove
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-
-
-
-    <div class="form-flex">
-
-
-      <div class="row33">
-        <!-- Form -->
-        <div class="col-md-12">
-          <h4>Adicionar Tabuleiro</h4>
-          <form [formGroup]="issueForm" (ngSubmit)="submitForm()" novalidate>
-            <div class="form-group">
-              <label>Nome</label>
-              <input type="text" formControlName="issue_name" class="form-control" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label>Cor</label>
-              <input type="text" class="form-control" formControlName="issue_message"/>
-            </div>
-            <button type="submit" class="btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="row33">
-        <!-- Form -->
-        <div class="col-md-12">
-          <h4>Adicionar Peça</h4>
-          <form [formGroup]="issueForm" (ngSubmit)="submitForm()" novalidate>
-            <div class="form-group">
-              <label>Tabuleiro</label>
-              <input type="text" formControlName="issue_name" class="form-control" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label>Issue Details</label>
-              <textarea class="form-control" formControlName="issue_message" rows="3" maxlength="50"></textarea>
-            </div>
-            <button type="submit" class="btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="row33">
-        <!-- Form -->
-        <div class="col-md-12">
-          <h4>Adicionar nível</h4>
-          <form [formGroup]="issueForm" (ngSubmit)="submitForm()" novalidate>
-            <div class="form-group">
-              <label>Tabuleiro</label>
-              <input type="text" formControlName="issue_name" class="form-control" maxlength="20" />
-            </div>
-            <div class="form-group">
-              <label>Issue Details</label>
-              <textarea class="form-control" formControlName="issue_message" rows="3" maxlength="50"></textarea>
-            </div>
-            <button type="submit" class="btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-
-    </div>
-
-
+    <ul class="menu-bar">
+      <li (click)="openTabuleiroMenu()">Tabuleiro</li>
+      <li (click)="openPecasMenu()">Peça</li>
+      <li (click)="openNiveisMenu()">Nível</li>
+    </ul>
 
   </div>
+
+
+
+</div>

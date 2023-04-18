@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-novo-nivel',
   templateUrl: './novo-nivel.component.html',
-  styleUrls: ['./novo-nivel.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class NovoNivelComponent implements OnInit {
   nivel: any = {}

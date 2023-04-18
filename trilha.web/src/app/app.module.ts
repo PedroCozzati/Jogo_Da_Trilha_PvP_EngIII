@@ -32,7 +32,8 @@ import { EditaPecaComponent } from './adm-page/peca/edita-peca/edita-peca.compon
 import { NovaPecaComponent } from './adm-page/peca/nova-peca/nova-peca.component';
 import { NovoNivelComponent } from './adm-page/nivel/novo-nivel/novo-nivel.component';
 import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.component';
-import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component'; // add this line
+import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component';
+import { LinhaApresentacaoNivelComponent } from './adm-page/nivel/lista-niveis/linha-apresentacao-nivel/linha-apresentacao-nivel.component';
 
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
@@ -64,6 +65,7 @@ export function playerFactory() { // add this line
     NovoNivelComponent,
     EditaNivelComponent,
     ListaNiveisComponent,
+    LinhaApresentacaoNivelComponent,
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),

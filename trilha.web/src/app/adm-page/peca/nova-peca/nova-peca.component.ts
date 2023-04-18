@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-nova-peca',
   templateUrl: './nova-peca.component.html',
-  styleUrls: ['./nova-peca.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class NovaPecaComponent {
   peca: any = {}

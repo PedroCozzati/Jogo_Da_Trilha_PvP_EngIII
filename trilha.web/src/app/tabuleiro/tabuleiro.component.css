@@ -1,8 +1,11 @@
 .tabuleiro{
     color: #f9fde4;
-    border: solid 5px black;
-    border-radius: 30px;
-    height: 35rem;
-    width: 37rem;
-    margin: 70px;
+    background-image: url("../../assets/image2.png");
+    background-size: contain;
+    background-color: antiquewhite;
+    border: solid 1px black;
+    border-radius: 10px;
+    height: 80px;
+    width: 78px;
+    margin: 20px;
 }

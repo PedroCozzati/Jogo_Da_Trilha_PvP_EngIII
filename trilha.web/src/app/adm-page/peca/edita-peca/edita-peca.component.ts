@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-edita-peca',
   templateUrl: './edita-peca.component.html',
-  styleUrls: ['./edita-peca.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class EditaPecaComponent {
   peca: any = {}

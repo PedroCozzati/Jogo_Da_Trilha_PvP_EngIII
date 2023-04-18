@@ -1,21 +1,25 @@
-<div class="row33">
-    <!-- Form -->
-    <div class="col-md-12">
-        <h4>Adicionar Peça</h4>
-        <div>
-            <div class="form-group">
-                <label>Nome</label>
-                <input type="text" class="form-control" maxlength="20" [(ngModel)]="peca.nome" />
+<div class="box">
+    <div class="form-flex">
+        <div class="row33">
+            <!-- Form -->
+            <div class="col-md-12">
+                <h4>Adicionar Peça</h4>
+                <div>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" maxlength="20" [(ngModel)]="peca.nome" />
+                    </div>
+                    <div class="form-group">
+                        <label>Cor Lado A</label>
+                        <input type="text" class="form-control" [(ngModel)]="peca.corLadoA" />
+                    </div>
+                    <div class="form-group">
+                        <label>Cor Lado B</label>
+                        <input type="text" class="form-control" [(ngModel)]="peca.corLadoB" />
+                    </div>
+                    <button type="submit" class="btn-primary" (click)="criaPeca(peca)">Submit</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Cor Lado A</label>
-                <input type="text" class="form-control" [(ngModel)]="peca.corLadoA" />
-            </div>
-            <div class="form-group">
-                <label>Cor Lado B</label>
-                <input type="text" class="form-control" [(ngModel)]="peca.corLadoB" />
-            </div>
-            <button type="submit" class="btn-primary" (click)="criaPeca(peca)">Submit</button>
         </div>
     </div>
 </div>

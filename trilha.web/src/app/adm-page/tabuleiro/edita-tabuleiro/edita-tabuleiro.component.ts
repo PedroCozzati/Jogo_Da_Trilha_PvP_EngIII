@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-edita-tabuleiro',
   templateUrl: './edita-tabuleiro.component.html',
-  styleUrls: ['./edita-tabuleiro.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class EditaTabuleiroComponent implements OnInit {
   tabuleiro: any = {}

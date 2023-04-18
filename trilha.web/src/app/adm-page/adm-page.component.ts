@@ -6,15 +6,13 @@ import { BugService } from '../shared/services/bug.service';
 @Component({
   selector: 'adm-page',
   templateUrl: './adm-page.component.html',
-  styleUrls: ['./adm-page.component.css']
+  styleUrls: ['./adm-page.component.css','./adm-page.component.scss']
 })
 export class AdmPageComponent implements OnInit{
   IssuesList: any = [];
   issueForm: FormGroup;
 
   ngOnInit() {
-    this.loadEmployees();
-    this.addIssue();
   }
 
   constructor(
@@ -24,32 +22,28 @@ export class AdmPageComponent implements OnInit{
     private router: Router,
     ) {}
 
-  // Issues list
-  loadEmployees() {
-    return this.bugService.GetIssues().subscribe((data: {}) => {
-      this.IssuesList = data;
-    });
+    backButton(){
+      this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
+    }
+  
+    exitButton(){
+      this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
+    }
+
+
+
+  openTabuleiroMenu(){
+    this.ngZone.run(() => this.router.navigateByUrl('/tabuleiros'));
   }
 
-  // Delete issue
-  deleteIusse(data) {
-    var index = (index = this.IssuesList.map((x) => {
-      return x.issue_name;
-    }).indexOf(data.issue_name));
-    return this.bugService.DeleteBug(data.id).subscribe((res) => {
-      this.IssuesList.splice(index, 1);
-      console.log('Issue deleted!');
-    });
+  openPecasMenu(){
+    this.ngZone.run(() => this.router.navigateByUrl('/pecas'));
   }
 
-
-
-  addIssue() {
-    this.issueForm = this.fb.group({
-      issue_name: [''],
-      issue_message: [''],
-    });
+  openNiveisMenu(){
+    this.ngZone.run(() => this.router.navigateByUrl('/niveis'));
   }
+
 
   submitForm() {
     alert("TEST")

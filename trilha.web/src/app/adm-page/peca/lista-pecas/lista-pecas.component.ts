@@ -1,19 +1,38 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BugService } from 'src/app/shared/services/bug.service';
 
 @Component({
   selector: 'app-lista-pecas',
   templateUrl: './lista-pecas.component.html',
-  styleUrls: ['./lista-pecas.component.css']
+  styleUrls: ['../../adm-page.component.css','../../adm-page.component.scss']
 })
 export class ListaPecasComponent {
   constructor(
     private http: HttpClient,
+    public bugService: BugService,
+    public fb: FormBuilder,
+    private ngZone: NgZone,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.consultaPecas()
   }
+
+   backButton(){
+    this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
+  }
+
+  exitButton(){
+    this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
+  }
+
+
+ 
+
 
   consultaPecas() {
     this.http.get("http://localhost:90/peca", { headers: { "Content-Type": 'application/json' } })

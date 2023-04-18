@@ -8,7 +8,8 @@ import { Component, Input } from '@angular/core';
 export class PecaComponent {
 
 
-@Input() color = "red";
-@Input() posicao = "2";
+  @Input() styles = {
+    'background-color':'red'
+  };
 
 }

@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-edita-nivel',
   templateUrl: './edita-nivel.component.html',
-  styleUrls: ['./edita-nivel.component.css']
+  styleUrls: ['../../adm-page.component.css']
 })
 export class EditaNivelComponent {
   nivel: any = {}

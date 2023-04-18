@@ -7,5 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class TabuleiroComponent {
     
-  @Input() campos = [];
+  
+  @Input() styles = {
+    'background-color':'red'
+  };
+
 }
