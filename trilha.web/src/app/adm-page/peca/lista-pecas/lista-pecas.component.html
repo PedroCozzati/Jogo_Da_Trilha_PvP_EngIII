@@ -23,6 +23,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th scope="col">ID</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Cor Lado A</th>
                                     <th scope="col">Cor Lado B</th>
@@ -31,6 +32,7 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let peca of pecas">
+                                    <td scope="row">{{peca._id}}</td>
                                     <td scope="row">{{ peca.nome }}</td>
                                     <td>
                                         
