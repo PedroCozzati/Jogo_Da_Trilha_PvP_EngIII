@@ -18,7 +18,7 @@ export class FormComponent {
   }
 
   constructor(
-  
+
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,
@@ -28,7 +28,7 @@ export class FormComponent {
   options: AnimationOptions = {
     path: '../../assets/lottie.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
   };
-  
+
   addIssue() {
     this.loginForm = this.fb.group({
       name: [''],
@@ -38,14 +38,10 @@ export class FormComponent {
   }
 
   submitForm() {
-    
-    console.log(this.loginForm.controls['name'].value=="ADM123");
-    
-      if(this.loginForm.controls['name'].value=="ADM123"){
-        this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
-      }
-      
+    if (this.loginForm.controls['name'].value == "useradm" && this.loginForm.controls['senha'].value == "1234") {
+      this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
+    }
   }
-  
+
 }
 
