@@ -9,26 +9,33 @@
                         <label>Nome</label>
                         <input type="text" class="form-control" maxlength="20" [(ngModel)]="nivel.nome" />
                     </div>
-                    <div class="form-group">
-                        <label>Tabuleiro</label>
-                        <select [(ngModel)]="nivel.tabuleiro_id">
-                            <option *ngFor="let tabuleiro of tabuleiros" [ngValue]="tabuleiro._id">{{tabuleiro.nome}}
-                            </option>
-                        </select>
+                    <div class="drop-flex">
+                        <div class="form-group-drop">
+                            <label>Tabuleiro</label>
+                            <select class="drop" [(ngModel)]="nivel.tabuleiro_id">
+                                <option *ngFor="let tabuleiro of tabuleiros" [ngValue]="tabuleiro._id">
+                                    {{tabuleiro.nome}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Peça</label>
-                        <select [(ngModel)]="nivel.peca_id">
-                            <option *ngFor="let peca of pecas" [ngValue]="peca._id">{{peca.nome}}</option>
-                        </select>
+                    <div class="drop-flex">
+                        <div class="form-group-drop">
+
+                            <label>Peça</label>
+                            <select [(ngModel)]="nivel.peca_id">
+                                <option *ngFor="let peca of pecas" [ngValue]="peca._id">{{peca.nome}}</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Valor de Aposta</label>
-                        <input type="text" class="form-control" [(ngModel)]="nivel.valorDeAposta" />
-                    </div>
-                    <button type="submit" class="btn-primary" (click)="editaNivel(nivel)">Confirmar</button>
+                
+                <div class="form-group">
+                    <label>Valor de Aposta</label>
+                    <input type="text" class="form-control" [(ngModel)]="nivel.valorDeAposta" />
                 </div>
+                <button type="submit" class="button" (click)="editaNivel(nivel)">Confirmar</button>
             </div>
         </div>
     </div>
+</div>
 </div>
