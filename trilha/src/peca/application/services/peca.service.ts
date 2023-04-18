@@ -47,11 +47,11 @@ export class PecaService {
   }
 
   @Span()
-  async deletaPeca(peca: PecaDto) {
+  async deletaPeca(id: string) {
     this._logger.log("starting service execution")
 
     return await this.commandBus.execute(
-      new DeletaPecaCommand(peca),
+      new DeletaPecaCommand(id),
     );
   }
 

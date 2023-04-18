@@ -44,11 +44,11 @@ export class NivelRepository {
   }
 
   @Span()
-  public async deletaNivelPorPeca(nivel: Nivel) {
+  public async deletaNivelPorPeca(pecaId: string) {
     try {
       this._logger.log("executing repository method")
 
-      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "peca_id": nivel.peca_id }, nivel))
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "peca_id": pecaId }, new Nivel({ peca_id: pecaId })))
 
       await nivelDeletado.deletaNivel()
 
@@ -60,11 +60,11 @@ export class NivelRepository {
   }
 
   @Span()
-  public async deletaNivelPorTabuleiro(nivel: Nivel) {
+  public async deletaNivelPorTabuleiro(tabuleiroId: string) {
     try {
       this._logger.log("executing repository method")
 
-      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "tabuleiro_id": nivel.tabuleiro_id }, nivel))
+      const nivelDeletado = new Nivel(await this.repositoryBase.deleteMany({ "tabuleiro_id": tabuleiroId }, new Nivel({ tabuleiro_id: tabuleiroId })))
 
       await nivelDeletado.deletaNivel()
 

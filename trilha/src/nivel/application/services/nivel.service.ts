@@ -48,25 +48,23 @@ export class NivelService {
   }
 
   @Span()
-  async deletaNivel(nivel: NivelDto) {
+  async deletaNivel(id: string) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new DeletaNivelCommand(nivel));
+    return await this.commandBus.execute(new DeletaNivelCommand(id));
   }
 
   @Span()
-  async deletaNivelPorPeca(nivel: NivelDto) {
+  async deletaNivelPorPeca(pecaId: string) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new DeletaNivelPorPecaCommand(nivel));
+    return await this.commandBus.execute(new DeletaNivelPorPecaCommand(pecaId));
   }
 
   @Span()
-  async deletaNivelPorTabuleiro(nivel: NivelDto) {
+  async deletaNivelPorTabuleiro(tabuleiroId: string) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new DeletaNivelPorTabuleiroCommand(nivel));
+    return await this.commandBus.execute(new DeletaNivelPorTabuleiroCommand(tabuleiroId));
   }
-
-
 }

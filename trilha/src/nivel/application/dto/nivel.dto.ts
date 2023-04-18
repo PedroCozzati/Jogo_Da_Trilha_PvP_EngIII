@@ -5,19 +5,14 @@ export class NivelDto {
     readonly _id: string
 
     @IsString()
-    @IsNotEmpty()
     readonly tabuleiro_id: string
 
     @IsString()
-    @IsNotEmpty()
     readonly peca_id: string
 
     @IsString()
-    @IsNotEmpty()
     readonly nome: string
 
     @IsNumber()
-    @IsNotEmpty()
     readonly valorDeAposta: number
-
 }

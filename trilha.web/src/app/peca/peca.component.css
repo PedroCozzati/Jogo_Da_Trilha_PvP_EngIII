@@ -1,0 +1,11 @@
+.peca{
+    width: 40px;
+    height: 40px;
+    margin-top: 20px;
+    color: rgb(0, 0, 0);
+    background-image: url("../../assets/peca1.png");
+    background-size: contain;
+    background-color: red;
+    border-radius: 100%;
+    border: 2px rgb(0, 0, 0) solid;
+}

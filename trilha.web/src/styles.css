@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url("https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css");
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px rgba(121, 44, 156, 0.418) inset !important;
+}
+
+  ::ng-deep .c-carousel 
+  .c-carousel-indicators {
+    
+        size: 30px;
+        
+        padding: 40px;
+        /* border: 0px solid #ff0000 !important; */
+      
+  }
+
+
+  .carousel-dot {
+    size: 30px;
+    padding-left: 30px;
+   
+  background-color: #ffffff !important;;
+}
+
+    .carousel-dot-active {
+        size: 30px;
+        padding-left: 30px;
+       
+      background-color: #6e2beb !important;;
+    }
+
+
+    ::ng-deep .table .table-bordered{
+      border-radius: 20px !important;
+    }
+  
+    
+  
+  
+
+
+
