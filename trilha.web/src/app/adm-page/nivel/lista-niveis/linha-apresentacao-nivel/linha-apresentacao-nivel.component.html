@@ -1,0 +1,12 @@
+<td scope="row">{{ nivel.nome }}</td>
+<td>{{ tabuleiro.nome }}</td>
+<td>{{ peca.nome }}</td>
+<td>{{ nivel.valorDeAposta }}</td>
+<td>
+    <button type="button" class="btn btn-success btn-sm move-right" [routerLink]="['/nivel/', nivel._id]">
+        Editar
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="deletaNivel(nivel)">
+        Remover
+    </button>
+</td>

@@ -2,8 +2,8 @@ global:
   scrape_interval: 30s
   scrape_timeout: 10s
   external_labels:
-    cluster: trilha-gabriel-cora
-    namespace: trilha-gabriel-cora
+    cluster: trilha-pedro-cozzati
+    namespace: trilha-pedro-cozzati
 
 rule_files:
   - alert.yml

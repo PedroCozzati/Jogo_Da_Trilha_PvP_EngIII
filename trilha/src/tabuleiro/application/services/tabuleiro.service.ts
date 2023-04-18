@@ -46,9 +46,9 @@ export class TabuleiroService {
   }
 
   @Span()
-  async deletaTabuleiro(tabuleiro: TabuleiroDto) {
+  async deletaTabuleiro(id: string) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new DeletaTabuleiroCommand(tabuleiro));
+    return await this.commandBus.execute(new DeletaTabuleiroCommand(id));
   }
 }
