@@ -20,8 +20,8 @@ export class LinhaApresentacaoNivelComponent {
     private router: Router,
   ) { }
 
-  tabuleiro: any
-  peca: any
+  tabuleiro: any = {}
+  peca: any = {}
   
   @Input() nivel: any = {}
 

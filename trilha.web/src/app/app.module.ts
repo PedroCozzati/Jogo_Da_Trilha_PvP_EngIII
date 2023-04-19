@@ -34,6 +34,7 @@ import { NovoNivelComponent } from './adm-page/nivel/novo-nivel/novo-nivel.compo
 import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.component';
 import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component';
 import { LinhaApresentacaoNivelComponent } from './adm-page/nivel/lista-niveis/linha-apresentacao-nivel/linha-apresentacao-nivel.component';
+import { GameComponent } from './game/game.component';
 
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
@@ -66,6 +67,7 @@ export function playerFactory() { // add this line
     EditaNivelComponent,
     ListaNiveisComponent,
     LinhaApresentacaoNivelComponent,
+    GameComponent,
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),

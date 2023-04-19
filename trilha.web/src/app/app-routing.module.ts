@@ -16,6 +16,7 @@ import { EditaPecaComponent } from './adm-page/peca/edita-peca/edita-peca.compon
 import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component';
 import { NovoNivelComponent } from './adm-page/nivel/novo-nivel/novo-nivel.component';
 import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.component';
+import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'app-login' },
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'nivel/novo', component: NovoNivelComponent },
   { path: 'nivel/:id', component: EditaNivelComponent },
 
-  { path: 'app-login', component: LoginComponent },
+  { path: 'app-login', component: GameComponent },
   { path: 'adm-page', component: AdmPageComponent },
   { path: 'edit-issue/:id', component: EditIssueComponent },
   { path: 'issues-list', component: IssueListComponent },
