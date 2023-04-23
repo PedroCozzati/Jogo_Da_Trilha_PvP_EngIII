@@ -273,10 +273,43 @@ body {
   height: 100%;
 }
 
-/* .box {
-  background: red;
-  height: 100%;
-} */
+.button-flex{
+
+    margin-left: 10vw;
+    width: 30vw;
+    display: flex;
+    justify-content: space-between;
+}
+.button{
+    height: 7vh;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 9vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+
+  button:hover{
+    background-color: rgb(60, 74, 169);
+    color: white;
+}
+
+  button:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px 0px #a29bfe;
+  }
+
+
+.box {
+  transition: all 4s ease-in-out;
+}
 
 /* .box {
     background:url("/assets/bgtest.png"); 
@@ -300,7 +333,7 @@ body {
     margin-top: 5vh;
     flex-direction: row;
     
-    height: 400px;
+    height: 300px;
     justify-content: space-around;
    
    
@@ -436,3 +469,47 @@ html, body {
     }
   }
   
+
+  ::ng-deep .spinner-border{
+    color: #a29bfe;
+
+    height: 50px;
+    width: 50px;
+  }
+
+  .div2{
+    display: flex;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
+    align-items: flex;
+    
+    justify-content: space-around;
+    vertical-align: middle;
+    
+    width: 100%;
+    height: 100%;
+    align-items: center;
+
+  }
+
+  .loading-text  {
+    color: aliceblue;
+    font-weight: bolder;
+    font-size: larger;
+  }
+
+  .loading-text2  {
+    margin-top: 20px;
+    color: aliceblue;
+    font-weight:400;
+    font-size: larger;
+  }
+
+  img{
+    border-radius: 10px;
+  }
+
+  .cancelar{
+    margin-top: 20px;
+  }
