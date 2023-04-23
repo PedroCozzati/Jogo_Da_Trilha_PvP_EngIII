@@ -7,9 +7,7 @@
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px rgba(121, 44, 156, 0.418) inset !important;
-}
+
 
   ::ng-deep .c-carousel 
   .c-carousel-indicators {
@@ -41,9 +39,4 @@ input:-webkit-autofill:active{
       border-radius: 20px !important;
     }
   
-    
-  
-  
-
-
-
+ 

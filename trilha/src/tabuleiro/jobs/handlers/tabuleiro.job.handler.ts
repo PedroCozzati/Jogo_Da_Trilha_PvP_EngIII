@@ -14,14 +14,14 @@ export class TabuleiroJobHandler {
     private readonly _logger: Logger,
   ) { }
 
-  @Span()
-  @Cron(CronExpression.EVERY_10_SECONDS)
-  async QUALQUER_NOME() {
-    try {
-      //throw new NotImplementedException()
-      await this.tabuleiroService.buscaTabuleiros()
-    } catch (exception) {
-      this._logger.error("error on job", { exception })
-    }
-  }
+  // @Span()
+  // @Cron(CronExpression.EVERY_10_SECONDS)
+  // async QUALQUER_NOME() {
+  //   try {
+  //     //throw new NotImplementedException()
+  //     await this.tabuleiroService.buscaTabuleiros()
+  //   } catch (exception) {
+  //     this._logger.error("error on job", { exception })
+  //   }
+  // }
 }

@@ -35,7 +35,11 @@ import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.co
 import { ListaNiveisComponent } from './adm-page/nivel/lista-niveis/lista-niveis.component';
 import { LinhaApresentacaoNivelComponent } from './adm-page/nivel/lista-niveis/linha-apresentacao-nivel/linha-apresentacao-nivel.component';
 import { GameComponent } from './game/game.component';
+import { MdbModalModule, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { LoginAuthenticatedComponent } from './login-authenticated/login-authenticated.component';
+import { UserCardComponent } from './login-authenticated/user-card/user-card.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
 } // add this line
@@ -68,13 +72,17 @@ export function playerFactory() { // add this line
     ListaNiveisComponent,
     LinhaApresentacaoNivelComponent,
     GameComponent,
+    LoginAuthenticatedComponent,
+    UserCardComponent,
+    
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),
-   
+    BrowserAnimationsModule,
     MdbCarouselModule,
     CarouselModule,
     BrowserModule,
+    MdbModalModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
