@@ -18,6 +18,7 @@ import { NovoNivelComponent } from './adm-page/nivel/novo-nivel/novo-nivel.compo
 import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.component';
 import { GameComponent } from './game/game.component';
 import { LoginAuthenticatedComponent } from './login-authenticated/login-authenticated.component';
+import { SelecionarNivelComponent } from './selecionar-nivel/selecionar-nivel.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'app-login' },
@@ -34,7 +35,9 @@ const routes: Routes = [
   { path: 'nivel/novo', component: NovoNivelComponent },
   { path: 'nivel/:id', component: EditaNivelComponent },
 
-  { path: 'app-login', component: GameComponent },
+  { path: 'selecionar-nivel/:user/:nivel', component: SelecionarNivelComponent, },
+ 
+  { path: 'game', component: GameComponent },
   { path: 'app-login', component: LoginComponent },
   { path: 'login-authenticated/:user', component: LoginAuthenticatedComponent },
   { path: 'adm-page', component: AdmPageComponent },

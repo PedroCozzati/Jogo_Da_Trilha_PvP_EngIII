@@ -1,0 +1,71 @@
+
+<div id="gameBoard" style="display: block;"> <!-- game board -->
+    <!-- Create lines of board -->
+    <div class="fieldLineHorizontal" style="width: 60vmin; transform: translate(-30vmin,-30vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 40vmin; transform: translate(-20vmin,-20vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 20vmin; transform: translate(-10vmin,-10vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 20vmin; transform: translate(-30vmin,  0vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 20vmin; transform: translate( 10vmin,  0vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 20vmin; transform: translate(-10vmin, 10vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 40vmin; transform: translate(-20vmin, 20vmin);"></div>
+    <div class="fieldLineHorizontal" style="width: 60vmin; transform: translate(-30vmin, 30vmin);"></div>
+    <div class="fieldLineVertical" style="height: 60vmin; transform: translate(-30vmin,-30vmin);"></div>
+    <div class="fieldLineVertical" style="height: 40vmin; transform: translate(-20vmin,-20vmin);"></div>
+    <div class="fieldLineVertical" style="height: 20vmin; transform: translate(-10vmin,-10vmin);"></div>
+    <div class="fieldLineVertical" style="height: 20vmin; transform: translate(  0vmin,-30vmin);"></div>
+    <div class="fieldLineVertical" style="height: 20vmin; transform: translate(  0vmin, 10vmin);"></div>
+    <div class="fieldLineVertical" style="height: 20vmin; transform: translate( 10vmin,-10vmin);"></div>
+    <div class="fieldLineVertical" style="height: 40vmin; transform: translate( 20vmin,-20vmin);"></div>
+    <div class="fieldLineVertical" style="height: 60vmin; transform: translate( 30vmin,-30vmin);"></div>
+
+    <div id="winnerScreen" onclick="Menu.ReturnToMenu();" style="display: none;">
+        <div>
+            <span id="winnerScreenText">White wins!</span>
+            <br>
+            (Click anywhere to go to menu.)
+        </div>
+    </div>
+    <div class="field fieldMoveable" style="transform: translate(-30vmin, -30vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, -30vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(30vmin, -30vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-20vmin, -20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, -20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(20vmin, -20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-10vmin, -10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, -10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(10vmin, -10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-30vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-20vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-10vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(10vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(20vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(30vmin, 0vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-10vmin, 10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, 10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(10vmin, 10vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-20vmin, 20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, 20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(20vmin, 20vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(-30vmin, 30vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(0vmin, 30vmin);"></div>
+    <div class="field fieldMoveable" style="transform: translate(30vmin, 30vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, -30vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, -22.5vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, -15vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, -7.5vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, 0vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, 7.5vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, 15vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, 22.5vmin);"></div>
+    <div class="stoneBlack" style="transform: translate(40vmin, 30vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, -30vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, -22.5vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, -15vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, -7.5vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, 0vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, 7.5vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, 15vmin);"></div>
+    <div class="stoneWhite" style="transform: translate(-40vmin, 22.5vmin);"></div>
+    <div class="stoneWhite stoneActive" style="transform: translate(-40vmin, 30vmin);"></div>
+</div>
+

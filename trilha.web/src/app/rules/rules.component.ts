@@ -4,7 +4,7 @@ import { AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-rules',
   templateUrl: './rules.component.html',
-  styleUrls: ['./rules.component.css']
+  styleUrls: ['./rules.component.css','./rules.component.scss']
 })
 export class Carousel03Component implements OnInit {
 

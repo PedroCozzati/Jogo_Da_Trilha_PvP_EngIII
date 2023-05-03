@@ -84,6 +84,10 @@ c-carousel-item{
   }
 
 
+  p{
+      margin-top: 5vh;
+  }
+
   .form-title {
     font-size: 1.25rem;
     line-height: 0.1rem;
@@ -268,8 +272,7 @@ c-carousel-item{
   }
 
 
-
-
+ 
 
 
 

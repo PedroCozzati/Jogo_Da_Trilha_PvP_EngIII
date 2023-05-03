@@ -68,25 +68,6 @@
     border-bottom-color: #6a3ed1;
   }
 
-
-  ::ng-deep .p-carousel-next, .p-carousel-prev {
-    box-shadow: none !important;
-    border-width: 1px !important;
-    color: #ffffff !important;
-    background-color: #1f003b ;
-  
-    border: none !important;
-  }
-  
-  ::ng-deep .p-carousel-prev {
-    box-shadow: none !important;
-    border-width: 1px !important;
-    color: #ffffff !important;
-    background-color: #1f003b;
-  
-    border: none !important;
-  }
-  
  
 
   ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
@@ -106,4 +87,32 @@
 ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator button:hover {
     background: #bdadb9;
   }
+
+  
+ .p-carousel-next, .p-carousel-prev {
+  box-shadow: 0px 0px 20px 10px rgb(39, 4, 85) !important;
+  border-width: 1px !important;
+  color: #ffffff !important;
+  background-color: #1f003b ;
+
+  border: 2px solid white !important;
+}
+
+ .p-carousel-prev {
+  box-shadow: 0px 0px 20px 10px rgb(39, 4, 85) !important;
+  border-width: 1px !important;
+  color: #ffffff !important;
+  background-color: #1f003b;
+
+  border: 2px solid white !important;
+}
+
+
+.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #ffffff;
+}
+
+
 

@@ -19,8 +19,9 @@ import { LoginComponent } from './login/login.component';
 import { AdmPageComponent } from './adm-page/adm-page.component';
 import { Carousel03Component } from './rules/rules.component';
 import { SlidesComponent } from './slides/slides.component';
-import { CarouselModule } from '@coreui/angular';
+// import { CarouselModule } from '@coreui/angular';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
+import { CarouselModule } from 'primeng/carousel';
 
 
 import { LottieModule } from 'ngx-lottie';
@@ -40,6 +41,7 @@ import { LoginAuthenticatedComponent } from './login-authenticated/login-authent
 import { UserCardComponent } from './login-authenticated/user-card/user-card.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SelecionarNivelComponent } from './selecionar-nivel/selecionar-nivel.component';
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
 } // add this line
@@ -74,6 +76,7 @@ export function playerFactory() { // add this line
     GameComponent,
     LoginAuthenticatedComponent,
     UserCardComponent,
+    SelecionarNivelComponent,
     
   ],
   imports: [

@@ -492,17 +492,17 @@ footer p {
 }
 
 .fieldLineHorizontal {
-    background-color: rgba(8, 0, 83, 0.6);
+    background-color: rgba(0,140,30,0.6);
 }
 .fieldLineVertical {
-    background-color: rgba(47, 1, 85, 0.6);
+    background-color: rgba(0,140,30,0.6);
 }
 
 .field:after {
-    background-color: rgb(8, 0, 82);
+    background-color: rgba(0,140,30,1);
 }
 .fieldMoveable:after {
-    background-color: #7000b1;
+    background-color: #00ff00;
 }
 .fieldMoveable:hover:after {
     background-color: #ddff00;
@@ -514,61 +514,61 @@ footer p {
     height: 10vmin;
 }
 .stoneWhite {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-nature.png);
     background-size: cover;
 }
 .stoneBlack {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-nature.png);
     background-size: cover;
 }
 .stoneWhite.stoneMoveable {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-moveable-nature.png);
     background-size: cover;
 }
 .stoneWhite.stoneMoveable.stoneHoverable:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-moveable-hover-nature.png);
     background-size: cover;
 }
 /* Its specified later so will override possible moveable */
 .stoneWhite.stoneActive {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-active-nature.png);
     background-size: cover;
 }
 .stoneWhite.stoneActive:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-active-nature.png);
     background-size: cover;
 }
 .stoneWhite.stoneRemoveable {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-removeable-nature.png);
     background-size: cover;
 }
 .stoneWhite.stoneRemoveable.stoneHoverable:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white-removeable-hover-nature.png);
     background-size: cover;
 }
 .stoneBlack.stoneMoveable {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-moveable-nature.png);
     background-size: cover;
 }
 .stoneBlack.stoneMoveable.stoneHoverable:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-moveable-hover-nature.png);
     background-size: cover;
 }
 /* Its specified later so will override possible moveable */
 .stoneBlack.stoneActive {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-active-nature.png);
     background-size: cover;
 }
 .stoneBlack.stoneActive:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-active-nature.png);
     background-size: cover;
 }
 .stoneBlack.stoneRemoveable {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-removeable-nature.png);
     background-size: cover;
 }
 .stoneBlack.stoneRemoveable.stoneHoverable:hover {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black-removeable-hover-nature.png);
     background-size: cover;
 }
 
@@ -599,10 +599,10 @@ footer p {
     background-color: black;
 }
 .fieldMoveable:after {
-    background-color: #371cad;
+    background-color: #00aa00;
 }
 .fieldMoveable:hover:after {
-    background-color: #cd60ff;
+    background-color: #44ff00;
 }
 
 .stoneWhite, .stoneBlack {
@@ -615,12 +615,12 @@ footer p {
 
 .stoneWhite {
     /* background-position needs to be set randomly between 0 and 8vmin */
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/white.jpg);
     background-repeat: repeat;
     border: 0.3vmin solid black;
 }
 .stoneBlack {
-    background-image: url("../../assets/peca1.png");
+    background: url(../../assets/pictures/black.jpg);
     background-repeat: repeat;
     border: 0.3vmin solid white;
 }

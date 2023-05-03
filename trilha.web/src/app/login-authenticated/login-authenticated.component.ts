@@ -54,6 +54,17 @@ export class LoginAuthenticatedComponent {
     this.div1=false 
 
     this.div2=true
+
+    let item;
+
+    item = {
+      url : `selecionar-nivel/${this.user}/500`
+    };
+  
+
+    this.ngZone.run(() => this.router.navigateByUrl(item.url));
+
+
   }
 
   div3Function() {
@@ -84,6 +95,14 @@ export class LoginAuthenticatedComponent {
         this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
       });
     }
+
+
+    logoutUser() {
+      // Futura funcao para deslogar usuario
+        
+          this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
+      
+      }
   
 
 }

@@ -2,11 +2,40 @@
 
 @import url("https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css");
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
+
+
+::ng-deep .p-carousel-next {
+  box-shadow: none !important;
+  border-width: 1px !important;
+  color: #1f003b;
+  background-color: #1f003b;
+
+  border: transparent !important;
+}
+
+::ng-deep  .p-carousel-prev {
+  box-shadow: none !important;
+  border-width: 1px !important;
+  color: #1f003b;
+  background-color: #1f003b;
+
+  border: transparent !important;
+}
+
+
+.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+
 
 
   ::ng-deep .c-carousel 

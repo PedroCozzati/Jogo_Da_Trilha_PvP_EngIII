@@ -275,18 +275,23 @@ body {
 
 .button-flex{
 
+   bottom: 0;
+   top: 0;
+
     margin-left: 10vw;
+    margin-top: 4vh;
     width: 30vw;
     display: flex;
+    height: 20vh;
     justify-content: space-between;
 }
-.button{
+.button1{
     height: 7vh;
     font-weight: bold;
-    background-color: rgb(252, 229, 255);
+    background-color: rgb(250, 184, 184);
     border-radius: 20px;
-    box-shadow: 0px 5px rgb(55, 19, 185) ;
-    width: 9vw;
+    box-shadow: 0px 5px rgb(148, 22, 106) ;
+    width: 5vw;
     border-top: 2px red;
     border-left: 2px red;
     border-right: 2px red;
@@ -296,10 +301,85 @@ body {
    
   }
 
-  button:hover{
-    background-color: rgb(60, 74, 169);
+  .button2{
+    height: 7vh;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 7vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+  .button3{
+    height: 7vh;
+    font-weight: bold;
+    background-image: url("../../assets/ranking.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y:center ;
+    background-size: 45%;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 6vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+  .button4{
+    height: 7vh;
+    font-weight: bold;
+    background-image: url("../../assets/shop.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y:center ;
+    background-size: 45%;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 6vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+
+  .button1:hover{
+    background-color: rgb(97, 14, 41);
     color: white;
 }
+
+.button2:hover{
+  background-color: rgb(60, 74, 169);
+  color: white;
+}
+.button3:hover{
+  background-color: rgb(60, 74, 169);
+  color: white;
+}
+.button4:hover{
+  background-color: rgb(60, 74, 169);
+  color: white;
+}
+
+
 
   button:active {
     transform: translateY(5px);
