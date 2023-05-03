@@ -10,7 +10,7 @@
 
     width: 90vmin;
     height: 76vmin;
-    
+
     padding: 0;
 }
 
@@ -19,20 +19,21 @@
 .fieldLineHorizontal {
     height: 0.6vmin;
     margin: -0.3vmin 0 0 0;
-    padding:0;
+    padding: 0;
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index:1;
+    z-index: 1;
 }
+
 .fieldLineVertical {
     width: 0.6vmin;
     margin: 0 0 0 -0.3vmin;
-    padding:0;
+    padding: 0;
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index:1;
+    z-index: 1;
 }
 
 .field {
@@ -45,8 +46,9 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index:2;
+    z-index: 2;
 }
+
 .field:after {
     position: absolute;
     content: "";
@@ -69,12 +71,15 @@
     top: 50%;
     transition: transform 0.4s ease-out, z-index 0.4s step-end;
 }
+
 .stoneMoveFast {
     transition: transform 0.2s, z-index 0.2s step-end;
 }
+
 .stoneMoveInstant {
     transition: transform 0s, z-index 0s;
 }
+
 .stoneActive {
     z-index: 4;
 }
@@ -88,7 +93,7 @@
     overflow: hidden;
     border-radius: 4vmin;
     position: absolute;
-    background-color: rgba(255,255,255,0.85);
+    background-color: rgba(255, 255, 255, 0.85);
     z-index: 5;
 
     color: black;
@@ -97,10 +102,12 @@
     text-align: center;
     transition: 0.4s;
 }
+
 #winnerScreen div {
-    display: table-cell; 
+    display: table-cell;
     vertical-align: middle;
 }
+
 #winnerScreen span {
     font-weight: bold;
     font-size: 8.5vmin;
@@ -116,7 +123,7 @@
     /*margin: 2.5vmin auto;*/
     border-radius: 4.412vmin;
     /*position: relative;*/
-    box-shadow: 20px 10px 10px rgba(0,0,0,0.8);
+    box-shadow: 20px 10px 10px rgba(0, 0, 0, 0.8);
     background-color: none;
     transition: background 1s;
     position: absolute;
@@ -124,9 +131,10 @@
     left: 50%;
     margin: -38vmin 0 0 -45vmin;
 }
+
 #gameMenu:after {
     content: "";
-    
+
     background-size: cover;
     border-radius: 4vmin;
     opacity: 1;
@@ -141,15 +149,19 @@
 }
 
 #gameMenu table {
-    width: -moz-max-content; /* otherwise text was wrapped inside Button & Labels in FF */
-    position:absolute;
+    width: -moz-max-content;
+    /* otherwise text was wrapped inside Button & Labels in FF */
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    padding: 5.882vmin; /* 40px */
+    transform: translate(-50%, -50%);
+    padding: 5.882vmin;
+    /* 40px */
 }
+
 #gameMenu td {
-    padding: 0.735vmin; /* 5px; */
+    padding: 0.735vmin;
+    /* 5px; */
     color: black;
     font-family: 'Arial';
     font-weight: bold;
@@ -160,9 +172,12 @@
 
 #gameMenu button {
     background-color: transparent;
-    border: 0.441vmin solid black; /* 3px */
-    padding: 1.912vmin; /* 13px; */
-    border-radius: 1.471vmin; /* 10px; */
+    border: 0.441vmin solid black;
+    /* 3px */
+    padding: 1.912vmin;
+    /* 13px; */
+    border-radius: 1.471vmin;
+    /* 10px; */
     color: black;
     font-family: 'Arial';
     font-weight: bold;
@@ -170,44 +185,54 @@
     text-transform: uppercase;
     cursor: pointer;
 }
-#gameMenu button:hover  {
+
+#gameMenu button:hover {
     background-color: rgba(238, 154, 77, 0.3);
-    outline:0;
+    outline: 0;
 }
-#gameMenu button:focus  {
+
+#gameMenu button:focus {
     background-color: rgba(238, 154, 77, 0.3);
-    outline:0;
+    outline: 0;
 }
+
 #gameMenu button:active {
     background-color: rgba(238, 154, 77, 1);
 }
 
 #gameMenu input[type="number"] {
     background-color: transparent;
-    border: 0.441vmin solid black; /* 3px */
-    padding: 0.294vmin; /* 2px; */
-    border-radius: 1.471vmin; /* 10px; */
+    border: 0.441vmin solid black;
+    /* 3px */
+    padding: 0.294vmin;
+    /* 2px; */
+    border-radius: 1.471vmin;
+    /* 10px; */
     color: black;
     font-family: 'Arial';
     font-weight: bold;
-    font-size: 5vmin; /* 34px */
+    font-size: 5vmin;
+    /* 34px */
     text-transform: uppercase;
     text-align: center;
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
 }
+
 #gameMenu input[type="number"]:hover {
     background-color: rgba(238, 154, 77, 0.3);
 }
-#gameMenu input[type="number"]:focus  {
+
+#gameMenu input[type="number"]:focus {
     background-color: rgba(238, 154, 77, 1);
-    outline:0;
+    outline: 0;
 }
-#gameMenu input[type=number]::-webkit-inner-spin-button, 
-#gameMenu input[type=number]::-webkit-outer-spin-button { 
+
+#gameMenu input[type=number]::-webkit-inner-spin-button,
+#gameMenu input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
 
 
@@ -219,14 +244,17 @@
     width: 9vmin;
     height: 5vmin;
 }
-.switch:focus  {
+
+.switch:focus {
     background-color: rgba(238, 154, 77, 0.3);
     border-radius: 5vmin;
     outline: 0;
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+    display: none;
+}
 
 /* The slider */
 .slider {
@@ -239,9 +267,11 @@
     background-color: transparent;
     -webkit-transition: .4s;
     transition: .4s;
-    border: 0.45vmin solid black; /* 3px */
+    border: 0.45vmin solid black;
+    /* 3px */
     border-radius: 5vmin;
 }
+
 .slider:hover {
     background-color: rgba(238, 154, 77, 0.3);
 }
@@ -250,7 +280,7 @@
     position: absolute;
     content: "";
     width: 3.5vmin;
-    left:  0.3vmin;
+    left: 0.3vmin;
     top: 0.3vmin;
     bottom: 0.3vmin;
     background-color: black;
@@ -259,11 +289,11 @@
     border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: rgba(238, 154, 77, 1);
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     -webkit-transform: translateX(4vmin);
     -ms-transform: translateX(4vmin);
     transform: translateX(4vmin);
@@ -307,24 +337,27 @@ input:checked + .slider:before {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* lightens up background */
-    }
+    background-color: rgba(255, 255, 255, 0.3);
+    /* lightens up background */
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show {
+    display: block;
+}
 
 
 #infoOverlay {
     margin: 0 0 -0.4vmin -0.4vmin;
     padding: 0;
-    width:90.8vmin;
+    width: 90.8vmin;
     height: 76.8vmin;
     border: none;
     display: table;
     overflow: hidden;
     border-radius: 4.2vmin;
     position: absolute;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 5;
     display: none;
 
@@ -334,15 +367,18 @@ input:checked + .slider:before {
     text-align: center;
     transition: 0.4s;
 }
+
 #infoOverlay div {
-    display: table-cell; 
+    display: table-cell;
     vertical-align: middle;
 }
+
 #infoOverlay span {
     font-weight: bold;
     font-size: 8.5vmin;
     text-transform: uppercase;
 }
+
 #infoOverlay p {
     margin: 4vmin;
 }
@@ -350,8 +386,8 @@ input:checked + .slider:before {
 html {
     width: 100%;
     height: 100%;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -359,10 +395,11 @@ body {
     text-align: center;
     height: 100%;
     width: 100%;
-    margin:0;
-    padding:0;
-    overflow:hidden;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
+
 /* Version one: Moving the background
 #background1 {
     background: url(../../assets/pictures/background.jpg);
@@ -385,27 +422,30 @@ body {
 #background1 {
     background: url(../../assets/pictures/background-nature.jpg);
     opacity: 1;
-    z-index:-1;
+    z-index: -1;
     transition: opacity 1.5s;
 }
+
 #background2 {
     background: url(../../assets/pictures/background.jpg);
-    z-index:-2;
+    z-index: -2;
 }
-#background1, #background2 {
+
+#background1,
+#background2 {
     background-size: cover;
     background-position: center;
     width: 100vw;
     height: 100vh;
     position: absolute;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
 }
 
 
 header {
     position: absolute;
-    top:0;
+    top: 0;
     width: 100%;
     text-align: center;
     font-family: 'Arial';
@@ -414,35 +454,40 @@ header {
     text-align: left;
     margin: 0 0 1vmin 0;
     height: 7vmin;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     /* background-color: rgba(0,255,0,0.5); */
 }
+
 header td {
     padding-left: 5vmin;
     vertical-align: middle;
 }
+
 header button {
-    display:block;
+    display: block;
     background-color: transparent;
     border: 0.3vmin solid white;
     padding: 0.4vmin;
-    margin:0;
-    border-radius: 1vmin; 
+    margin: 0;
+    border-radius: 1vmin;
     color: white;
     font-family: 'Arial';
     font-size: 2.5vmin;
     text-transform: uppercase;
     cursor: pointer;
 }
-header button:hover  {
+
+header button:hover {
     background-color: rgba(255, 255, 255, 0.5);
-    outline:0;
+    outline: 0;
 }
-header button:focus  {
+
+header button:focus {
     background-color: rgba(255, 255, 255, 0.5);
-    outline:0;
+    outline: 0;
 }
+
 header button:active {
     background-color: rgba(255, 255, 255, 1);
     color: black;
@@ -450,23 +495,25 @@ header button:active {
 
 
 footer {
-    position:absolute;
-    bottom:0;
-    text-align:center;
-    font-size: 2.353vmin; /* std 16px */
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    font-size: 2.353vmin;
+    /* std 16px */
     width: 100%;
     padding: 0;
     margin: 2vmin 0 0 0;
     height: 6vmin;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     /* background-color: rgba(255,0,0,0.5); */
 
 }
 
 footer p {
-    margin: 1.471vmin; /* 10px */
-    padding:0;
+    margin: 1.471vmin;
+    /* 10px */
+    padding: 0;
 }
 
 /*
@@ -479,21 +526,23 @@ footer p {
 */
 
 #gameMenu {
-    background-color: rgba(255,255,255,0.35);
-    box-shadow: 0 0 6vmin rgba(0,0,0,0.8);
+    background-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.8);
 }
+
 #gameMenu:after {
-    opacity:0 !important;
+    opacity: 0 !important;
 }
 
 #gameBoard {
-    background-color: rgba(255,255,255,0.35);
-    box-shadow: 0 0 6vmin rgba(0,0,0,0.8);
+    background-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.8);
 }
 
 .fieldLineHorizontal {
     background-color: rgba(8, 0, 83, 0.6);
 }
+
 .fieldLineVertical {
     background-color: rgba(47, 1, 85, 0.6);
 }
@@ -501,72 +550,89 @@ footer p {
 .field:after {
     background-color: rgb(8, 0, 82);
 }
+
 .fieldMoveable:after {
     background-color: #7000b1;
 }
+
 .fieldMoveable:hover:after {
     background-color: #ddff00;
 }
 
-.stoneWhite, .stoneBlack {
+.stoneWhite,
+.stoneBlack {
     margin: -5vmin 0 0 -5vmin;
     width: 10vmin;
     height: 10vmin;
 }
+
 .stoneWhite {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneWhite.stoneMoveable {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneWhite.stoneMoveable.stoneHoverable:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 /* Its specified later so will override possible moveable */
 .stoneWhite.stoneActive {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneWhite.stoneActive:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneWhite.stoneRemoveable {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneWhite.stoneRemoveable.stoneHoverable:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack.stoneMoveable {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack.stoneMoveable.stoneHoverable:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 /* Its specified later so will override possible moveable */
 .stoneBlack.stoneActive {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack.stoneActive:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack.stoneRemoveable {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
 }
+
 .stoneBlack.stoneRemoveable.stoneHoverable:hover {
     background-image: url("../../assets/peca1.png");
     background-size: cover;
@@ -585,12 +651,13 @@ footer p {
 
 #gameBoard {
     background-size: cover;
-    box-shadow: 2.353vmin 1.471vmin 1.471vmin rgba(0,0,0,0.8);
+    box-shadow: 2.353vmin 1.471vmin 1.471vmin rgba(0, 0, 0, 0.8);
 }
 
 .fieldLineHorizontal {
     background-color: black;
 }
+
 .fieldLineVertical {
     background-color: black;
 }
@@ -598,19 +665,22 @@ footer p {
 .field:after {
     background-color: black;
 }
+
 .fieldMoveable:after {
     background-color: #371cad;
 }
+
 .fieldMoveable:hover:after {
     background-color: #cd60ff;
 }
 
-.stoneWhite, .stoneBlack {
+.stoneWhite,
+.stoneBlack {
     margin: -4.3vmin 0 0 -4.3vmin;
     width: 8vmin;
     height: 8vmin;
-    
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8);
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8);
 }
 
 .stoneWhite {
@@ -619,6 +689,7 @@ footer p {
     background-repeat: repeat;
     border: 0.3vmin solid black;
 }
+
 .stoneBlack {
     background-image: url("../../assets/peca1.png");
     background-repeat: repeat;
@@ -627,40 +698,127 @@ footer p {
 
 .stoneMoveable {
     border-color: #00ff00;
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8),
-                inset 0 0 0 1000px rgba(0,255,0,0.1);
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(0, 255, 0, 0.1);
 }
+
 .stoneMoveable.stoneHoverable:hover {
     margin: -4.6vmin 0 0 -4.6vmin;
     border: 0.6vmin solid #ff7700;
-    
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8),
-                inset 0 0 0 0 white;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 0 white;
 }
+
 /* Its specified later so will override possible moveable */
 .stoneActive {
     border: 0.6vmin solid #ff7700;
     margin: -4.6vmin 0 0 -4.6vmin;
 
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8),
-                inset 0 0 0 1000px rgba(255,120,0,0.3);
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 120, 0, 0.3);
 }
+
 .stoneActive:hover {
     margin: -4.6vmin 0 0 -4.6vmin;
     border: 0.6vmin solid #ff7700;
-    
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8),
-                inset 0 0 0 1000px rgba(255,120,0,0.3);
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 120, 0, 0.3);
 }
+
 .stoneRemoveable {
     border-color: #ff0000;
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.5),
-                inset 0 0 0 1000px rgba(255,0,0,0.3);
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1000px rgba(255, 0, 0, 0.3);
 }
+
 .stoneRemoveable.stoneHoverable:hover {
     margin: -4.6vmin 0 0 -4.6vmin;
     border: 0.6vmin solid #ff7777;
-    
-    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0,0,0,0.8),
-                inset 0 0 0 1000px rgba(255,120,120,0.5);
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 120, 120, 0.5);
+}
+
+.player-card {
+    position: absolute;
+}
+
+.player-card-oponent {
+    top: 1%;
+    right: 1%;
+}
+
+.player-card-me {
+    bottom: 1%;
+    left: 1%;
+}
+
+.card-img-top {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.m-none {
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_1_0.woff2') format('woff2'),
+        url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff2') format('woff2'),
+        url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff') format('woff');
+    font-style: italic;
+    font-weight: 400;
+}
+
+blockquote.bubble {
+    background-position: center;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    text-align: center;
+    height: 0;
+    box-sizing: content-box;
+    line-height: 1;
+}
+
+blockquote.speech {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/speech-bubble.svg);
+    position: absolute;
+    width: auto;
+    padding-top: 6%;
+    padding-bottom: 20%;
+}
+
+blockquote.whisper {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/whisper.svg);
+    width: 25%;
+    font-size: 2vw;
+    color: #ccc;
+    font-style: italic;
+    padding: 6% 5% 15%;
+}
+
+blockquote.electric {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/electric.svg);
+    width: 25%;
+    font-size: 2.4vw;
+    font-style: italic;
+    padding: 4% 6% 12% 0%;
+}
+
+blockquote.electric span {
+    display: block;
+    font-size: 3vw;
+    font-weight: bold;
 }
