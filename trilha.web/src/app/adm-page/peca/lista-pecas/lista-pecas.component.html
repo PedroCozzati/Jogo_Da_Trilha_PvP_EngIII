@@ -1,0 +1,66 @@
+<div class="box">
+
+    <div class="form-flex3">
+
+        <ul class="menu-bar">
+          <li (click)="exitButton()">Sair</li>
+          <li (click)="backButton()">Voltar</li>
+        </ul>
+    
+      </div>
+    
+    <h3>Lista de peças</h3>
+    <div class="form-flex">
+        <div class="row">
+            <!-- Issue table -->
+            <div class="col-mds-12">
+                <div class="inner">
+                    <button type="button" class="btn btn-success btn-sm move-right"
+                        [routerLink]="['/peca/novo']">
+                        Adicionar nova peça
+                    </button>
+                    <div class="scrollit">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Cor Lado A</th>
+                                    <th scope="col">Cor Lado B</th>
+                                    <th scope="col">Operação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let peca of pecas">
+                                    <td scope="row">{{peca._id}}</td>
+                                    <td scope="row">{{ peca.nome }}</td>
+                                    <td>
+                                        
+                                        {{ peca.corLadoA }}
+
+                                        <app-peca [styles]="{'background-color': peca.corLadoA }"></app-peca>
+                                    </td>
+                                    <td>
+                                        {{ peca.corLadoB }}
+                                        <app-peca [styles]="{'background-color': peca.corLadoB }"></app-peca>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-sm move-right"
+                                            [routerLink]="['/peca/', peca._id]">
+                                            Editar
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="deletaPeca(peca)">
+                                            Remover
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

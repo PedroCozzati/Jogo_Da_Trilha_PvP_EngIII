@@ -6,7 +6,7 @@ export const loggerOptions: LoggerOptions = {
   level: 'info',
   formatters: {
     bindings(bindings) {
-      return {...bindings, job: process.env.OTEL_SERVICE_NAME}
+      return { ...bindings, job: process.env.OTEL_SERVICE_NAME }
     },
     level(label) {
       return { level: label };

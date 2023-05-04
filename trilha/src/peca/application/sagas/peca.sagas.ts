@@ -21,14 +21,11 @@ export class PecaSagas {
                 ofType(PecaDeletadaEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    this.httpService.delete("http://localhost:90/nivel/por-peca",
+                    this.httpService.delete(`http://localhost:90/nivel/por-peca/${event.pecaDto._id}`,
                         {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json'
-                            },
-                            data: {
-                                "peca_id": event.pecaDto._id
                             }
                         }).subscribe()
                 })

@@ -1,0 +1,25 @@
+<form class="form">
+  <p class="form-title">REGRAS</p>
+
+
+
+ 
+  <c-carousel [animate]="true" transition="crossfade" [dark]="true" [interval]=7000>
+    <c-carousel-indicators></c-carousel-indicators>
+    <c-carousel-inner>
+      <c-carousel-item *ngFor="let slide of slides">
+        <p
+          class="slide-texto"
+          loading="lazy"
+        >
+        {{slide.title}}
+      </p>
+      </c-carousel-item>
+    </c-carousel-inner>
+    <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+    <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+  </c-carousel>
+  <ng-lottie height="80px" [options]="options"></ng-lottie>
+
+
+</form>

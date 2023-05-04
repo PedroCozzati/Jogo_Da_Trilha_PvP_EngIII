@@ -1,0 +1,173 @@
+.box{
+    background:url("/assets/bgtest.png"); 
+ background-repeat: no-repeat;
+ background-size:cover;
+ background-repeat: repeat;
+    position:absolute;
+    background-color: rgb(48, 21, 73);
+    
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+}
+
+
+.scrollit {
+    overflow:scroll;
+    height:420px;
+    width: 80vw;
+}
+
+h3{
+    margin: 30px;
+    text-align: center;
+    color: azure;
+}
+
+h4{
+    color: azure;
+}
+
+label{
+    color: aliceblue;
+}
+.row33{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    border-radius: 20px;
+    border: 2px solid white;
+    padding: 30px;
+}
+.row{
+
+    
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 80px;
+    border-radius: 20px;
+    height: 200px;
+    color: azure;
+}
+
+th{
+    color: azure;
+}
+
+td{
+    color: azure;
+}
+
+
+.button{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 20%;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+
+  .button:hover{
+    background-color: rgb(60, 74, 169);
+    color: white;
+}
+
+  .button:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px 0px #a29bfe;
+  }
+
+
+.form-group{
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 20px;
+}
+
+
+.form-flex{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 20px;
+}
+
+.form-flex2{
+    padding-left: 50px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.form-control{
+    height: 25px;
+}
+
+.btn-primary{
+
+    margin-top: 20px;
+}
+
+.row-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+table, th, td {
+    border: 1px solid white;
+    
+    padding: 20px;
+  }
+
+  table{
+    border-collapse: separate !important;
+    border-radius: 20px !important;
+  }
+
+button{
+    margin: 10px;
+}
+ 
+
+  .button{
+    margin-top: 20px;
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 30%;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+
+  .button:hover{
+    background-color: rgb(60, 74, 169);
+    color: white;
+}
+
+  .button:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px 0px #a29bfe;
+  }
