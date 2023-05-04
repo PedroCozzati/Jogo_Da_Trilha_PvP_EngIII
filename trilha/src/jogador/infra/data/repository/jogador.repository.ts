@@ -3,6 +3,7 @@ import { Jogador } from 'src/jogador/domain/models/jogador.model';
 import { Logger } from 'nestjs-pino';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
 import { Span } from 'nestjs-otel';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class JogadorRepository {
@@ -26,6 +27,37 @@ export class JogadorRepository {
       throw exception
     }
   }
+  @Span()
+  public async deletaJogador(jogador: Jogador) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogadorDeletado = new Jogador(await this.repositoryBase.deleteOne({ "_id": jogador._id }, jogador))
+
+      await jogadorDeletado.deletaJogador()
+
+      return jogadorDeletado
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async atualizaJogador(jogador: Jogador) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogadorAtualizada = new Jogador(await this.repositoryBase.updateOne(jogador))
+
+      await jogadorAtualizada.atualizaJogador()
+
+      return jogadorAtualizada
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
 
   @Span()
   public async consultaJogadorAtual() {
@@ -36,6 +68,36 @@ export class JogadorRepository {
 
       if (jogadorAtual)
         return new Jogador(jogadorAtual)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async buscaJogadorPorId(id: string) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogador = await this.repositoryBase.findOneById(new Types.ObjectId(id))
+
+      if (jogador)
+        return new Jogador(jogador)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+
+  @Span()
+  public async buscaJogadors() {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogadors = await this.repositoryBase.find({})
+      return jogadors
+
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res } from '@nestjs/common';
 import { JogadorDto } from '../application/dto/jogador.dto';
 import { JogadorService } from '../application/services/jogador.service';
 import { Response, Request } from 'express'
@@ -13,6 +13,32 @@ export class JogadorController {
   ) { }
 
   @Span()
+  @Get(":id")
+  async getById(@Param('id') id: string, @Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.buscaJogadorPorId(id))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Get()
+  async get(@Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.buscaJogadors())
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
   @Post()
   async post(@Body() params: JogadorDto, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
@@ -20,6 +46,33 @@ export class JogadorController {
 
       return response.status(HttpStatus.OK).json(await this.jogadorService.registraJogador(params))
     } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Put(":_id")
+  async put(@Param() queryParams: any, @Body() params: JogadorDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.atualizaJogador({ ...params, ...queryParams }))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Delete(":id")
+  async delete(@Param('id') id: string, @Res() response: Response, @Req() request: Request): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.deletaJogador(id))
+    } catch (exception) {
+      this._logger.error(exception.message)
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }

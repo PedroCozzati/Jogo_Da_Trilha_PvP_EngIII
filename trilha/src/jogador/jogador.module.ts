@@ -13,7 +13,6 @@ import { JogadorSchema } from './domain/models/jogador.model';
 import { JogadorJobHandler } from './jobs/handlers/jogador.job.handler';
 import { HttpModule } from '@nestjs/axios';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
-import { JogadorGateway } from './gateway/jogador.gateway';
 
 @Module({
   imports: [
@@ -33,7 +32,6 @@ import { JogadorGateway } from './gateway/jogador.gateway';
     ...QueryHandlers,
     JogadorRepository,
     MongooseBaseRepository,
-    JogadorGateway,
     JogadorJobHandler,
     {
       provide: 'NOME_MODULO',

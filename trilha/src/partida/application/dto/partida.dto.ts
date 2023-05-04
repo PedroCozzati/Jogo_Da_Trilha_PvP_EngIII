@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsArray } from 'class-validator';
 
 export class PartidaDto {
     @IsString()
@@ -16,7 +16,7 @@ export class PartidaDto {
     @IsNotEmpty()
     readonly nivel_id: string
 
-    @IsString()
+    @IsArray()
     readonly versaoPartida: Array<any>;
 
     @IsString()

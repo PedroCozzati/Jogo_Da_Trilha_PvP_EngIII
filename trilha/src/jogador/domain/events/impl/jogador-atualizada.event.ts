@@ -1,7 +1,7 @@
 import { IEvent } from '@nestjs/cqrs';
 import { JogadorDto } from 'src/jogador/application/dto/jogador.dto';
 
-export class JogadorRegistradoEvent implements IEvent {
+export class JogadorAtualizadaEvent implements IEvent {
   constructor(
     public readonly jogadorDto: JogadorDto) { }
 }

@@ -18,10 +18,10 @@ export class Partida extends BaseModel {
   @Prop({ type: SchemaTypes.String })
   nivel_id: Types.ObjectId
 
-  @Prop({ type: SchemaTypes.Number })
+  @Prop({ type: SchemaTypes.Array })
   versaoPartida: Array<any>
 
-  @Prop({ type: SchemaTypes.Number })
+  @Prop({ type: SchemaTypes.String })
   resultado: string
 
 

@@ -1,19 +1,19 @@
 
 import { IEventHandler, EventsHandler } from '@nestjs/cqrs';
-import { JogadorRegistradoEvent } from '../impl/jogador-registrado.event';
+import { JogadorDeletadoEvent } from '../impl/jogador-deletado.event';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 
-@EventsHandler(JogadorRegistradoEvent)
-export class JogadorRegistradoHandler
-  implements IEventHandler<JogadorRegistradoEvent> {
+@EventsHandler(JogadorDeletadoEvent)
+export class JogadorAtualizadaHandler
+  implements IEventHandler<JogadorDeletadoEvent> {
 
   constructor(
     private readonly _logger: Logger,
   ) { }
 
   @Span()
-  handle(event: JogadorRegistradoEvent) {
+  handle(event: JogadorDeletadoEvent) {
     this._logger.log("executing event handler", { event_data: JSON.stringify(event) });
   }
 }
