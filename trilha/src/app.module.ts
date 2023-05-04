@@ -6,6 +6,7 @@ import { PecaModule } from './peca/peca.module';
 import { TransacaoModule } from './transacao/transacao.module';
 import { TabuleiroModule } from './tabuleiro/tabuleiro.module';
 import { NivelModule } from './nivel/nivel.module';
+import { PartidaModule } from './partida/partida.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { NivelModule } from './nivel/nivel.module';
     TransacaoModule,
     PecaModule,
     TabuleiroModule,
-    NivelModule
+    NivelModule,
+    PartidaModule
   ],
   controllers: [],
   providers: [],
