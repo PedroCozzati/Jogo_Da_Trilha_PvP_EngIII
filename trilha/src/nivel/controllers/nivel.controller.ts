@@ -26,12 +26,12 @@ export class NivelController {
   }
 
   @Span()
-  @Put()
-  async put(@Body() params: NivelDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Put(":_id")
+  async put(@Param() queryParams: any, @Body() params: any, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.nivelService.atualizaNivel(params))
+      return response.status(HttpStatus.OK).json(await this.nivelService.atualizaNivel({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)

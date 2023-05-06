@@ -52,12 +52,12 @@ export class TabuleiroController {
   }
 
   @Span()
-  @Put()
-  async put(@Body() params: TabuleiroDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Put(":_id")
+  async put(@Param() queryParams: any, @Body() params: TabuleiroDto, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.tabuleiroService.atualizaTabuleiro(params))
+      return response.status(HttpStatus.OK).json(await this.tabuleiroService.atualizaTabuleiro({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)

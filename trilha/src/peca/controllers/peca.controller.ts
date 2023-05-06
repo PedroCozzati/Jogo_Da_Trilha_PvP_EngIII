@@ -52,12 +52,12 @@ export class PecaController {
   }
 
   @Span()
-  @Put()
-  async put(@Body() params: PecaDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  @Put(":_id")
+  async put(@Param() queryParams: any, @Body() params: PecaDto, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.pecaService.atualizaPeca(params))
+      return response.status(HttpStatus.OK).json(await this.pecaService.atualizaPeca({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
