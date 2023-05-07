@@ -13,6 +13,7 @@ import { PartidaSchema } from './domain/models/partida.model';
 import { PartidaJobHandler } from './jobs/handlers/partida.job.handler';
 import { HttpModule } from '@nestjs/axios';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
+import { PartidaGateway } from './gateway/partida.gateway';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.co
     PartidaRepository,
     MongooseBaseRepository,
     PartidaJobHandler,
+    PartidaGateway,
     {
       provide: 'NOME_MODULO',
       useValue: PartidaModule.name,
