@@ -4,7 +4,7 @@ import { RegistraPartidaCommand } from 'src/partida/domain/commands/impl/registr
 import { PartidaDto } from '../dto/partida.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
-import { AtualizaPartidaCommand } from '../../domain/commands/impl/atualiza-partida.command';
+import { EfetuaJogadaCommand } from '../../domain/commands/impl/efetua-jogada.command';
 import { DeletaPartidaCommand } from 'src/partida/domain/commands/impl/deleta-partida.command';
 import { BuscaPartidaPorIdQuery } from 'src/partida/domain/queries/impl/busca-partida-por-id.query';
 import { BuscaPartidasQuery } from 'src/partida/domain/queries/impl/busca-partidas.query';
@@ -41,10 +41,10 @@ export class PartidaService {
   }
 
   @Span()
-  async atualizaPartida(partida: PartidaDto) {
+  async efetuaJogada(partida: PartidaDto) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new AtualizaPartidaCommand(partida));
+    return await this.commandBus.execute(new EfetuaJogadaCommand(partida));
   }
 
   @Span()

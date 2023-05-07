@@ -3,8 +3,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
 import { PartidaRegistradaEvent } from '../events/impl/partida-registrada.event';
 import { Span } from 'nestjs-otel';
-import { PartidaAtualizadaEvent } from '../events/impl/partida-atualizada.event';
+import { JogadaEfetuadaEvent } from '../events/impl/jogada-efetuada.event';
 import { PartidaDeletadaEvent } from '../events/impl/partida-deletada.event';
+import { PartidaDto } from 'src/partida/application/dto/partida.dto';
 
 @Schema({ collection: 'partida' })
 export class Partida extends BaseModel {
@@ -60,13 +61,20 @@ export class Partida extends BaseModel {
   }
 
   @Span()
+  async registraNovaJogada(partidaDto: PartidaDto) {
+    // lógica das jogadas
+    // erro = throw Exception
+    this.versaoPartida.push(partidaDto.versaoPartida)
+  }
+
+  @Span()
   async registraPartida() {
     this.apply(new PartidaRegistradaEvent(this.getData()));
   }
 
   @Span()
-  async atualizaPartida() {
-    this.apply(new PartidaAtualizadaEvent(this.getData()));
+  async efetuaJogada() {
+    this.apply(new JogadaEfetuadaEvent(this.getData()));
   }
 
   @Span()

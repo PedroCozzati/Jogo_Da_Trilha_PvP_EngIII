@@ -30,15 +30,15 @@ export class PartidaRepository {
   }
 
   @Span()
-  public async atualizaPartida(partida: Partida) {
+  public async efetuaJogada(partida: Partida) {
     try {
       this._logger.log("executing repository method")
 
-      const partidaAtualizada = new Partida(await this.repositoryBase.updateOne(partida))
+      const jogadaEfetuada = new Partida(await this.repositoryBase.updateOne(partida))
 
-      await partidaAtualizada.atualizaPartida()
+      await jogadaEfetuada.efetuaJogada()
 
-      return partidaAtualizada
+      return jogadaEfetuada
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception

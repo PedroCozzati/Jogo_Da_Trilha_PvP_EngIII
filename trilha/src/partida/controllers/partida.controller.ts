@@ -57,7 +57,7 @@ export class PartidaController {
     try {
       this._logger.log("starting request")
 
-      return response.status(HttpStatus.OK).json(await this.partidaService.atualizaPartida({ ...params, ...queryParams }))
+      return response.status(HttpStatus.OK).json(await this.partidaService.efetuaJogada({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)

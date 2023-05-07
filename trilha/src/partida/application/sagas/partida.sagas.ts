@@ -6,6 +6,7 @@ import { Span } from 'nestjs-otel';
 import { PartidaRegistradaEvent } from 'src/partida/domain/events/impl/partida-registrada.event';
 import { PartidaService } from '../services/partida.service';
 import { PartidaGateway } from 'src/partida/gateway/partida.gateway';
+import { JogadaEfetuadaEvent } from 'src/partida/domain/events/impl/jogada-efetuada.event';
 
 @Injectable()
 export class PartidaSagas {
@@ -28,4 +29,16 @@ export class PartidaSagas {
             )
     }
     // comando de update da partida(){}
+    @Span()
+    @Saga()
+    jogadaEfetuada(events$: Observable<any>): Observable<void> {
+        return events$
+            .pipe(
+                ofType(JogadaEfetuadaEvent),
+                map(event => {
+                    this._logger.log("inside saga", { event: JSON.stringify(event) });
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.consultaEstadoAtual(event.partidaDto));
+                })
+            )
+    }
 }
