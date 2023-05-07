@@ -51,7 +51,7 @@ export class PartidaService {
   async consultaEstadoAtual(partida: PartidaDto) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new ConsultaEstadoAtualQuery(partida));
+    return await this.queryBus.execute(new ConsultaEstadoAtualQuery(partida));
   }
 
 

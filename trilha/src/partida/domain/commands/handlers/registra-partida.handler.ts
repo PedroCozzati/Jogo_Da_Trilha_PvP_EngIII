@@ -19,9 +19,11 @@ export class RegistraPartidaHandler
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
     const { partidaDto } = command;
+    let partida = new Partida(partidaDto)
 
-    const partida = this.publisher.mergeObjectContext(
-      await this.repository.inserePartida(new Partida(partidaDto))
+    partida.registraPosicoesIniciais()
+    partida = this.publisher.mergeObjectContext(
+      await this.repository.inserePartida(partida)
     );
 
     partida.commit();

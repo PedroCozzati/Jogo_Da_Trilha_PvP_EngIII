@@ -18,6 +18,6 @@ export class ConsultaEstadoAtualHandler
         this._logger.log("executing query handler", { query_data: JSON.stringify(query) });
 
         const { partidaDto } = query;
-        return null;
+        return partidaDto;
     }
 }

@@ -19,7 +19,7 @@ export class Partida extends BaseModel {
   nivel_id: Types.ObjectId
 
   @Prop({ type: SchemaTypes.Array })
-  versaoPartida: Array<any>
+  versaoPartida: Array<any> = []
 
   @Prop({ type: SchemaTypes.String })
   resultado: string
@@ -29,6 +29,34 @@ export class Partida extends BaseModel {
     super();
 
     Object.assign(this, object);
+  }
+
+  @Span()
+  async registraPosicoesIniciais() {
+    this.versaoPartida.push([
+      [
+        [-4, 4],
+        [-4, 3],
+        [-4, 2],
+        [-4, 1],
+        [-4, 0],
+        [-4, -1],
+        [-4, -2],
+        [-4, -3],
+        [-4, -4],
+      ],
+      [
+        [4, 4],
+        [4, 3],
+        [4, 2],
+        [4, 1],
+        [4, 0],
+        [4, -1],
+        [4, -2],
+        [4, -3],
+        [4, -4],
+      ]
+    ])
   }
 
   @Span()

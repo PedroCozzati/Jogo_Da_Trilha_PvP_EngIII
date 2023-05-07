@@ -5,13 +5,14 @@ import { ofType, Saga } from '@nestjs/cqrs';
 import { Span } from 'nestjs-otel';
 import { PartidaRegistradaEvent } from 'src/partida/domain/events/impl/partida-registrada.event';
 import { PartidaService } from '../services/partida.service';
+import { PartidaGateway } from 'src/partida/gateway/partida.gateway';
 
 @Injectable()
 export class PartidaSagas {
     constructor(
         private readonly _logger: Logger,
         private readonly partidaService: PartidaService,
-        //  private readonly partidaGateway: partidaGateway,
+        private readonly partidaGateway: PartidaGateway,
     ) { }
 
     @Span()
@@ -22,9 +23,9 @@ export class PartidaSagas {
                 ofType(PartidaRegistradaEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    const estadoAtualPartida = this.partidaService.consultaEstadoAtual(event.partidaDto);
-                    // this.partidaGateway.emiteEstadoAtual(estadoAtualPartida);
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.consultaEstadoAtual(event.partidaDto));
                 })
             )
     }
+    // comando de update da partida(){}
 }

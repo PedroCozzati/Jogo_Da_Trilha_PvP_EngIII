@@ -20,7 +20,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     ) { }
 
     async emiteEstadoAtual(body) {
-        this.server.emit('estadoModificado', body);
+        this.server.emit('estadoModificado', await body);
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
