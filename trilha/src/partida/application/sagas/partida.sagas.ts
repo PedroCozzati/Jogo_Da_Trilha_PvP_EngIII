@@ -22,7 +22,7 @@ export class PartidaSagas {
                 ofType(PartidaRegistradaEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    // const estadoAtualPartida = this.partidaService.consultaEstadoAtual();
+                    const estadoAtualPartida = this.partidaService.consultaEstadoAtual(event.partidaDto);
                     // this.partidaGateway.emiteEstadoAtual(estadoAtualPartida);
                 })
             )

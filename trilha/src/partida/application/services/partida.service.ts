@@ -8,6 +8,7 @@ import { AtualizaPartidaCommand } from '../../domain/commands/impl/atualiza-part
 import { DeletaPartidaCommand } from 'src/partida/domain/commands/impl/deleta-partida.command';
 import { BuscaPartidaPorIdQuery } from 'src/partida/domain/queries/impl/busca-partida-por-id.query';
 import { BuscaPartidasQuery } from 'src/partida/domain/queries/impl/busca-partidas.query';
+import { ConsultaEstadoAtualQuery } from 'src/partida/domain/queries/impl/consulta-estado-atual.query';
 
 @Injectable()
 export class PartidaService {
@@ -45,6 +46,14 @@ export class PartidaService {
 
     return await this.commandBus.execute(new AtualizaPartidaCommand(partida));
   }
+
+  @Span()
+  async consultaEstadoAtual(partida: PartidaDto) {
+    this._logger.log('starting service execution');
+
+    return await this.commandBus.execute(new ConsultaEstadoAtualQuery(partida));
+  }
+
 
   @Span()
   async deletaPartida(partida: PartidaDto) {
