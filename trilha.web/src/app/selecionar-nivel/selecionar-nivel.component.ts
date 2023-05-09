@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { BugService } from '../shared/services/bug.service';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ModalService } from '../_modal';
 
 @Component({
   selector: 'app-selecionar-nivel',
@@ -31,11 +32,18 @@ export class SelecionarNivelComponent implements OnInit {
   div2: boolean;
   div3= true;
 
-  
+  openModal(id: string) {
+    this.modalService.open(id);
+}
+
+closeModal(id: string) {
+    this.modalService.close(id);
+}
 
   
 
   constructor(
+    private modalService: ModalService,
     private http: HttpClient,
     public bugService: BugService,
     private route: ActivatedRoute,
@@ -201,9 +209,15 @@ export class SelecionarNivelComponent implements OnInit {
 
 
   consultaNiveis() {
-    this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
+    
+    try{
+      this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
+
         this.niveis = response
+
+        console.log(this.niveis)
+       
 
 
 
@@ -232,10 +246,19 @@ export class SelecionarNivelComponent implements OnInit {
 
               console.log(this.niveis)
 
+            },
+            (error)=>{
+              this.openModal('custom-modal-2');
             })
         }
       })
 
-  }
+    }catch(e){
+      if(e==null){
+
+        this.openModal('custom-modal-2');
+      }
+    }
+    }
 
 }

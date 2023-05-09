@@ -39,9 +39,10 @@ import { GameComponent } from './game/game.component';
 import { MdbModalModule, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { LoginAuthenticatedComponent } from './login-authenticated/login-authenticated.component';
 import { UserCardComponent } from './login-authenticated/user-card/user-card.component';
-
+import { ModalModule } from './_modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelecionarNivelComponent } from './selecionar-nivel/selecionar-nivel.component';
+import { ModalCadastroComponent } from './modal-cadastro/modal-cadastro.component';
 export function playerFactory() { // add this line
   return import('lottie-web'); // add this line
 } // add this line
@@ -77,11 +78,13 @@ export function playerFactory() { // add this line
     LoginAuthenticatedComponent,
     UserCardComponent,
     SelecionarNivelComponent,
+    ModalCadastroComponent,
     
   ],
   imports: [
     LottieModule.forRoot({ player: playerFactory}),
     BrowserAnimationsModule,
+    ModalModule,
     MdbCarouselModule,
     CarouselModule,
     BrowserModule,

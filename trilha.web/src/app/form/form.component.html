@@ -1,19 +1,25 @@
-
 <form class="form">
 
-<p class="form-title">LOGIN</p>
+  <p class="form-title">LOGIN</p>
 
 
-  
 
-  <form class="test" [formGroup]="loginForm" (ngSubmit)="submitForm()" novalidate>
+
+  <form class="test" [formGroup]="loginForm" novalidate>
+
+
+
 
 
     <div class="login-row">
 
+      <div class="row-flex">
+
         <div class="avatar">
           <ng-lottie height="150px" [options]="options" resizeMode='center'></ng-lottie>
         </div>
+      </div>
+
 
       <div class="flex-column">
 
@@ -21,21 +27,85 @@
           <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
           <label class="user-label">Usuário</label>
         </div>
-        
+
         <div class="input-group">
           <input required="" formControlName="senha" type="password" name="text" autocomplete="off" class="input">
           <label class="user-label" for="name">Senha</label>
         </div>
+        <div class="input-clm">
+          <div class="input-row">
+            <button (click)="openModalCadastro()" class="btnCadastro">CADASTRO</button>
+            <button (click)="openModal('recsenha')" class="btnSenha">ESQUECI A SENHA</button>
+          </div>
+          <div class="input-row">
+            <button (click)="submitForm()" class="buttonEntrar">ENTRAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- <button (click)="submitForm()" class="button">ENTRAR</button> -->
+
+  <jw-modal id="custom-modal-1" class="modal">
+    <h3>Erro!</h3>
+    <p>Usuário não encontrado!</p>
+    <button class="button" (click)="closeModal('custom-modal-1');">OK</button>
+  </jw-modal>
+
+  <jw-modal id="cadastro" class="modal1">
+    <h3><b>CADASTRO</b></h3>
+    <div class="flex-column">
+
+
+      <div class="input-group">
+        <input required="" formControlName="email" type="email" name="text" autocomplete="off" class="input">
+        <label class="user-label" for="name">E-mail</label>
+      </div>
+      <div class="input-group">
+        <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
+        <label class="user-label">Usuário</label>
+      </div>
+
+    </div>
+    <div class="flex-column2">
+      <div class="row-input">
+        <div class="input-group2">
+          <input required="" formControlName="senha" type="password" name="text" autocomplete="off" class="input2">
+          <label class="user-label" for="name">Senha</label>
+        </div>
+        <button class="button3" (click)="closeModal('cadastro');">ENVIAR</button>
       </div>
     </div>
 
 
 
-    
-  </form>
-  <button (click)="submitForm()" class="button">ENTRAR</button>
+    <button class="button" (click)="closeModal('cadastro');">VOLTAR</button>
+  </jw-modal>
+
 
   
 
+  <jw-modal id="recsenha" class="modal2">
+    <h3><b>RECUPERAÇÃO DE SENHA</b></h3>
+    <div class="flex-column">
+      <p style="margin-bottom: 4vh;"><b>Digite seu e-mail cadastrado para receber uma nova senha:</b></p>
+
+
+      
+      <div class="row-input">
+        <div class="input-group">
+          <input style="width: 27vw;" required="" formControlName="email" type="text" name="email" autocomplete="off" class="input">
+          <label class="user-label" for="name">E-mail</label>
+        </div>
+        <button class="button3" (click)="closeModal('recsenha');">ENVIAR</button>
+      </div>
+    
+    </div>
+
+
+
+    <button class="button" (click)="closeModal('recsenha');">VOLTAR</button>
+  </jw-modal>
 
 </form>

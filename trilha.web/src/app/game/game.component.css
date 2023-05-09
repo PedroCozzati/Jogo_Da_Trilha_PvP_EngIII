@@ -712,7 +712,7 @@ footer p {
 
 /* Its specified later so will override possible moveable */
 .stoneActive {
-    border: 0.6vmin solid #ff7700;
+    border: 0.6vmin solid #fcfcfc;
     margin: -4.6vmin 0 0 -4.6vmin;
 
     box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
@@ -721,7 +721,7 @@ footer p {
 
 .stoneActive:hover {
     margin: -4.6vmin 0 0 -4.6vmin;
-    border: 0.6vmin solid #ff7700;
+    border: 0.6vmin solid #180c02;
 
     box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
         inset 0 0 0 1000px rgba(255, 120, 0, 0.3);
@@ -742,27 +742,240 @@ footer p {
 }
 
 .player-card {
+    
     position: absolute;
 }
-
-.player-card-oponent {
-    top: 1%;
-    right: 1%;
+.infos{
+    width: 45%;
+    position:absolute;
+    border:#371cad 0.3rem solid;
+    border-radius: 1rem;
+    padding: 0.3rem;
+    margin-bottom: 2vh;
+    text-align: center;
+    bottom: 1%;
+    font-weight: bolder;
+    background-color: #e4dfff;
+    left: 27%;
 }
 
+.card-me{
+    color: aliceblue;
+    padding: 2vw;
+    background-color: rgba(14, 0, 138, 0.267);
+    border:#371cad 0.5vw solid;
+    border-radius: 20px;
+}
+
+.timer{
+    border-radius: 2rem;
+    border: white 2px solid;
+    text-align: center;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-self: center;
+    width: 10vw;
+    font-weight: bold;
+    padding: 1vw;
+}
+
+
+.npecas{
+        border-radius: 2rem;
+        border: white 2px solid;
+        text-align: center;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-content: center;
+        justify-content: space-around;
+        justify-self: center;
+        width: 10vw;
+        font-weight: bold;
+        padding: 1vw;
+}
+
+.peca-card{
+    width: 2rem;
+    background-color: blue;
+    color:blue;
+    height: 2rem;
+    border-radius: 100%;
+    border: 0.1rem solid black;
+}
+.peca-col{
+    display: flex;
+    flex-direction: column;
+}
+.peca-card-oponent{
+    width: 2rem;
+    background-color: rgb(255, 0, 21);
+    color:blue;
+    height: 2rem;
+    border-radius: 100%;
+    border: 0.1rem solid black;
+}
+
+.ampulheta{
+    padding-top: 0.5vh;
+    padding-right: 0.6vw;
+    height: 4vh;
+    width: 3vw;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/ampulheta.gif");
+}
+
+.card-oponent{
+    color: aliceblue;
+    padding: 2vw;
+    background-color: rgba(175, 34, 34, 0.253);
+    border:#ad1c28 2px solid;
+    border-radius: 20px;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.player-card-oponent {
+    padding: 2vw;
+    top: 1%;
+    
+    right: 1%;
+    width: 20vw;
+}
+
+.card-me{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+}
+
+.card-oponent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+}
 .player-card-me {
+    padding: 2vw;
+    width: 20vw;
     bottom: 1%;
     left: 1%;
 }
 
 .card-img-top {
+    align-self: center;
     border-radius: 100%;
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 20%;
 }
+
+.oponent-playing{
+    font-size: large;
+    text-align: center;
+}
+
+
 
 .m-none {
     margin: 0;
+}
+
+.modal2 ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 30% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .modal2  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 55%;
+    left: 20%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .modal2 ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #0d0018;
+    opacity: 0;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.row-emoji{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-column-emoji{
+    height: 16vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    
+    text-align: center;
+    justify-content: space-around;
+}
+
+.emoji{
+    cursor: pointer;
+    font-size: 2rem;
+    height: 6vh;
+    opacity: 0.7;
+    width: 6vh;
+}
+
+.emoji:hover{
+    opacity: 1;
+    filter: brightness(120%);
+    transform: scale(1.2);
 }
 
 @font-face {
@@ -794,10 +1007,9 @@ blockquote.bubble {
 
 blockquote.speech {
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/speech-bubble.svg);
-    position: absolute;
     width: auto;
-    padding-top: 6%;
     padding-bottom: 20%;
+    padding-left: 20%;
 }
 
 blockquote.whisper {

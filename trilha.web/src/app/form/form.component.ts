@@ -6,28 +6,42 @@ import { AnimationOptions } from 'ngx-lottie';
 
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ModalComponent } from '../modal/modal.component';
+import { ModalCadastroComponent } from '../modal-cadastro/modal-cadastro.component';
 
 
+import { ModalService } from '../_modal';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css','./modal.component.less']
 })
 export class FormComponent {
   loginForm: FormGroup;
   IssueArr: any = [];
   modalRef: MdbModalRef<ModalComponent> | null = null;
+  modalRef2: MdbModalRef<ModalCadastroComponent> | null = null;
   user:string;
   item:any;
 
-
+  bodyText: string;
   ngOnInit() {
-    this.addIssue();
+    this.addIssue(); this.bodyText = 'This text can be updated in modal 1';
   }
 
+
+  openModal(id: string) {
+    this.modalService.open(id);
+}
+
+closeModal(id: string) {
+    this.modalService.close(id);
+}
+
+
   constructor(
-    private modalService: MdbModalService,
+    private modalService: ModalService,
+    private modalService2: MdbModalService,
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,
@@ -40,23 +54,34 @@ export class FormComponent {
 
   config = {
     animation:false,
-    backdrop: false,
+    backdrop: true,
     containerClass: 'right',
     data: {
       title: 'Custom title'
     },
     ignoreBackdropClick: false,
     keyboard: true,
-    modalClass: 'modal-dialog-centered modal-sm'
   }
 
-   
-
-
-
-  openModal() {
-    this.modalRef = this.modalService.open(ModalComponent, this.config);
+  config2 = {
+    animation:false,
+    backdrop:true,
+    containerClass: 'right',
+    data: {
+      title: 'Custom title'
+    },
+    ignoreBackdropClick: false,
+    keyboard: true,
   }
+
+  
+
+
+  openModalCadastro() {
+    this.openModal('cadastro');
+  }
+
+ 
 
   addIssue() {
     this.loginForm = this.fb.group({
@@ -83,7 +108,7 @@ export class FormComponent {
         this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
     }
     else{
-    this.openModal();
+    this.openModal('custom-modal-1');
     }
 
 
