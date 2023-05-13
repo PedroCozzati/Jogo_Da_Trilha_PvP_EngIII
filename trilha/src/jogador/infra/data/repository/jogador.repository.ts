@@ -48,16 +48,48 @@ export class JogadorRepository {
     try {
       this._logger.log("executing repository method")
 
-      const jogadorAtualizada = new Jogador(await this.repositoryBase.updateOne(jogador))
+      const jogadorAtualizado = new Jogador(await this.repositoryBase.updateOne(jogador))
 
-      await jogadorAtualizada.atualizaJogador()
+      await jogadorAtualizado.atualizaJogador()
 
-      return jogadorAtualizada
+      return jogadorAtualizado
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception
     }
   }
+
+  @Span()
+  public async atualizaSaldoJogador(jogador: Jogador) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogadorAtualizado = new Jogador(await this.repositoryBase.updateOne(jogador))
+
+      await jogadorAtualizado.atualizaSaldoJogador()
+
+      return jogadorAtualizado
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  // @Span()
+  // public async atualizaSaldoJogador(id: String, saldo: number) {
+  //   try {
+  //     this._logger.log("executing repository method")
+
+  //     const jogadorAtualizada = new Jogador(await this.repositoryBase.updateOne(jogador))
+
+  //     await jogadorAtualizada.atualizaJogador()
+
+  //     return jogadorAtualizada
+  //   } catch (exception) {
+  //     this._logger.error("error on repository method")
+  //     throw exception
+  //   }
+  // }
 
   @Span()
   public async consultaJogadorAtual() {

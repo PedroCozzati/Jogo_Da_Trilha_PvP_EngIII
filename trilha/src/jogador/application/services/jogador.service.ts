@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RegistraJogadorCommand } from 'src/jogador/domain/commands/impl/registra-jogador.command';
-import { JogadorDto } from '../dto/jogador.dto';
+import { AtualizaSaldoJogadorDto, JogadorDto } from '../dto/jogador.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaJogadorCommand } from '../../domain/commands/impl/atualiza-jogador.command';
 import { DeletaJogadorCommand } from 'src/jogador/domain/commands/impl/deleta-jogador.command';
 import { BuscaJogadorsQuery } from 'src/jogador/domain/queries/impl/busca-jogadors.query';
 import { BuscaJogadorPorIdQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-id.query';
+import { AtualizaSaldoJogadorCommand } from 'src/jogador/domain/commands/impl/atualiza-saldo-jogador.command';
 
 @Injectable()
 export class JogadorService {
@@ -43,6 +44,13 @@ export class JogadorService {
     this._logger.log('starting service execution');
 
     return await this.commandBus.execute(new AtualizaJogadorCommand(jogador));
+  }
+  @Span()
+
+  async atualizaSaldoJogador(atualizaSaldoJogador: AtualizaSaldoJogadorDto) {
+    this._logger.log('starting service execution');
+
+    return await this.commandBus.execute(new AtualizaSaldoJogadorCommand(atualizaSaldoJogador));
   }
 
   @Span()

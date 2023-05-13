@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res } from '@nestjs/common';
-import { JogadorDto } from '../application/dto/jogador.dto';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res, Query } from '@nestjs/common';
+import { AtualizaSaldoJogadorDto, JogadorDto } from '../application/dto/jogador.dto';
 import { JogadorService } from '../application/services/jogador.service';
 import { Response, Request } from 'express'
 import { Logger } from 'nestjs-pino';
@@ -53,11 +53,37 @@ export class JogadorController {
 
   @Span()
   @Put(":_id")
-  async put(@Param() queryParams: any, @Body() params: JogadorDto, @Res() response: Response, @Req() request: Request): Promise<any> {
+  async put(
+    @Param() queryParams: any,
+    @Body() params: JogadorDto,
+    @Res() response: Response,
+    @Req() request: Request
+  ): Promise<any> {
     try {
       this._logger.log("starting request")
 
       return response.status(HttpStatus.OK).json(await this.jogadorService.atualizaJogador({ ...params, ...queryParams }))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
+  @Put("atualiza-saldo/:_id")
+  async atualizaSaldo(
+    @Param() queryParams: any,
+    @Body() params: AtualizaSaldoJogadorDto,
+    @Res() response: Response,
+    @Req() request: Request
+  ): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      // const { saldo } = queryParams;
+      // const saldoAtualizado = Number(saldo) + Number(saldo_novo);
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.atualizaSaldoJogador({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })
       return response.status(HttpStatus.BAD_REQUEST).json(exception)

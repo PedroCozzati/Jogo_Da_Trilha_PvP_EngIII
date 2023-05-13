@@ -1,9 +1,11 @@
-import { JogadorDeletadoEvent } from "../impl/jogador-deletado.event";
-import { JogadorAtualizadaHandler } from "./jogador-atualizada.handler";
+import { JogadorDeletadoHandler } from "./jogador-deletado.handler";
+import { JogadorAtualizadoEventHandler } from "./jogador-atualizado.handler";
 import { JogadorRegistradoHandler } from "./jogador-registrado.handler";
+import { SaldoJogadorAtualizadoEventHandler } from "./saldo-jogador-atualizado.handler";
 
 export const EventHandlers = [
   JogadorRegistradoHandler,
-  JogadorAtualizadaHandler,
-  JogadorDeletadoEvent,
+  JogadorAtualizadoEventHandler,
+  JogadorDeletadoHandler,
+  SaldoJogadorAtualizadoEventHandler
 ];
