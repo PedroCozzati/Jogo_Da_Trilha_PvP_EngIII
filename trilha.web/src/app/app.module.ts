@@ -95,6 +95,6 @@ export function playerFactory() { // add this line
     ReactiveFormsModule,
   ],
   providers: [BugService],
-  bootstrap: [AppComponent,CarouselModule, Carousel03Component,ButtonComponent,TextComponent, LoaderComponent,FormComponent,TabuleiroComponent,PecaComponent],
+  bootstrap: [AppComponent,CarouselModule, LoginComponent,Carousel03Component,ButtonComponent,TextComponent, LoaderComponent,FormComponent,TabuleiroComponent,PecaComponent,Carousel03Component],
 })
 export class AppModule { }

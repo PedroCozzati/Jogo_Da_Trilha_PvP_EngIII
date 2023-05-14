@@ -115,21 +115,64 @@
     <button class="button" (click)="closeModal('ranking');">VOLTAR</button>
   </jw-modal>
 
+  <jw-modal id="buy" class="coin-buy">
+
+
+    <h3><b>PARABÉNS</b></h3>
+
+    <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
+      Você comprou {{coinsQtd}} moedas !
+    </div>
+
+    <button class="buttonShop" (click)="closeModal('buy');">VOLTAR</button>
+  </jw-modal>
 
   <jw-modal id="shop" class="modalShop">
-    <h3><b>SHOP</b></h3>
-    <div class="form-flex">
-      <div class="row">
-        <!-- Issue table -->
-        <div class="col-mds-12">
-          <div class="inner">
 
-           
+    
 
+
+    <h3 *ngIf="buyCoin"><b>SHOP</b></h3>
+
+    <div style="margin: 1rem;">
+
+      <div *ngIf="coinBought" class="loading">
+
+        <div class="d-flex justify-content-center" style="display: flex;flex-direction: column;justify-content: center;align-self: center;align-items: center;text-align: center;">
+          <div class="spinner-border text-dark" role="status">
+            <span class="sr-only"></span>
           </div>
+          <div>Aguarde, estamos processando sua transação...</div>
+          
+        </div>
+        <!-- <div class="loading-text2">
+          Carregando....
+        </div> -->
+  
+      </div>
+
+    </div>
+
+   
+
+    <div *ngIf="buyCoin" class="shop-row">
+    <div *ngFor='let item of shop' class="shop-row">
+      <div class="shop-item" (click)="buyCoins(item.coins)">
+        <div class="buy-money" >
+          <div style="font-weight: bolder;">{{item.name}}</div>
+          <div class="coin-flex">
+            <div class="coin-bg">
+              <div class="test5">{{item.coins}}</div>
+            </div>
+          </div>
+          
+          <div class="item-price">{{item.price}}</div>
         </div>
       </div>
+
     </div>
-    <button class="button" (click)="closeModal('shop');">VOLTAR</button>
+  </div>
+
+    <button *ngIf="buyCoin" class="buttonShop" (click)="closeModal('shop');">VOLTAR</button>
   </jw-modal>
 </section>

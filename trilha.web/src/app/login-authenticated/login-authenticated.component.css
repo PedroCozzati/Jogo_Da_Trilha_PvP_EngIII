@@ -187,6 +187,10 @@
 
 } */
 
+.test5{
+  text-shadow:0.1rem 0.1rem 0.05rem #e4dfff;
+}
+
 .c1{
     border: 4px solid rgb(48, 24, 136);
         border-radius: 30px;
@@ -645,6 +649,7 @@ html, body {
 .scrollit {
   overflow:scroll;
   height:30vh;
+  margin-bottom: 1rem;
   width: 24vw;
 }
 
@@ -755,6 +760,7 @@ td{
       height: 70vh;
       padding: 20px;
       background-image: url("../../assets/bg.png");
+      
     background-blend-mode:multiply;
     background-color: #e4dfff ;
     background-size: cover;
@@ -770,8 +776,8 @@ td{
           align-content: center;
       /* modal container fixed across whole screen */
       position: fixed;
-      top: 25%;
-      left: 25%;
+      top: 12%;
+      left: 9.5%;
     
       /* z-index must be higher than .jw-modal-background */
       z-index: 1000;
@@ -786,6 +792,8 @@ td{
     .modalShop  ::ng-deep  .jw-modal p{
       margin-bottom: 2vh;
     }
+
+    
 
   .button{
     height: 40px;
@@ -803,6 +811,22 @@ td{
    
   }
 
+  .buttonShop{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(196, 215, 255);
+    border-radius: 20px;
+    box-shadow: 0px 2px black ;
+    width: 30%;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
+
   button:hover{
     background-color: rgb(60, 74, 169);
     color: white;
@@ -811,4 +835,135 @@ td{
   button:active {
     transform: translateY(5px);
     box-shadow: 0px 0px 0px 0px #a29bfe;
+  }
+
+
+  .show-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .show-col2{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .shop-row{
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    vertical-align:middle;
+    justify-content: space-around;
+    
+  }
+  .shop-item{
+    padding: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1.5rem;
+    background-color: #aa9bfe63;
+    border-radius: 6%;
+    border:#230c50 2px solid;
+  }
+
+  .shop-item:hover{
+    transition-duration: 150ms;
+    box-shadow: 0 5px 20px 5px #39034144;
+    transform: scale(1.1);
+  }
+
+  .buy-money{
+    height: 35vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    vertical-align:middle;
+    justify-content: space-between;
+  }
+  .coin-bg{
+
+    align-self: center;
+    justify-content: end;
+    align-items: center;
+    vertical-align: baseline;
+    text-align: center;
+    height: 20vh;
+    font-weight: bolder;
+    width: 10vw;
+    color: rgb(36, 0, 56);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/coins_temp.png");
+  }
+
+  .coin-flex{
+    border-radius: 1rem;
+    background-color: #130c502c;
+
+
+    border: 2px solid black;
+
+    padding: 1rem;
+  }
+ 
+  .item-price{
+    font-weight: bolder;
+    font-size:x-large;
+  }
+
+
+
+  .coin-buy ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 50% !important;
+    height: 24vh;
+    padding: 20px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .coin-buy  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: center;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 40%;
+    left: 35%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+  .coin-buy ::ng-deep  .jw-modal h3{
+    margin-bottom: 20px;
+  }
+  
+  .coin-buy  ::ng-deep  .jw-modal p{
+    margin-bottom: 2vh;
   }

@@ -5,6 +5,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { BugService } from '../shared/services/bug.service';
 import { ModalService } from '../_modal';
 
+
 @Component({
   selector: 'app-login-authenticated',
   templateUrl: './login-authenticated.component.html',
@@ -14,33 +15,45 @@ export class LoginAuthenticatedComponent {
   issueForm: FormGroup;
   IssueArr: any = [];
   public user: string;
-
-  slides: any[] = new Array(3).fill({title:""});
+  coinsQtd: string;
+  buyCoin: boolean;
+  coinBought: boolean;
 
   ranking: any[] = new Array(10).fill({pos:"",name:"",wins:""})
+
+  shop: any[] = new Array(3).fill({coins:"",price:"",name:""})
+
 
   div1:boolean=true;
   div2:boolean=false;
 
 
   ngOnInit() {
+    this.buyCoin=true;
+    this.coinBought=false;
+    this.coinsQtd='0';
     this.div1=true;
     this.div2=false;
       this.user = this.route.snapshot.params['user']; 
-      console.log(this.route.snapshot.params['user']);
 
     this.addIssue();
-    this.slides[0] = {
-      title:"teste3"
-    };
-    this.slides[1] = {
-      title:"test356565"
-    }
-    this.slides[2] = {
-      title:"test45346"
-    }
+   
 
-
+    this.shop[0]={
+      coins:'100',
+      price:'R$5,00',
+      name:'Pacote básico'
+    }
+    this.shop[1]={
+      coins:'300',
+      price:'R$10,00',
+      name:'Pacote interessante'
+    }
+    this.shop[2]={
+      coins:'1000',
+      price:'R$25,00',
+      name:'Pacote completo'
+    }
 
 
     this.ranking[0]={
@@ -136,6 +149,23 @@ closeModal(id: string) {
 
   }
 
+
+  buyCoins=async (coinQtd:string) => {
+    this.buyCoin=false;
+    this.coinBought=true;
+    
+
+    setTimeout (() => {
+      this.coinsQtd=coinQtd;
+    this.modalService.close('shop');
+    this.modalService.open('buy');
+    this.buyCoin=true;
+    this.coinBought=false;
+    },4000);
+    
+
+  }
+
   div3Function() {
     console.log("FUNCAO CHAMDA")
 
@@ -144,7 +174,56 @@ closeModal(id: string) {
     this.div2=false
   }
    
-   
+  slides: any[] = [
+    {
+      src:"",
+      title:`
+      O tabuleiro possui 24 casas interligados horizontalmente e verticalmente.
+      Nesse jogo há 18 peças, sendo 9 para cada jogador (com cores distintas).
+      `
+    },
+    {
+      src:"",
+      title:`
+      Objetivo - Deixar o adversário com 2 peças no tabuleiro ou deixá-lo sem movimentos.
+      O jogo consiste em três partes principais que serão mostradas a seguir
+      `
+    },
+    {
+      src:"",
+      title:`
+      (1ª FASE) Cada jogador coloca uma peça alternando entre jogadores, caso um dos
+        jogadores forme uma linha horizontal ou vertical com três peças (um moinho), ele terá o direito de remover
+          uma peça de seu adversário do tabuleiro.
+     
+      `
+    },
+    {
+      src:"",
+      title:`
+      Após todos colocarem suas nove peças em jogo, eles movem suas peças ao longo de uma das
+      linhas do tabuleiro para uma outra casa adjacente.
+      `
+    },
+    {
+      src:"",
+      title:`
+      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário, contudo ele não poderá
+        remover uma peça do adversário que faz parte de um moinho dele, a não ser que não exista outra peça para
+        remover.
+      `
+    },
+    {
+      src:"",
+      title:`
+      Extra:
+        Se ambos jogadores ficarem com 3 peças em jogo e em 10 jogadas não houver vencedor, o jogo terminará e será
+        declarado um empate.
+      `
+    }
+
+  ]
+
 
   addIssue() {
     this.issueForm = this.fb.group({
@@ -169,7 +248,8 @@ closeModal(id: string) {
     logoutUser() {
       // Futura funcao para deslogar usuario
         
-          this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
+   
+          this.ngZone.run(() => this.router.navigateByUrl('')).then(()=> location.reload());
       
       }
   
