@@ -1,0 +1,178 @@
+<section style="z-index:-100">
+  <div class="wave wave1" style="z-index:-900"></div>
+  <div class="wave wave2" style="z-index:-900"></div>
+  <div class="wave wave3" style="z-index:-900"></div>
+
+  <div *ngIf="div1" class="box" style="z-index:100">
+    <div class="page">
+      <div class="title-div">
+        <img src="../../assets/board6.png" alt="">
+
+      </div>
+
+
+      <div class="flex" style="z-index: 10;">
+
+
+
+        <app-user-card [title]='user' [hide]="div1Function"></app-user-card>
+
+        <app-rules></app-rules>
+
+      </div>
+
+      <div class="button-flex">
+
+        <button (click)="logoutUser()" class="button1">SAIR</button>
+
+        <button (click)="div1Function()" class="button2">JOGAR</button>
+
+
+        <button (click)="openModal('ranking')" class="button3"></button>
+
+        <button (click)="openModal('shop')" class="button4"></button>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+  </div>
+
+
+  <div *ngIf="div2" class="div2">
+
+
+    <div class="loading-text">
+      Encontrando seu oponente!
+    </div>
+
+    <div>
+      <img src="../../assets/gif.gif">
+    </div>
+    <div class="loading">
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only"></span>
+        </div>
+
+      </div>
+      <!-- <div class="loading-text2">
+        Carregando....
+      </div> -->
+
+      <div class="cancelar">
+        <button (click)="div3Function()" class="button">CANCELAR</button>
+      </div>
+
+
+    </div>
+    <div class="loading-text">
+      DICA: Não sei economia básica
+    </div>
+
+
+  </div>
+
+  <jw-modal id="ranking" class="modal1">
+    <h3><b>RANKING</b></h3>
+    <div class="form-flex">
+      <div class="row">
+        <!-- Issue table -->
+        <div class="col-mds-12">
+          <div class="inner">
+
+            <div class="scrollit">
+              <table class="table table">
+                <thead>
+                  <tr>
+                    <th scope="posicao">Posição</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Vitórias</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rank of ranking">
+                    <td scope="row">{{rank.pos}}</td>
+                    <td scope="row">{{rank.name}}</td>
+                    <td scope="row">{{rank.wins}}</td>
+
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="button" (click)="closeModal('ranking');">VOLTAR</button>
+  </jw-modal>
+
+  <jw-modal id="buy" class="coin-buy">
+
+
+    <h3><b>PARABÉNS</b></h3>
+
+    <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
+      Você comprou {{coinsQtd}} moedas !
+    </div>
+
+    <button class="buttonShop" (click)="closeModal('buy');">VOLTAR</button>
+  </jw-modal>
+
+  <jw-modal id="shop" class="modalShop">
+
+    
+
+
+    <h3 *ngIf="buyCoin"><b>SHOP</b></h3>
+
+    <div style="margin: 1rem;">
+
+      <div *ngIf="coinBought" class="loading">
+
+        <div class="d-flex justify-content-center" style="display: flex;flex-direction: column;justify-content: center;align-self: center;align-items: center;text-align: center;">
+          <div class="spinner-border text-dark" role="status">
+            <span class="sr-only"></span>
+          </div>
+          <div>Aguarde, estamos processando sua transação...</div>
+          
+        </div>
+        <!-- <div class="loading-text2">
+          Carregando....
+        </div> -->
+  
+      </div>
+
+    </div>
+
+   
+
+    <div *ngIf="buyCoin" class="shop-row">
+    <div *ngFor='let item of shop' class="shop-row">
+      <div class="shop-item" (click)="buyCoins(item.coins)">
+        <div class="buy-money" >
+          <div style="font-weight: bolder;">{{item.name}}</div>
+          <div class="coin-flex">
+            <div class="coin-bg">
+              <div class="test5">{{item.coins}}</div>
+            </div>
+          </div>
+          
+          <div class="item-price">{{item.price}}</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+    <button *ngIf="buyCoin" class="buttonShop" (click)="closeModal('shop');">VOLTAR</button>
+  </jw-modal>
+</section>

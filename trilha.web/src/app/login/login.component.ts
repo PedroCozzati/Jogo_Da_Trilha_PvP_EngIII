@@ -10,25 +10,15 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent{
   issueForm: FormGroup;
   IssueArr: any = [];
 
-  slides: any[] = new Array(3).fill({title:""});
+  
 
 
 
   ngOnInit() {
-    this.addIssue();
-    this.slides[0] = {
-      title:"teste3"
-    };
-    this.slides[1] = {
-      title:"test356565"
-    }
-    this.slides[2] = {
-      title:"test45346"
-    }
   }
 
   constructor(
