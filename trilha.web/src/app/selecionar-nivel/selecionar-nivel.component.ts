@@ -16,6 +16,7 @@ export class SelecionarNivelComponent implements OnInit {
   slides: any[] = new Array(3).fill({ src: "", title: "" });
 
   public user:string;
+  saldo:string;
 
   options: AnimationOptions = {
     path: "../../assets/select-level.json",
@@ -112,10 +113,11 @@ closeModal(id: string) {
     this.div1=false 
 
     this.user = this.route.snapshot.params['user']; 
+    this.saldo = this.route.snapshot.params['saldo']; 
       console.log(this.route.snapshot.params['user']);
 
       this.item = {
-        url : `login-authenticated/${this.user}`
+        url : `login-authenticated/${this.user}/${this.saldo}`
       };
 
 

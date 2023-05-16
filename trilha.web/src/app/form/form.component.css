@@ -174,7 +174,7 @@
     background-color: rgb(252, 229, 255);
     border-radius: 20px;
     box-shadow: 0px 5px rgb(55, 19, 185) ;
-    width: 7vw;
+    width: 9vw;
     margin-left: 1vw;
     border-top: 2px red;
     border-left: 2px red;
@@ -185,6 +185,22 @@
    
   }
 
+  .button4{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 9vw;
+    margin-left: 1vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
   button:hover{
     background-color: rgb(60, 74, 169);
     color: white;
@@ -249,12 +265,17 @@
   }
 
   .row-input{
-    justify-content: space-between;
+    justify-content: center;
     display: flex;
     flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-    align-content: space-around;
+    vertical-align: middle;
+    align-items: center;
+    align-self:center;
+    justify-self: center;
+    justify-items: center;
+    width: 65%;
+    justify-content: center;
+    align-content: center;
   }
 
  
@@ -333,6 +354,15 @@ border-radius: 50px;
     margin-bottom: 20px;
     position: relative;
    }
+
+   .input-group-email {
+    position: relative;
+    display: flex;
+    flex-wrap: initial;
+    align-items: initial;
+    width: 100%;
+    flex-direction: column;
+  }
    
 
    .input-group2 {
@@ -377,13 +407,25 @@ border-radius: 50px;
    
    .input:focus, input:valid {
     outline: none;
-    border: 1.5px solid #530372;
+    border: 1.5px solid #720303;
+   }
+
+   .input:focus, input:invalid {
+    outline: none;
+    border: 1.5px solid #380031;
    }
    
-   .input:focus ~ label, input:valid ~ label {
+   
+   .input:focus ~ .user-label, input:valid ~ .user-label {
     transform: translateY(-90%) scale(0.8);
     background-color: #82319b00;
     padding: 0 .2em;
+    color: #000508;
+   }
+
+
+   .input:focus ~ .user-label2, input:valid ~ .user-label2 {
+    
     color: #000508;
    }
 
@@ -452,9 +494,35 @@ border-radius: 50px;
 
 }
 
+.input-register{
+  width: 30vw;
+  border: solid 1.5px #9e9e9e;
+    border-radius: 20px !important;
+    background-color: #f0f0f067;
+    padding: 0.7rem;
+  
+
+    font-size: 1rem;
+    color: #000000;
+
+}
+
+
+
+.input-register:valid {
+  outline: none;
+  border: 1.5px solid #3c0372;
+ }
+
+ .input-register:invalid {
+  outline: none;
+  border: 1.5px solid #720303;
+ }
+
+
 .input2{
   justify-content: space-between;
-  width: 12vw;
+  width: 20vw;
 
 }
 
@@ -492,7 +560,7 @@ border-radius: 50px;
   align-self: center;
   align-items: center;
   align-content: center;
-  width: 50% !important;
+  width: 50vw !important;
   padding: 20px;
   background-image: url("../../assets/bg.png");
 background-blend-mode:multiply;
@@ -511,7 +579,7 @@ background-size: cover;
   /* modal container fixed across whole screen */
   position: fixed;
   top: 25%;
-  left: 35%;
+  left: 25%;
 
   /* z-index must be higher than .jw-modal-background */
   z-index: 1000;
@@ -561,7 +629,7 @@ background-size: cover;
       align-content: center;
   /* modal container fixed across whole screen */
   position: fixed;
-  top: 25%;
+  top: 20%;
   left: 25%;
 
   /* z-index must be higher than .jw-modal-background */

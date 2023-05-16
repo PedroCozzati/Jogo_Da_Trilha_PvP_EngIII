@@ -18,7 +18,9 @@ export class LoginAuthenticatedComponent {
   coinsQtd: string;
   buyCoin: boolean;
   coinBought: boolean;
+  
 
+  saldo: string;
   ranking: any[] = new Array(10).fill({pos:"",name:"",wins:""})
 
   shop: any[] = new Array(3).fill({coins:"",price:"",name:""})
@@ -35,6 +37,7 @@ export class LoginAuthenticatedComponent {
     this.div1=true;
     this.div2=false;
       this.user = this.route.snapshot.params['user']; 
+      this.saldo = this.route.snapshot.params['saldo'];
 
     this.addIssue();
    
@@ -140,7 +143,7 @@ closeModal(id: string) {
     let item;
 
     item = {
-      url : `selecionar-nivel/${this.user}/500`
+      url : `selecionar-nivel/${this.user}/${this.saldo}`
     };
   
 
@@ -249,7 +252,7 @@ closeModal(id: string) {
       // Futura funcao para deslogar usuario
         
    
-          this.ngZone.run(() => this.router.navigateByUrl('')).then(()=> location.reload());
+          this.ngZone.run(() => this.router.navigateByUrl(''));
       
       }
   

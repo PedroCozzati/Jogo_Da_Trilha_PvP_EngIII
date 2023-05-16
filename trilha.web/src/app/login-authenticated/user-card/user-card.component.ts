@@ -20,6 +20,7 @@ export class UserCardComponent {
 
 
   @Input() title: string;
+  @Input() saldo: string;
 
   options: AnimationOptions = {
     path: '../../../assets/511-money.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json

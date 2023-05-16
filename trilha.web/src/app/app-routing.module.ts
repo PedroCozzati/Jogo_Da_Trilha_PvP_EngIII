@@ -35,11 +35,11 @@ const routes: Routes = [
   { path: 'nivel/novo', component: NovoNivelComponent },
   { path: 'nivel/:id', component: EditaNivelComponent },
 
-  { path: 'selecionar-nivel/:user/:nivel', component: SelecionarNivelComponent, },
+  { path: 'selecionar-nivel/:user/:saldo', component: SelecionarNivelComponent, },
  
   { path: 'game', component: GameComponent },
   { path: 'app-login', component: LoginComponent },
-  { path: 'login-authenticated/:user', component: LoginAuthenticatedComponent },
+  { path: 'login-authenticated/:user/:saldo', component: LoginAuthenticatedComponent },
   { path: 'adm-page', component: AdmPageComponent },
   { path: 'edit-issue/:id', component: EditIssueComponent },
   { path: 'issues-list', component: IssueListComponent },
