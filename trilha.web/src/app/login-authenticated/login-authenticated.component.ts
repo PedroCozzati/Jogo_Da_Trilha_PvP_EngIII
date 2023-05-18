@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { BugService } from '../shared/services/bug.service';
 import { ModalService } from '../_modal';
+import { Jogador } from '../shared/services/jogador';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -15,15 +17,17 @@ export class LoginAuthenticatedComponent {
   issueForm: FormGroup;
   IssueArr: any = [];
   public user: string;
-  coinsQtd: string;
+  coinsQtd: number;
   buyCoin: boolean;
   coinBought: boolean;
+
+  jogador: Jogador;
   
 
   saldo: string;
   ranking: any[] = new Array(10).fill({pos:"",name:"",wins:""})
 
-  shop: any[] = new Array(3).fill({coins:"",price:"",name:""})
+  shop: any[] = new Array(3).fill({coins:0,price:"",name:""})
 
 
   div1:boolean=true;
@@ -33,27 +37,29 @@ export class LoginAuthenticatedComponent {
   ngOnInit() {
     this.buyCoin=true;
     this.coinBought=false;
-    this.coinsQtd='0';
+    this.coinsQtd=0;
     this.div1=true;
     this.div2=false;
       this.user = this.route.snapshot.params['user']; 
       this.saldo = this.route.snapshot.params['saldo'];
+      this.jogador = JSON.parse(this.route.snapshot.params['data']);
+      console.log(this.jogador)
 
     this.addIssue();
    
 
     this.shop[0]={
-      coins:'100',
+      coins:100,
       price:'R$5,00',
       name:'Pacote básico'
     }
     this.shop[1]={
-      coins:'300',
+      coins:300,
       price:'R$10,00',
       name:'Pacote interessante'
     }
     this.shop[2]={
-      coins:'1000',
+      coins:1000,
       price:'R$25,00',
       name:'Pacote completo'
     }
@@ -125,12 +131,27 @@ closeModal(id: string) {
   constructor(
     private modalService: ModalService,
     private route: ActivatedRoute,
+    private http: HttpClient,
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,
     public bugService: BugService
   ) { }
 
+
+
+  updateBalance(jogador_id:string,saldo:number){
+    this.http.put(`http://localhost:90/atualiza-saldo/${jogador_id}`, {
+      _id: jogador_id,
+      saldo: saldo,
+    }, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+       
+      }, err => {
+      
+      })
+   
+  }
 
 
   div1Function() {
@@ -142,8 +163,10 @@ closeModal(id: string) {
 
     let item;
 
+  
+
     item = {
-      url : `selecionar-nivel/${this.user}/${this.saldo}`
+      url: `selecionar-nivel/${JSON.stringify(this.jogador)}`
     };
   
 
@@ -153,10 +176,22 @@ closeModal(id: string) {
   }
 
 
-  buyCoins=async (coinQtd:string) => {
+  buyCoins=async (coinQtd:number) => {
+    var newBalance:number = this.jogador.saldo - 100;
+
+
+
+
+  
+    this.updateBalance(
+      this.jogador._id,
+      newBalance,
+    )
+
     this.buyCoin=false;
     this.coinBought=true;
     
+    console.log(this.jogador)
 
     setTimeout (() => {
       this.coinsQtd=coinQtd;
@@ -251,6 +286,7 @@ closeModal(id: string) {
     logoutUser() {
       // Futura funcao para deslogar usuario
         
+      
    
           this.ngZone.run(() => this.router.navigateByUrl(''));
       
