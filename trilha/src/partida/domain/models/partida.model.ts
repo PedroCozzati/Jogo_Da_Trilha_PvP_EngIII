@@ -1,12 +1,12 @@
 import { BaseModel } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
-import { PartidaRegistradaEvent } from '../events/impl/partida-registrada.event';
 import { Span } from 'nestjs-otel';
+import { Logger } from 'nestjs-pino';
+import { PartidaDto } from 'src/partida/application/dto/partida.dto';
 import { JogadaEfetuadaEvent } from '../events/impl/jogada-efetuada.event';
 import { PartidaDeletadaEvent } from '../events/impl/partida-deletada.event';
-import { PartidaDto } from 'src/partida/application/dto/partida.dto';
-import { PartidaModule } from 'src/partida/partida.module';
+import { PartidaRegistradaEvent } from '../events/impl/partida-registrada.event';
 
 @Schema({ collection: 'partida' })
 export class Partida extends BaseModel {
@@ -39,26 +39,26 @@ export class Partida extends BaseModel {
 
     this.versaoPartida.push([
       [
-        [1, -4, 4],
-        [1, -4, 3],
-        [1, -4, 2],
-        [1, -4, 1],
-        [1, -4, 0],
-        [1, -4, -1],
-        [1, -4, -2],
-        [1, -4, -3],
-        [1, -4, -4],
+        [-4, 4],
+        [-4, 3],
+        [-4, 2],
+        [-4, 1],
+        [-4, 0],
+        [-4, -1],
+        [-4, -2],
+        [-4, -3],
+        [-4, -4],
       ],
       [
-        [2, 4, 4],
-        [2, 4, 3],
-        [2, 4, 2],
-        [2, 4, 1],
-        [2, 4, 0],
-        [2, 4, -1],
-        [2, 4, -2],
-        [2, 4, -3],
-        [2, 4, -4],
+        [4, 4],
+        [4, 3],
+        [4, 2],
+        [4, 1],
+        [4, 0],
+        [4, -1],
+        [4, -2],
+        [4, -3],
+        [4, -4],
       ]
     ])
   }
@@ -68,33 +68,54 @@ export class Partida extends BaseModel {
 
   // throw new ForaDoPlano();
   // }
+  @Span()
+  verificaMoinho(mapaLadoAutor: any[]): any[] {
+    const agrupamentoPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor, '0'))
+    const agrupamentoPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor, '1'))
+    //tem que verificar se o moinho está disponível
+    return [
+      ...agrupamentoPorEixoX.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4),
+      ...agrupamentoPorEixoY.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4)
+    ]
+  }
 
   @Span()
-  async registraNovaJogada(registraJogada: PartidaDto) {
-    // lógica das jogadas
-    // erro = throw Exception
-    const novaVersaoPartida = []
-    const posicaoAntiga = registraJogada.versaoPartida[0];
-    const posicaoNova = registraJogada.versaoPartida[1];
+  registraNovaJogada(registraJogada: PartidaDto, logger: Logger) {
+    this.versaoPartida.push(registraJogada.versaoPartida)
 
-    const ultimaVersaoPartida = this.versaoPartida[this.versaoPartida.length - 1]
-    for (let i = 0; i < ultimaVersaoPartida.length; i++) {
-      const element = ultimaVersaoPartida[i];
-      const subArray = [];
+    const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
+    const mapaTabuleiro = versaoPartidaClone.shift();
 
+    const moinhoEncontrado = [];
 
-      for (let j = 0; j < element.length; j++) {
-        if (posicaoAntiga[1] === element[j][1] && posicaoAntiga[2] === element[j][2]) {
-          subArray.push(posicaoNova)
-        }
-        else {
-          subArray.push(element[j])
-        }
+    versaoPartidaClone.forEach((versao, index, array) => {
+
+      const mapaLadoAutor = mapaTabuleiro.at(this.obtemIndiceAutorJogada(versao))
+
+      for (let i = 0; i < mapaLadoAutor.length; i++) {
+        if (mapaLadoAutor[i].toString() === versao.at(0).toString())
+          mapaLadoAutor[i] = versao.at(1)
       }
-      novaVersaoPartida.push(subArray);
-    }
 
-    this.versaoPartida.push(novaVersaoPartida)
+      if (index === array.length - 1)
+        moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
+    });
+
+    if (moinhoEncontrado.length > 0)
+      logger.log("Moinho encontrado", { moinho_data: moinhoEncontrado });
+  }
+
+  @Span()
+  private obtemIndiceAutorJogada(versao: any[]) {
+    return this.jogador1_id.toString() === versao.at(2) ? 0 : 1
+  }
+
+  @Span()
+  private groupBy(xs, key) {
+    return xs.filter(x => x.at(0) > -4 && x.at(0) < 4 && x.at(1) > -4 && x.at(1) < 4).reduce(function (rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {});
   }
 
   @Span()
