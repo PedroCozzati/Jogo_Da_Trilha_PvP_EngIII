@@ -69,8 +69,8 @@ export class Partida extends BaseModel {
 
   @Span()
   verificaMoinho(mapaLadoAutor: any[]): any[] {
-    const agrupamentoPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor, '0'))
-    const agrupamentoPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor, '1'))
+    const agrupamentoPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '0'))
+    const agrupamentoPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '1'))
 
     return [
       ...agrupamentoPorEixoX.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4 && !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() === grupo.at(1).toString())),
@@ -83,7 +83,7 @@ export class Partida extends BaseModel {
     this.versaoPartida.push(registraJogada.versaoPartida)
 
     if (this.versaoPartida.at(-1).at(1) === null) {
-      this.vericafaMoinhoAtivo(logger)
+      this.redefineMoinhoAtivo(logger)
       return
     }
 
@@ -97,14 +97,14 @@ export class Partida extends BaseModel {
       const mapaLadoAutor = mapaTabuleiro.at(this.obtemIndiceAutorJogada(versao))
 
       for (let i = 0; i < mapaLadoAutor.length; i++) {
-        if (mapaLadoAutor[i].toString() === versao.at(0).toString())
+        if (mapaLadoAutor[i]?.toString() === versao.at(0)?.toString())
           mapaLadoAutor[i] = versao.at(1)
       }
       if (index === array.length - 1)
         moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
     });
 
-    this.vericafaMoinhoAtivo(logger)
+    this.redefineMoinhoAtivo(logger)
 
     if (moinhoEncontrado.length > 0) {
       this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
@@ -113,7 +113,7 @@ export class Partida extends BaseModel {
   }
 
   @Span()
-  private vericafaMoinhoAtivo(logger: Logger) {
+  private redefineMoinhoAtivo(logger: Logger) {
     this.moinhosAtivos = this.moinhosAtivos.filter(moinhoAtivo =>
       !moinhoAtivo.some(coordenada => coordenada.toString() === this.versaoPartida.at(-1).at(0).toString())
     );
