@@ -7,6 +7,7 @@ import { PartidaDto } from 'src/partida/application/dto/partida.dto';
 import { JogadaEfetuadaEvent } from '../events/impl/jogada-efetuada.event';
 import { PartidaDeletadaEvent } from '../events/impl/partida-deletada.event';
 import { PartidaRegistradaEvent } from '../events/impl/partida-registrada.event';
+import { MoinhoEfetuadoEvent } from '../events/impl/moinho-efetuado.event';
 
 @Schema({ collection: 'partida' })
 export class Partida extends BaseModel {
@@ -22,6 +23,9 @@ export class Partida extends BaseModel {
 
   @Prop({ type: SchemaTypes.Array })
   versaoPartida: Array<any> = []
+
+  @Prop({ type: SchemaTypes.Array })
+  moinhosAtivos: Array<any> = []
 
   @Prop({ type: SchemaTypes.String })
   resultado: string
@@ -63,25 +67,25 @@ export class Partida extends BaseModel {
     ])
   }
 
-  // @Span()
-  // async checaPosicaoLivre(pardidaDto: PartidaDto) {
-
-  // throw new ForaDoPlano();
-  // }
   @Span()
   verificaMoinho(mapaLadoAutor: any[]): any[] {
     const agrupamentoPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor, '0'))
     const agrupamentoPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor, '1'))
-    //tem que verificar se o moinho está disponível
+
     return [
-      ...agrupamentoPorEixoX.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4),
-      ...agrupamentoPorEixoY.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4)
+      ...agrupamentoPorEixoX.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4 && !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() === grupo.at(1).toString())),
+      ...agrupamentoPorEixoY.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4 && !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() === grupo.at(1).toString()))
     ]
   }
 
   @Span()
   registraNovaJogada(registraJogada: PartidaDto, logger: Logger) {
     this.versaoPartida.push(registraJogada.versaoPartida)
+
+    if (this.versaoPartida.at(-1).at(1) === null) {
+      this.vericafaMoinhoAtivo(logger)
+      return
+    }
 
     const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
     const mapaTabuleiro = versaoPartidaClone.shift();
@@ -96,13 +100,23 @@ export class Partida extends BaseModel {
         if (mapaLadoAutor[i].toString() === versao.at(0).toString())
           mapaLadoAutor[i] = versao.at(1)
       }
-
       if (index === array.length - 1)
         moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
     });
 
-    if (moinhoEncontrado.length > 0)
-      logger.log("Moinho encontrado", { moinho_data: moinhoEncontrado });
+    this.vericafaMoinhoAtivo(logger)
+
+    if (moinhoEncontrado.length > 0) {
+      this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
+      this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
+    }
+  }
+
+  @Span()
+  private vericafaMoinhoAtivo(logger: Logger) {
+    this.moinhosAtivos = this.moinhosAtivos.filter(moinhoAtivo =>
+      !moinhoAtivo.some(coordenada => coordenada.toString() === this.versaoPartida.at(-1).at(0).toString())
+    );
   }
 
   @Span()

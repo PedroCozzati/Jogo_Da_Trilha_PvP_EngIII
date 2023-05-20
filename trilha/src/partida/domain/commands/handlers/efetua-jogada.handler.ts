@@ -1,9 +1,8 @@
-import { EventPublisher, ICommandHandler, CommandHandler } from '@nestjs/cqrs';
-import { EfetuaJogadaCommand } from '../impl/efetua-jogada.command';
-import { Partida } from '../../models/partida.model';
-import { PartidaRepository } from 'src/partida/infra/data/repository/partida.repository';
-import { Logger } from 'nestjs-pino';
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { Span } from 'nestjs-otel';
+import { Logger } from 'nestjs-pino';
+import { PartidaRepository } from 'src/partida/infra/data/repository/partida.repository';
+import { EfetuaJogadaCommand } from '../impl/efetua-jogada.command';
 
 @CommandHandler(EfetuaJogadaCommand)
 export class EfetuaJogadaHandler
@@ -22,7 +21,7 @@ export class EfetuaJogadaHandler
 
     const partidaCompleta = await this.repository.buscaPartidaPorId(partidaDto._id)
 
-    partidaCompleta.registraNovaJogada(partidaDto)
+    partidaCompleta.registraNovaJogada(partidaDto, this._logger)
 
     const partida = this.publisher.mergeObjectContext(
       await this.repository.efetuaJogada(partidaCompleta)

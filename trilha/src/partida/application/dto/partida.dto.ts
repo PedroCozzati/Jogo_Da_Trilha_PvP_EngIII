@@ -19,7 +19,17 @@ export class PartidaDto {
     @IsArray()
     readonly versaoPartida: Array<any>;
 
+    @IsArray()
+    readonly moinhosAtivos: Array<any>;
+
     @IsString()
     readonly resultado: string
+
+}
+
+export class MoinhoEfetuadoDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly jogador_id: string
 
 }
