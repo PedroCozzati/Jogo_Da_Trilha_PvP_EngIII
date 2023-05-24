@@ -82,13 +82,15 @@ export class Partida extends BaseModel {
   registraNovaJogada(registraJogada: PartidaDto, logger: Logger) {
     this.versaoPartida.push(registraJogada.versaoPartida)
 
-    if (this.versaoPartida.at(-1).at(1) === null) {
-      this.redefineMoinhoAtivo(logger)
-      return
-    }
-
     const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
     const mapaTabuleiro = versaoPartidaClone.shift();
+
+    if (this.versaoPartida.at(-1).at(1) === null) {
+      this.redefineMoinhoAtivo(logger)
+
+
+      return
+    }
 
     const moinhoEncontrado = [];
 
@@ -100,8 +102,12 @@ export class Partida extends BaseModel {
         if (mapaLadoAutor[i]?.toString() === versao.at(0)?.toString())
           mapaLadoAutor[i] = versao.at(1)
       }
-      if (index === array.length - 1)
+      if (index === array.length - 1) {
         moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
+        logger.log('Mapa Lado Autor', { mapaLadoAutor })
+        this.finalizaPartida(mapaLadoAutor)
+      }
+
     });
 
     this.redefineMoinhoAtivo(logger)
@@ -110,6 +116,13 @@ export class Partida extends BaseModel {
       this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
       this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
     }
+    //if(.filter((element) => element === null).length);
+
+  }
+
+  @Span()
+  private finalizaPartida(mapaLadoAutor: any) {
+    return null
   }
 
   @Span()
