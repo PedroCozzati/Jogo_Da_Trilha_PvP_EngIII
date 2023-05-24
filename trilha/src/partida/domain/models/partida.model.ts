@@ -8,6 +8,7 @@ import { JogadaEfetuadaEvent } from '../events/impl/jogada-efetuada.event';
 import { PartidaDeletadaEvent } from '../events/impl/partida-deletada.event';
 import { PartidaRegistradaEvent } from '../events/impl/partida-registrada.event';
 import { MoinhoEfetuadoEvent } from '../events/impl/moinho-efetuado.event';
+import { PartidaFinalizadaEvent } from '../events/impl/partida-finalizada.event';
 
 @Schema({ collection: 'partida' })
 export class Partida extends BaseModel {
@@ -85,6 +86,7 @@ export class Partida extends BaseModel {
     const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
     const mapaTabuleiro = versaoPartidaClone.shift();
 
+
     if (this.versaoPartida.at(-1).at(1) === null) {
       this.redefineMoinhoAtivo(logger)
       this.finalizaPartida(versaoPartidaClone, mapaTabuleiro, logger)
@@ -129,7 +131,8 @@ export class Partida extends BaseModel {
       }
       if (index === array.length - 1) {
         if (mapaLadoOponente.filter(coordenadas => coordenadas != null).length < 3)
-          logger.log('Partida Finalizada')
+          this.apply(new PartidaFinalizadaEvent({ jogador_vencedor_id: this.versaoPartida.at(-1).at(2) }))
+
       }
 
     });

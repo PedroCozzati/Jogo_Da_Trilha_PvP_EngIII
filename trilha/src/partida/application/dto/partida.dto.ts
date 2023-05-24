@@ -33,3 +33,11 @@ export class MoinhoEfetuadoDto {
     readonly jogador_id: string
 
 }
+
+export class PartidaFinalizadaDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly jogador_vencedor_id: string
+
+}
+
