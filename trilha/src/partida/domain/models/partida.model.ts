@@ -87,7 +87,7 @@ export class Partida extends BaseModel {
 
     if (this.versaoPartida.at(-1).at(1) === null) {
       this.redefineMoinhoAtivo(logger)
-
+      this.finalizaPartida(versaoPartidaClone, mapaTabuleiro, logger)
 
       return
     }
@@ -102,11 +102,9 @@ export class Partida extends BaseModel {
         if (mapaLadoAutor[i]?.toString() === versao.at(0)?.toString())
           mapaLadoAutor[i] = versao.at(1)
       }
-      if (index === array.length - 1) {
+      if (index === array.length - 1)
         moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
-        logger.log('Mapa Lado Autor', { mapaLadoAutor })
-        this.finalizaPartida(mapaLadoAutor)
-      }
+
 
     });
 
@@ -116,13 +114,25 @@ export class Partida extends BaseModel {
       this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
       this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
     }
-    //if(.filter((element) => element === null).length);
-
   }
 
   @Span()
-  private finalizaPartida(mapaLadoAutor: any) {
-    return null
+  private finalizaPartida(versaoPartidaClone: any, mapaTabuleiro: any, logger: Logger) {
+
+    versaoPartidaClone.forEach((versao, index, array) => {
+
+      const mapaLadoOponente = mapaTabuleiro.at(!this.obtemIndiceAutorJogada(versao))
+
+      for (let i = 0; i < mapaLadoOponente.length; i++) {
+        if (mapaLadoOponente[i]?.toString() === versao.at(0)?.toString())
+          mapaLadoOponente[i] = versao.at(1)
+      }
+      if (index === array.length - 1) {
+        if (mapaLadoOponente.filter(coordenadas => coordenadas != null).length < 3)
+          logger.log('Partida Finalizada')
+      }
+
+    });
   }
 
   @Span()
