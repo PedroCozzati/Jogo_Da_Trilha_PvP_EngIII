@@ -37,11 +37,11 @@
 }
 
 .field {
-    height: 9vmin;
-    width: 9vmin;
+    height: 0vmin;
+    width: 0vmin;
     margin: -4.5vmin 0 0 -4.5vmin;
     padding: 0;
-    background-color: transparent;
+    background-color: black;
     border-radius: 50%;
     position: absolute;
     left: 50%;
@@ -82,6 +82,14 @@
 
 .stoneActive {
     z-index: 4;
+}
+
+
+.stoneSelected{
+    border: 0.6vmin solid #fcfcfc !important;
+    margin: -4.6vmin 0 0 -4.6vmin !important;
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.404) !important;
 }
 
 #winnerScreen {
@@ -535,6 +543,7 @@ footer p {
 }
 
 #gameBoard {
+    background-image: url("../../assets/tablebg.png");
     background-color: rgba(255, 255, 255, 0.35);
     box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.8);
 }
@@ -677,8 +686,8 @@ footer p {
 .stoneWhite,
 .stoneBlack {
     margin: -4.3vmin 0 0 -4.3vmin;
-    width: 8vmin;
-    height: 8vmin;
+    width: 7vmin;
+    height: 7vmin;
 
     box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8);
 }
@@ -693,7 +702,18 @@ footer p {
 .stoneBlack {
     background-image: url("../../assets/peca1.png");
     background-repeat: repeat;
-    border: 0.3vmin solid white;
+    border: 0.3vmin solid rgb(0, 0, 0);
+}
+
+.stoneWhite:hover {
+    /* background-position needs to be set randomly between 0 and 8vmin */
+    
+    border: 1vmin solid black;
+}
+
+.stoneBlack:hover {
+   
+    border: 1vmin solid rgb(0, 0, 0);
 }
 
 .stoneMoveable {
@@ -716,7 +736,7 @@ footer p {
     margin: -4.6vmin 0 0 -4.6vmin;
 
     box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
-        inset 0 0 0 1000px rgba(255, 120, 0, 0.3);
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.404);
 }
 
 .stoneActive:hover {
@@ -724,7 +744,7 @@ footer p {
     border: 0.6vmin solid #180c02;
 
     box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
-        inset 0 0 0 1000px rgba(255, 120, 0, 0.3);
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.336);
 }
 
 .stoneRemoveable {
@@ -813,32 +833,33 @@ footer p {
     flex-direction: column;
 }
 .peca-card-oponent{
+    background-image: url("../../assets/peca1.png");
     width: 2rem;
     background-color: rgb(255, 0, 21);
     color:blue;
     height: 2rem;
     border-radius: 100%;
-    border: 0.1rem solid black;
+    border: 0.3vmin solid rgb(0, 0, 0);
 }
 
 .ampulheta{
-    padding-top: 0.5vh;
-    padding-right: 0.6vw;
-    height: 4vh;
-    width: 3vw;
+    height: 7vh;
+    width: auto;
     background-repeat: no-repeat;
-    background-image: url("../../assets/ampulheta.gif");
 }
 
 .card-oponent{
+    background-image:url("../../assets/tablebg.png");
+    
     color: aliceblue;
     padding: 2vw;
-    background-color: rgba(175, 34, 34, 0.253);
-    border:#ad1c28 2px solid;
+    background-color: rgba(207, 179, 21, 0.459);
+    
     border-radius: 20px;
 }
 
 .card-body{
+    opacity: 1 !important;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -852,10 +873,15 @@ footer p {
 }
 
 .card-me{
+    background-image: url("../../assets/tablebg.png");
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 70vh;
+}
+
+.card-oponent-color{
+    border: 2px 
 }
 
 .card-oponent{
@@ -874,7 +900,7 @@ footer p {
 .card-img-top {
     align-self: center;
     border-radius: 100%;
-    width: 70%;
+    width: 60%;
     height: 20%;
 }
 

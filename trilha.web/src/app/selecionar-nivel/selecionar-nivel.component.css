@@ -866,25 +866,34 @@ html, body {
     flex-direction: row;
     justify-content: space-around;
     margin-left: 4vw;
-    padding-left: 3vw;
-   padding-right: 3vw;
     height: 30vh;
   }
 
-  .items_text{}
+  .items_text{
+
+
+  }
+
+  .item-slide{
+    
+    background-color: rgba(255, 255, 255, 0.171);
+    background-repeat: no-repeat;
+    backdrop-filter: blur(1rem);
+
+  }
 
 
   .glow{
-    height: 10vh;
-    background-image: url(../../assets/board_dark.png);
+    display: block;
+  max-width:5vw;
+  max-height:8vh;
+  width: auto;
+  height: auto;
     filter: opacity(80%);
     background-size: cover;
     background-repeat: no-repeat;
     align-self: center;
-    width: 5vw;
-    border-radius: 0.3rem;
-    margin-bottom: 4vh;
-    padding-right: 20px;
+    border-radius: 0.6rem !important;
   }
 
   .div.item-slide{
@@ -1030,4 +1039,33 @@ div.item-slide:hover{
       
       .modal2  ::ng-deep  .jw-modal p{
         margin-bottom: 2vh;
+      }
+
+
+      .image-cropper-selected {
+        width: auto;
+        height: 8vh;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+      }
+    
+      .image-cropper {
+        margin-right: 1rem;
+        width: auto;
+        height: 8vh;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+      }
+
+      .avatar-img{
+        z-index: 0;
+        display: inline;
+        margin: 0 auto;
+        height: 100%;
+        width: auto;
+        background-repeat: no-repeat;
+        background-size: contain;
+        
       }

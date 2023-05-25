@@ -645,3 +645,19 @@ background-size: cover;
 .modal2  ::ng-deep  .jw-modal p{
   margin-bottom: 2vh;
 }
+
+
+.foundEmail-user{
+  border: 0.1rem solid black;
+  padding: 1rem;
+  border-radius: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  width: 40%;
+  
+}

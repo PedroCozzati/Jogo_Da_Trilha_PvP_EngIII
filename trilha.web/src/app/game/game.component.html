@@ -1,7 +1,7 @@
 <section style="z-index:-100">
-    <div class="wave wave1" style="z-index:-900"></div>
-    <div class="wave wave2" style="z-index:-900"></div>
-    <div class="wave wave3" style="z-index:-900"></div>
+    <div (click)="deselectStone()" class="wave wave1" style="z-index:-900"></div>
+    <div (click)="deselectStone()" class="wave wave2" style="z-index:-900"></div>
+    <div (click)="deselectStone()" class="wave wave3" style="z-index:-900"></div>
 
 
     <div class="gameFlex">
@@ -15,7 +15,8 @@
             </div>
         </div> -->
         <div class="player-card player-card-oponent">
-            <div class="card-oponent">
+            <div class="card-oponent "
+                style="background-color: {{nivelPeca.corLadoB}};border:2px solid {{nivelPeca.corLadoB}}">
 
                 <div class="card-body">
                     <blockquote class="speech bubble">Did someone say <em>chimichangas?</em></blockquote>
@@ -32,7 +33,7 @@
                             Peças restantes</div>
                         <div class="npecas">
 
-                            <div class="peca-card-oponent"></div>
+                            <div class="peca-card-oponent" style="background-color: {{nivelPeca.corLadoA}}"></div>
                             <div style="font-size: 1.1rem;">
                                 x2
                             </div>
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div id="gameBoard" style="display: block; background-color: #ebedefcc;"> <!-- game board -->
+        <div id="gameBoard" style="display: block; background-color: {{nivel.corTab}};"> <!-- game board -->
             <!-- Create lines of board -->
             <div class="fieldLineHorizontal" style="width: 60vmin; transform: translate(-30vmin,-30vmin);"></div>
             <div class="fieldLineHorizontal" style="width: 40vmin; transform: translate(-20vmin,-20vmin);"></div>
@@ -71,70 +72,106 @@
                     (Click anywhere to go to menu.)
                 </div>
             </div>
-            <div class="field fieldMoveable" style="transform: translate(-30vmin, -30vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, -30vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(30vmin, -30vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-20vmin, -20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, -20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(20vmin, -20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-10vmin, -10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, -10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(10vmin, -10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-30vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-20vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-10vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(10vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(20vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(30vmin, 0vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-10vmin, 10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, 10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(10vmin, 10vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-20vmin, 20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, 20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(20vmin, 20vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(-30vmin, 30vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(0vmin, 30vmin);"></div>
-            <div class="field fieldMoveable" style="transform: translate(30vmin, 30vmin);"></div>
-            <div  class="stoneBlack" style="transform: translate(40vmin, -30vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneBlack" style="transform: translate(40vmin, -22.5vmin);background-color: {{corLadoA}};">
+
+            <!-- TABULEIRO -->
+            <div (click)="movePeca([-3,-3])" class="field fieldMoveable"
+                style="transform: translate(-30vmin, -30vmin);"></div>
+            <div (click)="movePeca([0,-3])" class="field fieldMoveable"
+                style="transform: translate(0vmin, -30vmin);"></div>
+            <div (click)="movePeca([3,-3])" class="field fieldMoveable"
+                style="transform: translate(30vmin, -30vmin);"></div>
+            <div (click)="movePeca([-2,-2])" class="field fieldMoveable"
+                style="transform: translate(-20vmin, -20vmin);"></div>
+            <div (click)="movePeca([0,-2])" class="field fieldMoveable"
+                style="transform: translate(0vmin, -20vmin);"></div>
+            <div (click)="movePeca([2,-2])" class="field fieldMoveable"
+                style="transform: translate(20vmin, -20vmin);"></div>
+            <div (click)="movePeca([-1,-1])" class="field fieldMoveable"
+                style="transform: translate(-10vmin, -10vmin);"></div>
+            <div (click)="movePeca([0,-1])" class="field fieldMoveable"
+                style="transform: translate(0vmin, -10vmin);"></div>
+            <div (click)="movePeca([1,-1])" class="field fieldMoveable"
+                style="transform: translate(10vmin, -10vmin);"></div>
+            <div (click)="movePeca([-3,0])" class="field fieldMoveable"
+                style="transform: translate(-30vmin, 0vmin);"></div>
+            <div (click)="movePeca([-2,0])" class="field fieldMoveable"
+                style="transform: translate(-20vmin, 0vmin);"></div>
+            <div (click)="movePeca([-1,0])" class="field fieldMoveable"
+                style="transform: translate(-10vmin, 0vmin);"></div>
+            <div (click)="movePeca([1,0])" class="field fieldMoveable"
+                style="transform: translate(10vmin, 0vmin);"></div>
+            <div (click)="movePeca([2,0])" class="field fieldMoveable"
+                style="transform: translate(20vmin, 0vmin);"></div>
+            <div (click)="movePeca([3,0])" class="field fieldMoveable"
+                style="transform: translate(30vmin, 0vmin);"></div>
+            <div (click)="movePeca([-1,1])" class="field fieldMoveable"
+                style="transform: translate(-10vmin, 10vmin);"></div>
+            <div (click)="movePeca([0,1])" class="field fieldMoveable"
+                style="transform: translate(0vmin, 10vmin);"></div>
+            <div (click)="movePeca([1,1])" class="field fieldMoveable"
+                style="transform: translate(10vmin, 10vmin);"></div>
+            <div (click)="movePeca([-2,2])" class="field fieldMoveable"
+                style="transform: translate(-20vmin, 20vmin);"></div>
+            <div (click)="movePeca([0,2])" class="field fieldMoveable"
+                style="transform: translate(0vmin, 20vmin);"></div>
+            <div (click)="movePeca([2,2])" class="field fieldMoveable"
+                style="transform: translate(20vmin, 20vmin);"></div>
+            <div (click)="movePeca([-3,3])" class="field fieldMoveable"
+                style="transform: translate(-30vmin, 30vmin);"></div>
+            <div (click)="movePeca([0,3])" class="field fieldMoveable"
+                style="transform: translate(0vmin, 30vmin);"></div>
+            <div (click)="movePeca([3,3])" class="field fieldMoveable"
+                style="transform: translate(30vmin, 30vmin);"></div>
+
+            <!--PEÇAS-->
+
+
+            <!--PECA B-->
+            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1)}" *ngFor="let coordenada of tabuleiro[0]" (click)="stoneClick(coordenada,0)" class="stoneBlack"
+                style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};"></div>
+
+            <!--PECA A-->
+            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1)}" *ngFor="let coordenada of tabuleiro[1]" (click)="stoneClick(coordenada,1)" class="stoneWhite"
+                style="transform: translate({{coordenada[0]*10}}vmin, {{coordenada[1]*getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-            <div class="stoneBlack" style="transform: translate(40vmin, -15vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneBlack" style="transform: translate(40vmin, -7.5vmin);background-color: {{corLadoA}};">
+            <!-- <div (click)="stoneClick(1,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -22.5vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-            <div class="stoneBlack" style="transform: translate(40vmin, 0vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneBlack" style="transform: translate(40vmin, 7.5vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneBlack" style="transform: translate(40vmin, 15vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneBlack" style="transform: translate(40vmin, 22.5vmin);background-color: {{corLadoA}};">
+            <div (click)="stoneClick(2,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -15vmin);background-color: {{nivelPeca.corLadoB}};"></div>
+            <div (click)="stoneClick(3,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -7.5vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-            <div class="stoneBlack" style="transform: translate(40vmin, 30vmin);background-color: {{corLadoA}};"></div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, -30vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick(4,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 0vmin);background-color: {{nivelPeca.corLadoB}};"></div>
+            <div (click)="stoneClick(5,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 7.5vmin);background-color: {{nivelPeca.corLadoB}};"></div>
+            <div (click)="stoneClick(6,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 15vmin);background-color: {{nivelPeca.corLadoB}};"></div>
+            <div (click)="stoneClick(7,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 22.5vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, -22.5vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick(8,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 30vmin);background-color: {{nivelPeca.corLadoB}};"></div>
+            <div (click)="stoneClick2(0,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -30vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, -15vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick2(1,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -22.5vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, -7.5vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick2(2,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -15vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, 0vmin);background-color: {{corLadoB}};"></div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, 7.5vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick2(3,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -7.5vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, 15vmin);background-color: {{corLadoB}};"></div>
-            <div class="stoneWhite" style="transform: translate(-40vmin, 22.5vmin);background-color: {{corLadoB}};">
+            <div (click)="stoneClick2(4,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 0vmin);background-color: {{nivelPeca.corLadoA}};"></div>
+            <div (click)="stoneClick2(5,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 7.5vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
-            <div class="stoneWhite stoneActive"
-                style="transform: translate(-40vmin, 30vmin);background-color: {{corLadoB}};"></div>
+            <div (click)="stoneClick2(6,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 15vmin);background-color: {{nivelPeca.corLadoA}};"></div>
+            <div (click)="stoneClick2(7,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 22.5vmin);background-color: {{nivelPeca.corLadoA}};">
+            </div>
+            <div (click)="stoneClick2(8,'.stoneWhite')" class="stoneWhite" style="transform: translate(-40vmin, 30vmin);background-color: {{nivelPeca.corLadoA}};"></div> -->
         </div>
         <div class="infos" *ngIf="showInfo">
-            Só restam 10 turnos!
+            {{infoTitle}}
         </div>
         <div class="player-card player-card-me">
-            <div class="card-me">
+            <div class="card-me"
+                style="background-color: {{nivelPeca.corLadoA}};border:2px solid {{nivelPeca.corLadoA}}">
 
                 <div class="card-body">
-                    <img class="card-img-top"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/1200px-Breezeicons-actions-22-im-user.svg.png"
+                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
                         alt="Card image cap">
-                    <h5 class="card-title text-center">Joãozinho [Você] </h5>
+                    <h5 class="card-title text-center">{{jogador.nome}} [Você] </h5>
                     <div class="row">
                         <!-- <p class="card-text m-none col-sm-8">
                             Peças: 9 <br />
@@ -146,11 +183,8 @@
                     </div>
                     <div class="timer">
 
-                        <img class="ampulheta" src="../../assets/ampulheta.gif">
-                        <div style="font-size: 1.1rem;">
-                            00:00
+                        <img class="ampulheta" src="../../assets/clock.gif">
 
-                        </div>
 
                     </div>
                     <!-- <div class="npecas">
@@ -166,8 +200,8 @@
                             Peças roubadas</div>
                         <div class="npecas">
 
-                            <div class="peca-card-oponent"></div>
-                            <div style="font-size: 1.1rem;">
+                            <div class="peca-card-oponent" style="background-color: {{nivelPeca.corLadoB}}"></div>
+                            <div style="font-size: 1.1rem; ">
                                 x2
                             </div>
 
@@ -230,7 +264,7 @@
                 </div>
 
             </div>
-            
+
 
         </div>
 

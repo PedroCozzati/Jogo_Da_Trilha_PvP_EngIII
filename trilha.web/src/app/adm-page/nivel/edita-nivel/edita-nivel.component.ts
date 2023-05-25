@@ -48,7 +48,7 @@ export class EditaNivelComponent {
   }
 
   editaNivel(nivel: any) {
-    this.http.put(`http://localhost:90/nivel`, nivel, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://localhost:90/nivel/${this.nivel._id}`, nivel, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/niveis'));
       })

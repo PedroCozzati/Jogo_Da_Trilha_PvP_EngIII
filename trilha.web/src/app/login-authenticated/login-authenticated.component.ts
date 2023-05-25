@@ -20,21 +20,48 @@ export class LoginAuthenticatedComponent {
   coinsQtd: number;
   buyCoin: boolean;
   coinBought: boolean;
-
+  userList:  [Jogador];
   jogador: Jogador;
+  wins:number;
+  position:any=[];
+  imgSelected:string;
+  avatarImage:string='avatar0';
+  selectedImage:string ='../../assets/avatar0.png';
   
 
   saldo: string;
   ranking: any[] = new Array(10).fill({pos:"",name:"",wins:""})
 
   shop: any[] = new Array(3).fill({coins:0,price:"",name:""})
-
+  playerObject: Jogador;
+  
 
   div1:boolean=true;
   div2:boolean=false;
 
+  getUserByID() {
+    this.http.get<Jogador>(`http://localhost:90/jogador/${this.jogador._id}`, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => { this.playerObject = response });
+  }
+
+  getAllUsers() {
+    this.http.get<[Jogador]>(`http://localhost:90/jogador`, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => { this.userList = response });
+  }
+
+  selectImage(){
+    this.openModal('avatar')
+  }
 
   ngOnInit() {
+    this.imgSelected='../../assets/avatar2.png'
+
+    
+    
+
+    this.getAllUsers()
+  console.log(this.userList)
+
     this.buyCoin=true;
     this.coinBought=false;
     this.coinsQtd=0;
@@ -43,6 +70,8 @@ export class LoginAuthenticatedComponent {
       this.user = this.route.snapshot.params['user']; 
       this.saldo = this.route.snapshot.params['saldo'];
       this.jogador = JSON.parse(this.route.snapshot.params['data']);
+
+      this.getUserByID()
       console.log(this.jogador)
 
     this.addIssue();
@@ -65,56 +94,11 @@ export class LoginAuthenticatedComponent {
     }
 
 
-    this.ranking[0]={
-      pos:'1',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[1]={
-      pos:'2',
-      name:'TESTE',
-      wins:'19'
-    }
-    this.ranking[2]={
-      pos:'3',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[3]={
-      pos:'4',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[4]={
-      pos:'5',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[5]={
-      pos:'6',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[6]={
-      pos:'7',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[7]={
-      pos:'8',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[8]={
-      pos:'9',
-      name:'Victor',
-      wins:'20'
-    }
-    this.ranking[9]={
-      pos:'10',
-      name:'Victor',
-      wins:'20'
-    }
+    
+
+    this.getUserByID()
+
+    
     
 
   }
@@ -126,6 +110,59 @@ closeModal(id: string) {
     this.modalService.close(id);
 }
 
+
+openModalRanking() {
+
+
+
+  
+
+  var vitorias: any = [];
+
+
+  this.userList.forEach(rank => {
+    if(rank.vitoria==null){
+      rank.vitoria=0
+    }
+    vitorias.push(rank.vitoria)    
+
+  });
+
+  var sortedArray: Jogador[] = this.userList.sort((n1,n2) => {
+    if (n1.vitoria > n2.vitoria) {
+        return 1;
+    }
+
+    if (n1.vitoria < n2.vitoria) {
+        return -1;
+    }
+
+    return 0;
+});
+
+
+  var test:any=[2,3,4,5,6,6,6]
+
+  var data = vitorias;
+  
+
+  var rank = data.map(function (rank) {
+    return function (a, i, aa) {
+        return [rank = i + 1];
+    };
+}(0));
+
+  console.log(data)
+
+
+
+  console.log(rank.map(JSON.stringify));
+
+
+  this.position = rank;
+
+  this.modalService.open('ranking');
+}
   
 
   constructor(
@@ -141,8 +178,7 @@ closeModal(id: string) {
 
 
   updateBalance(jogador_id:string,saldo:number){
-    this.http.put(`http://localhost:90/atualiza-saldo/${jogador_id}`, {
-      _id: jogador_id,
+    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
       saldo: saldo,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
@@ -163,21 +199,31 @@ closeModal(id: string) {
 
     let item;
 
+    
+
+    var image = {
+     image:this.selectedImage
+    }
+
   
 
     item = {
-      url: `selecionar-nivel/${JSON.stringify(this.jogador)}`
+      url: `selecionar-nivel/${JSON.stringify(this.playerObject)}/`
     };
   
 
-    this.ngZone.run(() => this.router.navigateByUrl(item.url));
+    this.ngZone.run(() => this.router.navigateByUrl(item.url+this.avatarImage));
 
 
   }
 
 
   buyCoins=async (coinQtd:number) => {
-    var newBalance:number = this.jogador.saldo - 100;
+    this.jogador.saldo = this.playerObject.saldo
+
+
+
+    var test =  this.jogador.saldo + coinQtd
 
 
 
@@ -185,11 +231,12 @@ closeModal(id: string) {
   
     this.updateBalance(
       this.jogador._id,
-      newBalance,
+      coinQtd,
     )
 
     this.buyCoin=false;
     this.coinBought=true;
+    this.playerObject.saldo =+ this.jogador.saldo + coinQtd
     
     console.log(this.jogador)
 
@@ -273,6 +320,10 @@ closeModal(id: string) {
     path: 'https://assets4.lottiefiles.com/packages/lf20_lvftzthk.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
   };
   
+  options1: AnimationOptions = {
+    path: '../../assets/511-money.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
+  };
+
 
   submitForm() {
     // if (this.issueForm.value == 'adm') {

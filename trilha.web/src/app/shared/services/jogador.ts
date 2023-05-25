@@ -1,5 +1,7 @@
-export class Jogador{
+export interface Jogador{
+    _id:string;
+    dataNasc:string;
     nome:string;
     saldo:number;
-    vitorias:number;
+    vitoria:number;
 }

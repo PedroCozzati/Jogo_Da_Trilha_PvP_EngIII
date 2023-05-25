@@ -6,20 +6,108 @@
   <div *ngIf="div1" class="box" style="z-index:100">
     <div class="page">
       <div class="title-div">
-        <img src="../../assets/board6.png" alt="">
+        <img  style='height: 12vh;' src="../../assets/board6.png" alt="">
 
       </div>
 
 
       <div class="flex" style="z-index: 10;">
 
+        <div class="user">
+
+          <form class="form">
+
+            <p class="form-title">USUÁRIO</p>
 
 
-        <app-user-card [title]='user' [saldo]="saldo" [hide]="div1Function"></app-user-card>
+
+
+            <form class="test" novalidate>
+
+
+              <div class="login-row">
+
+
+                <div style="margin-right: 1rem;"  class="image-cropper-selected">
+                  <div class="circle2" (click)="selectImage()"></div>
+                  <img  class="avatar-img" src='{{selectedImage}}'>
+                </div>
+
+
+
+
+
+                <div class="flex-column">
+                  <P>{{jogador.nome}}</P>
+                  <!-- <div class="input-group">
+                      <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
+                      <label class="user-label">Usuário</label>
+                    </div> -->
+                </div>
+              </div>
+              <div class="money">
+
+                 <div style="max-height: 50px;max-width: 70px;margin-bottom: 1rem;"><ng-lottie height="30px" [options]="options1"  style="max-height: 30px;"></ng-lottie></div>
+                <p>{{playerObject.saldo.toString()}}</p>
+              </div>
+            </form>
+
+            <div class="space"></div>
+
+
+            <div class="descricao">
+              <div>Partidas jogadas: 3</div>
+              <div>Vitórias: {{playerObject.vitoria}}</div>
+              <div>+ Detalhes</div>
+            </div>
+
+          </form>
+
+
+
+        </div>
+
+
+
+        <!-- <app-user-card [title]='jogador.nome' [saldo]="playerObject.saldo.toString()" [hide]="div1Function"
+          [vitorias]="playerObject.vitoria" [selectImage]="selectImage()"></app-user-card> -->
 
         <app-rules></app-rules>
 
       </div>
+
+      <jw-modal id="avatar" class="modal-avatar">
+        <p style="margin-top: 1rem;font-size: large;font-weight: bold;">AVATAR</p>
+        <div class="flex-column-emoji">
+
+          <div class="row-emoji">
+            <div   class="image-cropper" (click)="selectedImage='../../assets/avatar0.png';avatarImage='avatar0'" >
+              <img  class="avatar-img" src='../../assets/avatar0.png'>
+            </div>
+            <div   class="image-cropper" (click)="selectedImage='../../assets/avatar9.png';avatarImage='avatar9'">
+              <img  class="avatar-img" src='../../assets/avatar9.png'>
+            </div>
+            <div   class="image-cropper" (click)="selectedImage='../../assets/avatar1.png';avatarImage='avatar1'">
+              <img  class="avatar-img" src='../../assets/avatar1.png'>
+            </div>
+          </div>
+
+          <div class="row-emoji">
+            <div   class="image-cropper" (click)="selectedImage='../../assets/avatar7.png';avatarImage='avatar7'">
+              <img  class="avatar-img" src='../../assets/avatar7.png'>
+            </div>
+            <div  class="image-cropper" (click)="selectedImage='../../assets/avatar8.png';avatarImage='avatar8'">
+              <img  class="avatar-img" src='../../assets/avatar8.png'>
+            </div>
+            <div   class="image-cropper" (click)="selectedImage='../../assets/avatar5.png';avatarImage='avatar5'">
+              <img  class="avatar-img" src='../../assets/avatar5.png'>
+            </div>
+          </div>
+
+        </div>
+        <button style="margin-top: 1rem;" (click)="closeModal('avatar')" class="button-avatar">VOLTAR</button>
+
+      </jw-modal>
 
       <div class="button-flex">
 
@@ -28,7 +116,7 @@
         <button (click)="div1Function()" class="button2">JOGAR</button>
 
 
-        <button (click)="openModal('ranking')" class="button3"></button>
+        <button (click)="openModalRanking()" class="button3"></button>
 
         <button (click)="openModal('shop')" class="button4"></button>
       </div>
@@ -97,10 +185,45 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let rank of ranking">
-                    <td scope="row">{{rank.pos}}</td>
-                    <td scope="row">{{rank.name}}</td>
-                    <td scope="row">{{rank.wins}}</td>
+                  <tr *ngFor="let rank of userList.reverse();let i = index;">
+                    <td scope="row">
+                      <div *ngIf="position[i]==1"
+                        style="border: 0.2rem solid rgb(221, 201, 88);background-color: rgba(255, 255, 0, 0.322);border-radius:2rem;width: 2.5rem;text-align: center;padding: 0.4rem;">
+                        {{position[i]}}
+                      </div>
+                      <div *ngIf="position[i]==2"
+                        style="border: 0.2rem solid rgb(214, 215, 224);background-color: rgba(214, 215, 224, 0.349);border-radius:2rem;width:  2.5rem;text-align: center;padding: 0.4rem;">
+                        {{position[i]}}
+                      </div>
+                      <div *ngIf="position[i]==3"
+                        style="border: 0.2rem solid rgb(134, 53, 5);background-color: rgba(134, 52, 5, 0.281);border-radius:2rem;width: 2.5rem;text-align: center;padding: 0.4rem;">
+                        {{position[i]}}
+                      </div>
+                      <div *ngIf="position[i]>3"
+                        style="border: 0.1rem solid rgb(0, 0, 0);border-radius:2rem;width:  2.5rem;text-align: center;padding: 0.4rem;">
+                        {{position[i]}}
+                      </div>
+                    </td>
+                    <td scope="row" *ngIf="rank.nome==this.jogador.nome"
+                      style="padding: 0.4rem;font-weight: bold;color: rgb(17, 0, 58);">
+
+
+
+                      <div style="padding: 0.4rem;">
+                        {{rank.nome}} (Você)
+                      </div>
+
+                    </td>
+                    <td scope="row" style="padding: 0.4rem;" *ngIf="!(rank.nome==this.jogador.nome)">
+                      <div style="padding: 0.4rem;">
+                        {{rank.nome}}
+                      </div>
+                    </td>
+                    <td scope="row" style="padding: 0.4rem;">
+                      <div style="padding: 0.4rem;">
+                        {{rank.vitoria || 0}}
+                      </div>
+                    </td>
 
 
                   </tr>
@@ -128,51 +251,53 @@
   </jw-modal>
 
   <jw-modal id="shop" class="modalShop">
-
     
 
 
-    <h3 *ngIf="buyCoin"><b>SHOP</b></h3>
 
-    <div style="margin: 1rem;">
+
+    <h3 *ngIf="buyCoin" style="margin: 1rem;"><b>SHOP</b></h3>
+
+    <div style="margin: 0rem;">
 
       <div *ngIf="coinBought" class="loading">
 
-        <div class="d-flex justify-content-center" style="display: flex;flex-direction: column;justify-content: center;align-self: center;align-items: center;text-align: center;">
+        <div class="d-flex justify-content-center"
+          style="display: flex;flex-direction: column;justify-content: center;align-self: center;align-items: center;text-align: center;">
           <div class="spinner-border text-dark" role="status">
             <span class="sr-only"></span>
           </div>
           <div>Aguarde, estamos processando sua transação...</div>
-          
+
         </div>
         <!-- <div class="loading-text2">
           Carregando....
         </div> -->
-  
+
       </div>
 
     </div>
 
-   
+
 
     <div *ngIf="buyCoin" class="shop-row">
-    <div *ngFor='let item of shop' class="shop-row">
-      <div class="shop-item" (click)="buyCoins(item.coins)">
-        <div class="buy-money" >
-          <div style="font-weight: bolder;">{{item.name}}</div>
-          <div class="coin-flex">
-            <div class="coin-bg">
-              <div class="test5">{{item.coins}}</div>
+      <div *ngFor='let item of shop' class="shop-row">
+        <div class="shop-item" (click)="buyCoins(item.coins)">
+          <div class="buy-money">
+            <div style="font-weight: bolder;">{{item.name}}</div>
+            <div class="coin-flex">
+              <div class="coin-bg">
+                <div class="test5">{{item.coins.toString()}}</div>
+              </div>
             </div>
+
+            <div class="item-price">{{item.price}}</div>
           </div>
-          
-          <div class="item-price">{{item.price}}</div>
         </div>
+
       </div>
-
     </div>
-  </div>
 
-    <button *ngIf="buyCoin" class="buttonShop" (click)="closeModal('shop');">VOLTAR</button>
+    <button style="margin: 1rem;" *ngIf="buyCoin" class="buttonShop" (click)="closeModal('shop');">VOLTAR</button>
   </jw-modal>
 </section>

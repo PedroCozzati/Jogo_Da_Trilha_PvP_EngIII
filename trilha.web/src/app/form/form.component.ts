@@ -1,11 +1,13 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { BugService } from '../shared/services/bug.service';
 import { AnimationOptions } from 'ngx-lottie';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalCadastroComponent } from '../modal-cadastro/modal-cadastro.component';
+
+import { Jogador } from '../shared/services/jogador';
 
 
 import { ModalService } from '../_modal';
@@ -31,7 +33,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class FormComponent implements OnInit {
 
 
-
+  found: string;
   loginForm: FormGroup;
   registerForm: FormGroup;
   modalRef: MdbModalRef<ModalComponent> | null = null;
@@ -60,7 +62,7 @@ export class FormComponent implements OnInit {
     this.userEmails2.reset();
     this.userEmails.reset();
     this.loginForm.reset();
-    }
+  }
 
   get primEmail() {
     return this.userEmails.get('primaryEmail')
@@ -105,9 +107,24 @@ export class FormComponent implements OnInit {
       })
   }
 
+  updatePassword(jogador_id: string, senha: string, nome: string, saldo: 100, email: string, dataNasc: Date) {
+    this.http.put(`http://localhost:90/jogador/${jogador_id}`, {
+      nome: nome,
+      senha: senha,
+      saldo: saldo,
+      email: email,
+      dataNasc: dataNasc,
+    }, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+        this.successRegister = true;
+      }, err => {
+        this.errorRegister = true;
+      })
+  }
+
 
   ngOnInit() {
-    this.pwdChanged=false;
+    this.pwdChanged = false;
     this.canResetPwd = false
     this.tryLogin = false
     this.successLogin = false
@@ -165,11 +182,9 @@ export class FormComponent implements OnInit {
 
     console.log(this.userList)
 
-    const found = this.userList.find((obj) => {
-      return obj.id === 1;
-    });
 
-    console.log(found)
+
+
 
     this.bodyText = 'This text can be updated in modal 1';
   }
@@ -195,9 +210,9 @@ export class FormComponent implements OnInit {
 
     console.log(this.userList)
     this.clearForm()
-    this.canResetPwd=false;
+    this.canResetPwd = false;
     this.userEmails2.controls['secundaryEmail'].enable()
-    this.pwdChanged=false;
+    this.pwdChanged = false;
 
     this.modalService.close('recsenha');
   }
@@ -243,6 +258,7 @@ export class FormComponent implements OnInit {
 
     else {
       this.usernameAlreadyTaken = false;
+      this.userEmails.controls['primaryEmail'].disable()
       this.registerUser(
         this.userEmails.controls['nameCadastro'].value,
         this.userEmails.controls['primaryEmail'].value,
@@ -328,63 +344,86 @@ export class FormComponent implements OnInit {
       return obj.nome === this.loginForm.controls['name'].value;
     });
 
-    if(foundUser){
 
-      if (
-        foundUser.nome == this.loginForm.controls['name'].value &&
-        foundUser.senha == this.loginForm.controls['senha'].value) {
-        this.tryLogin = false
-  
-        this.user = this.loginForm.controls['name'].value;
-  
-        const found = this.userList.find((obj) => {
-          return obj.nome === this.user;
-        });
-        this.item = {
-          url: `login-authenticated/${this.user}/${found.saldo}`
-        };
-  
-        this.successLogin = true;
-        setTimeout(() => {
-          this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
-        }, 3000);
-  
-      }
-  
-      else if (
-        this.loginForm.controls['name'].value == "useradm" && this.loginForm.controls['senha'].value == "1234") {
-        this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
-        this.successLogin = false;
-  
-      }
-  
-      else if (
-        foundUser.nome == this.loginForm.controls['name'].value &&
-        foundUser.senha != this.loginForm.controls['senha'].value
-      ) {
-        this.successLogin = false;
-  
-        this.openModal('custom-modal-0')
-      }
-     
-
-    }
-
-    else{
+    if (
+      this.loginForm.controls['name'].value == "useradm" && this.loginForm.controls['senha'].value == "1234") {
+      this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
       this.successLogin = false;
 
-      this.openModal('custom-modal-1');
+    } else {
+
+      if (foundUser) {
+
+        if (
+          foundUser.nome == this.loginForm.controls['name'].value &&
+          foundUser.senha == this.loginForm.controls['senha'].value) {
+          this.tryLogin = false
+
+
+          this.user = this.loginForm.controls['name'].value;
+
+
+
+          var found = this.userList.find((obj) => {
+            return obj.nome === this.user;
+          });
+
+          var jogador: Jogador = {
+            dataNasc: found.dataNasc,
+            _id: found._id,
+            nome: this.loginForm.controls['name'].value,
+            saldo: found.saldo,
+            vitoria: found.vitoria
+          }
+
+
+
+
+
+          var data: Jogador = jogador;
+
+          this.item = {
+            url: `login-authenticated/${JSON.stringify(data)}`
+          };
+
+          this.successLogin = true;
+          setTimeout(() => {
+            this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
+          }, 3000);
+
+        }
+
+
+
+        else if (
+          foundUser.nome == this.loginForm.controls['name'].value &&
+          foundUser.senha != this.loginForm.controls['senha'].value
+        ) {
+          this.successLogin = false;
+
+          this.openModal('custom-modal-0')
+        }
+
+
+      }
+
+      else {
+        this.successLogin = false;
+
+        this.openModal('custom-modal-1');
+      }
     }
 
-   
+
 
 
   }
 
   checkUserModal() {
-    if (
-      this.userList.find(({ email }) => email == this.userEmails2.controls['secundaryEmail'].value)
-    ) {
+    var foundEmail = this.userList.find(({ email }) => email == this.userEmails2.controls['secundaryEmail'].value)
+
+    this.found = foundEmail.nome;
+    if (foundEmail) {
       this.canResetPwd = true
       this.userEmails2.controls['secundaryEmail'].disable()
 
@@ -418,15 +457,26 @@ export class FormComponent implements OnInit {
 
   recSenha() {
 
-    this.canResetPwd=false
+    this.canResetPwd = false
+
+
     const found = this.userList.find((obj) => {
       return obj.email === this.userEmails2.controls['secundaryEmail'].value;
     });
 
+    this.updatePassword(
+      found._id,
+      this.userEmails2.controls['novaSenha'].value,
+      found.nome,
+      found.saldo,
+      found.email,
+      found.dataNasc,
+    )
+
     found.senha = this.userEmails2.controls['novaSenha'].value
 
-    this.pwdChanged=true;
-    
+    this.pwdChanged = true;
+
     console.log(found)
 
   }

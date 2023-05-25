@@ -11,14 +11,18 @@
 
     <div *ngIf="div1" class="profile">
 
+      <div class="image-cropper">
+        <img class="avatar-img" src="../../assets/{{avatar}}.png">
+      </div>
+
       <div class="avatar">
-        <img class="avat_img" src="../../../assets/user-profile-icon.webp">
-        {{user}}
+
+        {{jogador.nome}}
       </div>
 
       <div class="money">
         <ng-lottie height="30px" [options]="moneyAnimation" resizeMode='center'></ng-lottie>
-        {{saldo.toString()}}
+        {{jogador.saldo.toString()}}
       </div>
 
 
@@ -42,15 +46,25 @@
 
     <p-carousel *ngIf="div1" [value]="niveis" [numVisible]="3" [numScroll]="1" [circular]="true">
       <ng-template let-nivel pTemplate="item">
-        <div class="item-slide" (click)="selectLevelButton()">
-          <div class="items_text" style="height: 3vh;">
-            <p>{{ nivel.nome }}</p>
-            <p> Valor de aposta: {{nivel.valorDeAposta}}🪙</p>
+        <div
+          style="background-position: bottom bottom;background-size: cover;background-repeat: no-repeat;background:  url(../../assets/{{images[random2]}}.png);box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
+          class="item-slide" (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca_id)">
+          <div class="items_text" style="display: flex;flex-direction: column;margin-top: 2rem;">
+            <div style="filter: blur(0) !important;" >{{ nivel.nome }}</div>
+            <div style="filter: blur(0) !important;"> Valor de aposta: {{nivel.valorDeAposta}}🪙</div>
+
           </div>
 
-          <div style="background-color: {{nivel.tab.cor}};" class="glow">
+          <div class="glow"
+            style="filter: blur(0) !important; border-radius: 1px;box-shadow: none !important;width:50%;height:50%;background-color: {{nivel.tab.cor}};">
+            <img style="width:100%; height:100%;" src="../../assets/image2.png">
           </div>
+
+          <!-- <div style="background-color: {{nivel.tab.cor}};" class="glow"> -->
+          <!-- </div> -->
+
         </div>
+
       </ng-template>
       <!-- <ng-template let-tab pTemplate="item">
         <div class="item-slide">
@@ -66,6 +80,16 @@
 
   </div>
 
+  <jw-modal id="selectedLevel" class="selectedLevel">
+
+
+    <h3><b>SALDO INSUFICIENTE!</b></h3>
+
+    <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
+      Você pode comprar mais moedas na loja
+    </div>
+    <button class="buttonShop" (click)="closeModal('selectedLevel');">VOLTAR</button>
+  </jw-modal>
 
   <div *ngIf="div2" class="div2">
 
@@ -89,14 +113,14 @@
         Carregando....
       </div> -->
 
-      <div class="cancelar">
+      <!-- <div class="cancelar">
         <button class="button">CANCELAR</button>
-      </div>
+      </div> -->
 
 
     </div>
     <div class="loading-text">
-      DICA: Não sei economia básica
+      {{tips[random]}}
     </div>
 
 
@@ -109,10 +133,10 @@
     <button class="button" (click)="closeModal('custom-modal-2');">OK</button>
   </jw-modal>
 
-  
 
 
-    
+
+
 
 
 </section>

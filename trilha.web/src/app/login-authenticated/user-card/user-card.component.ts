@@ -21,6 +21,7 @@ export class UserCardComponent {
 
   @Input() title: string;
   @Input() saldo: string;
+  @Input() vitorias: number;
 
   options: AnimationOptions = {
     path: '../../../assets/511-money.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
@@ -41,6 +42,14 @@ export class UserCardComponent {
 
 
   @Input() hide:any;
+  @Input() styles = {
+    'background-img':'url("../../../assets/avatar1.png")'
+  };
+
+  @Input() imgSelected = "../../../assets/avatar1.png"
+  @Input() selectImage;
+  
+
 
 
   div1: boolean = true;

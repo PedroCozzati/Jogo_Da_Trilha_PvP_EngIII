@@ -27,7 +27,7 @@ export class AdmPageComponent implements OnInit{
     }
   
     exitButton(){
-      this.ngZone.run(() => this.router.navigateByUrl('')).then(()=> location.reload());
+      this.ngZone.run(() => this.router.navigateByUrl(''));
     }
 
 

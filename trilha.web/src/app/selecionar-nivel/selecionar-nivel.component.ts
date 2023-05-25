@@ -6,6 +6,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { BugService } from '../shared/services/bug.service';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { ModalService } from '../_modal';
+import { Jogador } from '../shared/services/jogador';
 
 @Component({
   selector: 'app-selecionar-nivel',
@@ -15,8 +16,8 @@ import { ModalService } from '../_modal';
 export class SelecionarNivelComponent implements OnInit {
   slides: any[] = new Array(3).fill({ src: "", title: "" });
 
-  public user:string;
-  saldo:string;
+  public user: string;
+  saldo: string;
 
   options: AnimationOptions = {
     path: "../../assets/select-level.json",
@@ -31,17 +32,23 @@ export class SelecionarNivelComponent implements OnInit {
   niveis: any = []
   div1: boolean;
   div2: boolean;
-  div3= true;
+  div3 = true;
+  tips:any=[]
+  images: any=[]
+
+  jogador: Jogador;
+  avatar: any
+  nivelPeca: any;
 
   openModal(id: string) {
     this.modalService.open(id);
-}
+  }
 
-closeModal(id: string) {
+  closeModal(id: string) {
     this.modalService.close(id);
-}
+  }
 
-  
+
 
   constructor(
     private modalService: ModalService,
@@ -67,13 +74,14 @@ closeModal(id: string) {
 
   tabuleiros: any = []
   peca: any = {}
-
+ random:any
+ random2:any
   @Input() nivel: any = {}
 
   @Output()
   nivelDeletado = new EventEmitter<string>();
 
- 
+
 
   deletaNivel(nivel: any) {
     this.http.delete(`http://localhost:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
@@ -107,18 +115,29 @@ closeModal(id: string) {
   }
 
   ngOnInit() {
-  this.div2=false
+    this.tips=[
+      'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
+      'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
+      'Procure neutralizar as jogadas do seu oponente',
+      'Procure deixar uma peça livre para o plano de fuga em caso de trancamento',
+      'Aproveite a fase inicial para posicionar as suas peças estrategicamente',
+    ]
+    this.images =['draw']
+    this.random = Math.floor(Math.random() * this.tips.length);
+    this.random2 = Math.floor(Math.random() * this.images.length);
+    this.div2 = false
 
     this.div3 = true
-    this.div1=false 
+    this.div1 = false
 
-    this.user = this.route.snapshot.params['user']; 
-    this.saldo = this.route.snapshot.params['saldo']; 
-      console.log(this.route.snapshot.params['user']);
+    this.user = this.route.snapshot.params['user'];
+    this.saldo = this.route.snapshot.params['saldo'];
+    console.log(this.route.snapshot.params['user']);
 
-      this.item = {
-        url : `login-authenticated/${this.user}/${this.saldo}`
-      };
+    this.jogador = JSON.parse(this.route.snapshot.params['data']);
+
+    this.avatar = this.route.snapshot.params['image']
+
 
 
 
@@ -126,6 +145,8 @@ closeModal(id: string) {
 
     this.consultaTabuleiroPorId(this.nivel)
     this.consultaPecaPorId(this.nivel)
+
+    this.consultaPeca(this.nivel.peca_id)
 
 
 
@@ -181,29 +202,88 @@ closeModal(id: string) {
   }
 
 
-  
+
 
 
   backButton() {
+
+    this.item = {
+      url: `login-authenticated/${JSON.stringify(this.jogador)}`
+    };
+
     this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
   }
 
-  selectLevelButton() {
-    this.div1=false;
-    this.div3=false;
-    this.div2=true;
-
-    
-    setTimeout (() => {
-      this.ngZone.run(() => this.router.navigateByUrl('game'));
-    },2000);
-
-    
-   
+  consultaPeca(id: string): Promise<any> {
+    return this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } }).toPromise().then(response=>this.nivelPeca=response)
+      
   }
 
-  test(){
-    
+  getPeca=(id:string)=>{
+    this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
+    .subscribe( response => {
+      this.nivelPeca =  response
+      console.log(response)
+    })
+  }
+
+  updateBalance(jogador_id: string, saldo: number) {
+    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
+      saldo: saldo,
+    }, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+
+      }, err => {
+
+      })
+
+  }
+
+  selectLevelButton(valorDeAposta: number, nomeNivel: string, corNivel: string, nivel_id:string) {
+
+    this.consultaPeca(nivel_id)
+
+    console.log(this.nivel)
+
+    console.log(nivel_id)
+
+    console.log(this.nivelPeca)
+
+    var nivel = {
+      id: nivel_id,
+      nome: nomeNivel,
+      corTab: corNivel,
+    }
+
+    var item = {
+      url: `game/${JSON.stringify(this.jogador)}/${JSON.stringify(nivel)}/`
+    };
+
+    console.log(this.jogador.saldo)
+    console.log(valorDeAposta)
+
+    if (this.jogador.saldo >= valorDeAposta) {
+
+      this.updateBalance(this.jogador._id, -valorDeAposta)
+
+      this.div1 = false;
+      this.div3 = false;
+      this.div2 = true;
+      setTimeout(() => {
+        this.ngZone.run(() => this.router.navigateByUrl(item.url+this.avatar));
+      }, 5000);
+
+
+    } else {
+      this.openModal('selectedLevel')
+    }
+
+
+
+  }
+
+  test() {
+
   }
   exitButton() {
     this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
@@ -211,56 +291,56 @@ closeModal(id: string) {
 
 
   consultaNiveis() {
-    
-    try{
+
+    try {
       this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
+        .subscribe(response => {
 
-        this.niveis = response
+          this.niveis = response
 
-        console.log(this.niveis)
-       
-
+          console.log(this.niveis)
 
 
 
 
-        for (let i = 0; i < this.niveis.length; i++) {
-          let niv = this.niveis[i]
-          this.http.get(`http://localhost:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
-            .subscribe(response => {
-              this.div1=true;
-              this.div3=false;
-              this.tabuleiro = response
-
-              this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
-              this.tabuleiros.push(this.tabuleiro);
 
 
-              // this.tabsSorted = this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
+          for (let i = 0; i < this.niveis.length; i++) {
+            let niv = this.niveis[i]
+            this.http.get(`http://localhost:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
+              .subscribe(response => {
+                this.div1 = true;
+                this.div3 = false;
+                this.tabuleiro = response
+
+                this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
+                this.tabuleiros.push(this.tabuleiro);
 
 
-              // this.objectTab.tabs = this.tabsSorted
+                // this.tabsSorted = this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
 
 
-              this.niveis[i].tab = this.tabuleiro
+                // this.objectTab.tabs = this.tabsSorted
 
 
-              console.log(this.niveis)
+                this.niveis[i].tab = this.tabuleiro
 
-            },
-            (error)=>{
-              this.openModal('custom-modal-2');
-            })
-        }
-      })
 
-    }catch(e){
-      if(e==null){
+                console.log(this.niveis)
+
+              },
+                (error) => {
+                  this.openModal('custom-modal-2');
+                })
+          }
+        })
+
+    } catch (e) {
+      if (e == null) {
 
         this.openModal('custom-modal-2');
       }
     }
-    }
+  }
 
 }

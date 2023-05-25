@@ -12,9 +12,16 @@
 
       <div class="login-row">
 
-        <div class="avatar">
-          <img src="../../../assets/user-profile-icon.webp">
+
+        <div style="margin-right: 1rem;" class="image-cropper">
+          <div class="circle2" (click)="selectImage()" ></div>
+            <img  class="avatar" src={{imgSelected}}>
+           
         </div>
+
+       
+
+       
 
         <div class="flex-column">
           <P>{{title}}</P>
@@ -36,7 +43,7 @@
 
     <div class="descricao">
       <div>Partidas jogadas: 3</div>
-      <div>Vitórias: 3</div>
+      <div>Vitórias: {{vitorias}}</div>
       <div>+ Detalhes</div>
     </div>
 

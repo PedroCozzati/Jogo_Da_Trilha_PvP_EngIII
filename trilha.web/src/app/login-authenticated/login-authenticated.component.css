@@ -461,9 +461,9 @@ body {
     width: 40px;
     height: 40px;
 }
-img{
+/* img{
     height: 12vh;
-}
+} */
 h2{
     text-align: center;
     font-weight: bolder;
@@ -590,9 +590,9 @@ html, body {
     font-size: larger;
   }
 
-  img{
+  /* img{
     border-radius: 10px;
-  }
+  } */
 
   .cancelar{
     margin-top: 20px;
@@ -756,8 +756,8 @@ td{
       align-self: center;
       align-items: center;
       align-content: center;
-      width: 90% !important;
-      height: 70vh;
+      width: 80% !important;
+      height: 56vh;
       padding: 20px;
       background-image: url("../../assets/bg.png");
       
@@ -776,8 +776,8 @@ td{
           align-content: center;
       /* modal container fixed across whole screen */
       position: fixed;
-      top: 12%;
-      left: 9.5%;
+      top: 20%;
+      left: 15%;
     
       /* z-index must be higher than .jw-modal-background */
       z-index: 1000;
@@ -786,11 +786,9 @@ td{
       overflow: auto;
     }
     .modalShop ::ng-deep  .jw-modal h3{
-      margin-bottom: 20px;
     }
     
     .modalShop  ::ng-deep  .jw-modal p{
-      margin-bottom: 2vh;
     }
 
     
@@ -876,8 +874,9 @@ td{
     transform: scale(1.1);
   }
 
+
   .buy-money{
-    height: 35vh;
+    height: 25vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -895,9 +894,9 @@ td{
     align-items: center;
     vertical-align: baseline;
     text-align: center;
-    height: 20vh;
+    height: 15vh;
     font-weight: bolder;
-    width: 10vw;
+    width: 7vw;
     color: rgb(36, 0, 56);
     background-size: contain;
     background-repeat: no-repeat;
@@ -943,6 +942,49 @@ td{
     /* margin exposes part of the modal background */
   }
   
+ 
+  .image-cropper-selected {
+    width: auto;
+    height: 10vh;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .image-cropper {
+    width: auto;
+    height: 10vh;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+.image-cropper:hover{
+  border: 2px solid rgb(26, 0, 73);
+  filter: brightness(70%);
+}
+
+  .circle2 {
+    display: inline;
+    margin: 0 auto;
+    border-radius: 100%;
+    background-image: url('../../assets/change.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 100;
+    position: absolute;
+    top: 70%;
+    left: 60%;
+    height: 25%;
+    width: 25%;
+  }
+
+  .circle2:hover{
+    transform: scale(1.1);
+    background-color: #30129baf;
+    filter: brightness(60%);
+  }
   
   .coin-buy  ::ng-deep  .jw-modal {
     justify-content: center;
@@ -952,7 +994,7 @@ td{
     /* modal container fixed across whole screen */
     position: fixed;
     top: 40%;
-    left: 35%;
+    left: 30%;
   
     /* z-index must be higher than .jw-modal-background */
     z-index: 1000;
@@ -967,3 +1009,373 @@ td{
   .coin-buy  ::ng-deep  .jw-modal p{
     margin-bottom: 2vh;
   }
+
+
+
+  .modal-avatar ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 60% !important;
+
+    height: 60%;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .modal-avatar  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 15%;
+    left: 25%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .modal-avatar ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #0d0018;
+    opacity: 0.2;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.row-emoji{
+    display: flex;
+    margin-bottom: 1rem;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-column-emoji{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    
+    text-align: center;
+    align-items: center;
+    align-items: center;
+    align-self:center;
+    justify-content: center;
+}
+
+.emoji{
+    cursor: pointer;
+    font-size: 2rem;
+    height: 6vh;
+    opacity: 0.7;
+    width: 6vh;
+}
+
+.emoji:hover{
+    opacity: 1;
+    filter: brightness(120%);
+    transform: scale(1.2);
+}
+
+.form {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    align-content: space-between;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0rem;
+    padding-top: 30px;
+    padding-bottom: 20px;
+  
+    background-image: url("../../assets/bg.png");
+    background-blend-mode:multiply;
+    background-color: #e4dfffea ;
+    margin-top: 10px;
+    background-size: cover;
+    width: 40vw;
+  
+    border: 4px solid rgb(48, 24, 136);
+    border-radius: 50px;
+    box-shadow: 0 10px 15px -3px rgb(129, 51, 202), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-title {
+    font-size: large;
+    line-height: 1rem;
+    padding-bottom: 1.5rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #1f003b;
+    
+  }
+
+
+  .form-group{
+    flex-direction: column;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    display: flex;
+  }
+  .flex-column{
+    flex-direction: column;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    display: flex;
+  }
+
+
+  .login-row{
+    flex-direction: row;
+    
+    align-items: center;
+    align-self: center;
+    align-content: space-around;
+    display: flex;
+  }
+  .flex-row{
+    flex-direction: row;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    align-content: space-between;
+    display: flex;
+  }
+
+  .div{
+    width: 2vw;
+    height: 40px;
+  }
+
+
+  .input-group {
+   
+    margin-bottom: 20px;
+    position: relative;
+   }
+   
+   .input {
+    border: solid 1.5px #9e9e9e;
+    border-radius: 20px !important;
+    background-color: #f0f0f067;
+    padding: 0.7rem;
+    font-size: 1rem;
+    color: #000000;
+    transition: border 150ms cubic-bezier(0.4,0,0.2,1);
+   }
+   
+   .user-label {
+    position: absolute;
+    left: 15px;
+    bottom:25px;
+    color: #000000;
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: 150ms cubic-bezier(0.4,0,0.2,1);
+   }
+
+   .input:focus{
+    background-color: #8652b43f !important;
+   }
+   
+   .input:focus, input:valid {
+    outline: none;
+    border: 1.5px solid #530372;
+   }
+   
+   .input:focus ~ label, input:valid ~ label {
+    transform: translateY(-90%) scale(0.8);
+    background-color: #82319b00;
+    padding: 0 .2em;
+    color: #000508;
+   }
+
+  .avatar-img{
+    z-index: 0;
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+  }
+
+
+
+  
+
+ 
+
+  .descricao{
+    width: 34vw;
+    flex-direction: row;
+    display: flex;
+    align-self: safe;
+    align-content: space-around;
+    align-items: start;
+    justify-content: space-around;
+    justify-self: start;
+    justify-items: start;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .space{
+    height: 4vh;
+  }
+  
+  .space2{
+    height: 20vh;
+  }
+
+  .buttons-space{
+    width: 34vw;
+    flex-direction: row;
+    display: flex;
+    align-self: safe;
+    align-content: space-around;
+    align-items: start;
+    justify-content: space-around;
+    justify-self: start;
+    justify-items: start;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .test{
+    width: 39vw;
+    flex-direction: row;
+    display: flex;
+    align-self: safe;
+    align-content: space-around;
+    align-items: start;
+    justify-content: space-around;
+    justify-self: start;
+    justify-items: start;
+  }
+
+  .money{
+    flex-direction: row;
+    display: flex;
+    align-self: center;
+    align-content: space-between;
+    align-items: center;
+    margin-right: 1vw;
+  }
+
+  .user{
+
+    flex-direction: column;
+    display: flex;
+    align-self: center;
+    align-content: space-between;
+    align-items: center;
+    margin-right: 1vw;
+    
+  }
+
+  .animation{
+    padding-top: 70px;
+    flex-direction: row;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
+    align-content: center;
+    display: flex;
+  }
+
+
+  .animation {
+    opacity: 0;
+    animation: opacityOn 3s normal forwards;
+    animation-iteration-count: infinite;
+}
+@keyframes opacityOn {
+  0% {
+    opacity: 1;
+}
+25% {
+    opacity: 0.2;
+}
+50% {
+    opacity: 1;
+}
+75% {
+    opacity: 0.2;
+}
+100% {
+    opacity: 1;
+}
+}
+
+
+.input{
+  width: 20vw;
+
+}
+
+.backdropFix { 
+  z-index: -1 
+}
+.modal-backdrop {
+  color: #000000;
+  bottom: 0;
+  position: fixed;
+}
+
+.modal-backdrop.fade {
+  opacity: 0.7;
+}
+
+
+.button-avatar{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(196, 215, 255);
+    border-radius: 20px;
+    box-shadow: 0px 2px black ;
+    width: 70%;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+
+}

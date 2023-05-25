@@ -257,10 +257,43 @@
    }
 
   .avatar{
-    height: 10vh;
-    width: 7vw;
+    z-index: 0;
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../../../assets/avatar1.png");
     
   }
+
+
+  .image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .circle2 {
+    display: inline;
+    margin: 0 auto;
+    border-radius: 100%;
+    background-image: url('../../../assets/change.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 100;
+    position: absolute;
+    top: 70%;
+    left: 60%;
+    height: 25%;
+    width: 25%;
+    background-color: green;
+  }
+ 
 
   img{
     height: 10vh;
