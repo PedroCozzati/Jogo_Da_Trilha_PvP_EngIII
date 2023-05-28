@@ -1,47 +1,267 @@
 <form class="form">
+
   <p class="form-title">LOGIN</p>
 
-  <form class="test" [formGroup]="loginForm" (ngSubmit)="submitForm()" novalidate>
-    
- 
-      <div class="avatar">
+  <div class="successLogin" *ngIf="successLogin">
 
+    <ng-lottie height="250px" [options]="optionsLogin" resizeMode='center'></ng-lottie>
+
+  </div>
+
+
+
+
+  <form class="test" [formGroup]="loginForm" novalidate *ngIf="!successLogin">
+
+
+
+
+
+    <div class="login-row">
+
+      <div class="row-flex">
+
+        <div class="avatar">
+          <ng-lottie height="150px" [options]="options" resizeMode='center'></ng-lottie>
+        </div>
       </div>
-      <div class="flex">
+
+
+      <div class="flex-column">
+
         <div class="input-group">
           <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
           <label class="user-label">Usuário</label>
         </div>
+
         <div class="input-group">
-          <input required=""formControlName="senha" type="password" name="text" autocomplete="off" class="input">
+          <input required="" formControlName="senha" type="password" name="text" autocomplete="off" class="input">
           <label class="user-label" for="name">Senha</label>
         </div>
-          <!-- <div class="inputGroup">
-            <input type="text" formControlName="name" class="form-control" maxlength="20" required=""
-              autocomplete="off">
-            <label class="user-label" for="name">Usuário</label>
-          </div> -->
-        
-        <!-- <div class="form-group">
-          <div class="inputGroup">
-            <input type="password" formControlName="senha" class="form-control" maxlength="20" required=""
-              autocomplete="off">
-            <label for="name">Senha</label>
+        <div class="input-clm">
+          <div class="input-row">
+            <button (click)="openModalCadastro()" class="btnCadastro">CADASTRO</button>
+            <button (click)="openModal('recsenha')" class="btnSenha">ESQUECI A SENHA</button>
           </div>
-        </div> -->
-
-
-
-        <button class="button">ENTRAR</button>
+          <div class="input-row">
+            <button (click)="submitForm()" class="buttonEntrar">ENTRAR</button>
+          </div>
+        </div>
       </div>
-    
+    </div>
   </form>
-  <div class="animation">
-  <ng-lottie height="100px" [options]="options"></ng-lottie>
 
-  
+  <!-- <button (click)="submitForm()" class="button">ENTRAR</button> -->
 
-  </div>
+  <jw-modal id="custom-modal-1" class="modal">
+    <h3>Erro!</h3>
+    <p style="text-align: center;">Usuário não encontrado!</p>
+    <button class="button" (click)="closeModal('custom-modal-1');">OK</button>
+  </jw-modal>
 
+  <jw-modal id="custom-modal-0" class="modal">
+    <h3>Erro!</h3>
+    <p>Senha inválida!</p>
+    <button class="button" (click)="closeModal('custom-modal-0');">OK</button>
+  </jw-modal>
+
+  <jw-modal id="cadastro" class="modal1" [formGroup]="userEmails">
+    <h3><b>CADASTRO</b></h3>
+    <div class="flex-column">
+
+
+
+
+      <div style="color: rgb(17, 128, 17);font-weight: bold;" class="successRegister" *ngIf="successRegister">
+        Usuário cadastrado com sucesso!
+      </div>
+
+      <div style="color: rgb(114, 13, 13);font-weight: bold;" class="errorRegister" *ngIf="errorRegister">
+        Falha ao cadastrar usuário!
+      </div>
+
+      <div class="input-group-email" *ngIf="(!errorRegister)||(!successRegister)">
+
+
+
+
+        <!-- <input [class.is-invalid]="primEmail.invalid" required="" formControlName="primaryEmail" type="email" name="text" autocomplete="off" class="input">
+        <label class="user-label" for="primaryEmail">E-mail</label>
+      </div>
+      <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
+        <small *ngIf="primEmail.errors?.required" class="text-danger">Primary email is required</small>
+       
+        <small *ngIf="primEmail.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+       -->
+        <div class="email-col" style="display: flex;flex-direction: column;">
+          <label class="user-label2" for="primaryEmail">E-mail</label>
+          <input [class.is-invalid]="primEmail.invalid && primEmail.touched" placeholder='example@email.com'
+            type="email" class="input-register" formControlName="primaryEmail" />
+        </div>
+
+
+        <div style="margin: 0;" *ngIf="(primEmail.invalid) || primEmail.dirty">
+
+          <div style="color:red" *ngIf="emailAlreadyTaken&& primEmail.touched">Esse email já foi cadastrado no nosso
+            sistema!</div>
+
+          <div style="color:red" *ngIf="primEmail.errors?.required">Digite seu email mais utilizado</div>
+          <!--question mark(?) is a safe navigation operator-->
+          <div style="color:red" *ngIf="primEmail.errors?.pattern">Insira um email válido!</div>
+        </div>
+
+      </div>
+
+
+
+
+
+
+      <div class="input-group-email" *ngIf="primEmail.valid && !successRegister">
+        <div class="email-col" style="display: flex;flex-direction: column;">
+          <label class="user-label2" for="nameCadastro">Usuário</label>
+
+          <input required="" formControlName="nameCadastro" type="text" name="text" autocomplete="off"
+            class="input-register">
+        </div>
+
+
+        <div style="text-align: left" *ngIf="(userField.invalid) || userField.dirty">
+
+          <div style="color:red" *ngIf="usernameAlreadyTaken&& userField.touched">Esse nome de usuário já foi escolhido
+          </div>
+          <!--question mark(?) is a safe navigation operator-->
+          <div style="color:red;text-align: left;" *ngIf="userField.errors?.required">O nome de usuário não pode ser
+            vazio!</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="input-group-email" *ngIf="primEmail.valid && !successRegister">
+      <div class="row-input">
+        <div class="input-group2" style="display: flex; flex-direction: column;">
+          <label class="user-label2" for="senhaCadastro">Senha</label>
+
+          <input required="" formControlName="senhaCadastro" type="password" name="text" autocomplete="off"
+            class="input2">
+
+          <div style="margin: 0;" *ngIf="(passwordField.invalid) || passwordField.dirty">
+
+
+            <div style="color:red" *ngIf="passwordField.errors?.required">A senha não pode ser vazia!</div>
+            <div style="color:red" *ngIf="passwordField.errors?.pattern">A senha deve ter entre 6 e 12 caracteres!</div>
+
+          </div>
+        </div>
+
+
+        <button class="button3" *ngIf="!(userField.errors?.required) && !(passwordField.errors?.required) && !successRegister" (click)="registerUserModal();">ENVIAR</button>
+      </div>
+    </div>
+
+
+
+    <button style="margin-top: 0.5rem !important;" class="button" (click)="closeModalCadastro();">VOLTAR</button>
+  </jw-modal>
+
+
+
+
+  <jw-modal id="recsenha" class="modal2" [formGroup]="userEmails2">
+    <h3><b>RECUPERAÇÃO DE SENHA</b></h3>
+    <div class="flex-column">
+      <p style="margin: 2vh;text-align: center;"><b>Digite seu e-mail cadastrado para receber uma nova senha:</b></p>
+
+
+
+
+      <div class="input-group-email" *ngIf="(!errorRegister)||(!successRegister)">
+
+
+
+
+        <!-- <input [class.is-invalid]="primEmail.invalid" required="" formControlName="primaryEmail" type="email" name="text" autocomplete="off" class="input">
+        <label class="user-label" for="primaryEmail">E-mail</label>
+      </div>
+      <div *ngIf="(primEmail.invalid && primEmail.touched) || primEmail.dirty">
+        <small *ngIf="primEmail.errors?.required" class="text-danger">Primary email is required</small>
+       
+        <small *ngIf="primEmail.errors?.pattern" class="text-danger">Please provide a valid email address</small>
+       -->
+        <div *ngIf='!pwdChanged'
+          style="display: flex;flex-direction: row;align-items: center;align-self: center;align-content: center;justify-self: center;justify-content: center;justify-items: center;vertical-align: middle;">
+          <div class="email-col" style="display: flex;flex-direction: column;">
+            <label class="user-label2" for="secundaryEmail">E-mail</label>
+            <input [class.is-invalid]="secEmail.invalid && secEmail.touched" placeholder='example@email.com'
+              type="email" class="input-register" formControlName="secundaryEmail" />
+          </div>
+          <button *ngIf="!this.canResetPwd" class="button3" style="margin-top: 1rem;" (click)="checkUserModal();">VERIFICAR</button>
+
+
+        </div>
+
+
+        <div  *ngIf='pwdChanged' style="color:rgb(17, 128, 17);text-align: center;margin: 0.5rem;font-weight: bold;">SENHA ALTERADA COM SUCESSO!</div>
+
+        <div *ngIf="this.canResetPwd" style="color:rgb(17, 128, 17);text-align: center;margin: 0.5rem;">Email encontrado!
+        </div>
+
+        <div class="foundEmail-user" *ngIf="this.canResetPwd">Usuário: {{found}}</div>
+
+
+
+        <div style="margin: 0;" *ngIf="(secEmail.invalid) || secEmail.dirty">
+
+          <div style="color:red;text-align: center;" *ngIf="neverUsedEmail && secEmail.touched">Esse email não existe no nosso sistema!
+          </div>
+
+          <div style="color:red;text-align: center;" *ngIf="secEmail.errors?.required"></div>
+          <!--question mark(?) is a safe navigation operator-->
+          <div style="color:red;text-align: center;" *ngIf="secEmail.errors?.pattern">Insira um email válido!</div>
+        </div>
+
+
+
+      </div>
+
+      <div class="input-group-email" *ngIf="canResetPwd">
+        <div class="row-input" >
+          <div class="input-group2" style="display: flex;flex-direction: column;">
+            
+            <label class="user-label2" for="novaSenha">Senha</label>
+
+            <input required="" formControlName="novaSenha" type="password" name="text" autocomplete="off"
+              class="input2">
+
+            <div style="margin: 0;" *ngIf="(newPwd.invalid) || newPwd.dirty">
+
+
+              <div style="color:red" *ngIf="newPwd.errors?.required">A senha não pode ser vazia!</div>
+              <div style="color:red" *ngIf="newPwd.errors?.pattern">A senha deve ter entre 6 e 12 caracteres!</div>
+
+            </div>
+
+          </div>
+          <button class="button4"  *ngIf="!(newPwd.errors?.required) && !(newPwd.errors?.pattern)" (click)="recSenha();">ALTERAR</button>
+
+
+
+        </div>
+      </div>
+      <!-- <div class="row-input">
+        <div class="input-group">
+          <input style="width: 27vw;" required="" formControlName="email" type="text" name="email" autocomplete="off"
+            class="input">
+          <label class="user-label" for="name">E-mail</label>
+        </div>
+        <button class="button3" (click)="closeModal('recsenha');">ENVIAR</button>
+      </div> -->
+
+    </div>
+
+
+
+    <button class="button" style="margin-top: 1rem;" (click)="closeModalRecSenha();">VOLTAR</button>
+  </jw-modal>
 
 </form>

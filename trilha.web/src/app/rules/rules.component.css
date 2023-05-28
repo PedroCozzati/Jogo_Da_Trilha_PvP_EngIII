@@ -63,6 +63,7 @@ c-carousel-item{
     align-self: center;
     align-content: center;
     padding: 0rem;
+    margin-top: 10px;
     
    
     padding-bottom: 20px;
@@ -82,6 +83,10 @@ c-carousel-item{
     box-shadow: 0 10px 15px -3px rgb(129, 51, 202), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
+
+  p{
+      margin-top: 5vh;
+  }
 
   .form-title {
     font-size: 1.25rem;
@@ -267,8 +272,7 @@ c-carousel-item{
   }
 
 
-
-
+ 
 
 
 

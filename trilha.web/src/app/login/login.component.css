@@ -264,7 +264,7 @@
 }
 
 .page{
-    margin: 30px;
+    margin: 5vh;
 }
 
 html,
@@ -273,12 +273,12 @@ body {
   height: 100%;
 }
 
-.box {
+/* .box {
   background: red;
   height: 100%;
-}
+} */
 
-.box {
+/* .box {
     background:url("/assets/bgtest.png"); 
  background-repeat: no-repeat;
  background-size:100% 100%;
@@ -289,7 +289,7 @@ body {
     right:0px;
     bottom:0px;
     left:0px;
-  }
+  } */
 
   .main{
     opacity: 100%;
@@ -297,7 +297,7 @@ body {
 
   .flex {
     display: flex;
-    margin-top: 20px;
+    margin-top: 5vh;
     flex-direction: row;
     
     height: 400px;
@@ -313,22 +313,129 @@ body {
     align-self: center;
     flex-direction: row;
     align-items: flex;
+    
     justify-content: center;
-    padding-bottom: 20px;
+    vertical-align: middle;
     
     
     align-items: center;
+}
+
+.board{
+    display: flex;
+    height: 10vh;
+    margin-left: auto;
+  margin-right: auto;
+  display: block;
+    align-items: center;
+    align-self: center;
+    width: 100%;
+    justify-content: center;
+    
+    
+    align-items: center;
+
+    background-image: url("../../assets/board6.png");
+
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 .divisao{
     width: 40px;
     height: 40px;
 }
 img{
-    border-radius: 12px;
-    height: 60px;
+    height: 12vh;
 }
 h2{
     text-align: center;
     font-weight: bolder;
     color: aliceblue;
 }
+
+
+html, body {
+    margin: 0;
+    padding: 0;
+  }
+  section {
+    
+
+    background:
+        /* top, transparent black, faked with gradient */ 
+        linear-gradient(
+          rgba(71, 40, 197, 0.815), 
+          #0e001a
+        );
+        /* bottom, image */
+
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    
+  }
+
+
+  .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+    background: url(https://i.imgur.com/DLD3N2t.png);
+    background-color: rgba(77, 18, 133, 0.479);
+    background-size: 100vw 20vh;
+  }
+  .wave1 {
+    filter: brightness(40%);
+    animation: animate 20s linear infinite;
+    background-color: rgb(58, 3, 129);
+    opacity: 0.3;
+    animation-delay: 0s;
+    top: 0;
+  }
+  .wave2 {
+    filter: brightness(40%);
+    background-color: #e7e2ff63;
+    animation: animate 20s linear infinite;
+    opacity: 0.3;
+    background-image: url("../../assets/blank.png");
+    animation-delay: 0s;
+    top: 20vh;
+    height: 60% ;
+    
+  }
+  .wave3 {
+    filter: brightness(40%);
+    animation: animate 10s linear infinite;
+    opacity: 0.3;
+    background: linear-gradient(
+        black,
+        black,
+    );
+    
+    animation-delay: -2s;
+    transform: rotate(3.1415rad);
+    
+  }
+ 
+  @keyframes animate {
+    0% {
+      background-position-x: 0;
+    }
+    100% {
+      background-position-x: 100vw;
+    }
+  }
+  @keyframes animate2 {
+    0% {
+      background-position-x: 0;
+    }
+    100% {
+      background-position-x: -100vw;
+    }
+  }
+  
+
+
+  

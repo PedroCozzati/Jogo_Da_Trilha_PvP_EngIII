@@ -4,7 +4,7 @@
 
 
  
-  <c-carousel [animate]="true" transition="crossfade" [dark]="true" [interval]=7000>
+  <!-- <c-carousel [animate]="true" transition="crossfade" [dark]="true" [interval]=7000>
     <c-carousel-indicators></c-carousel-indicators>
     <c-carousel-inner>
       <c-carousel-item *ngFor="let slide of slides">
@@ -18,7 +18,18 @@
     </c-carousel-inner>
     <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
     <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
-  </c-carousel>
+  </c-carousel> -->
+
+
+  <p-carousel  [value]="slides" [autoplayInterval]='6000' [numVisible]="1" [numScroll]="1" [circular]="true" >
+    <ng-template let-slide pTemplate="item">
+            <div>
+                <p >{{ slide.title }}</p>
+            </div>
+    </ng-template>
+</p-carousel>
+
+
   <ng-lottie height="80px" [options]="options"></ng-lottie>
 
 

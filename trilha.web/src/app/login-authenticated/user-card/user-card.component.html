@@ -1,0 +1,54 @@
+<div class="user">
+
+  <form class="form">
+
+    <p class="form-title">USUÁRIO</p>
+
+
+
+
+    <form class="test" [formGroup]="loginForm" (ngSubmit)="submitForm()" novalidate>
+
+
+      <div class="login-row">
+
+
+        <div style="margin-right: 1rem;" class="image-cropper">
+          <div class="circle2" (click)="selectImage()" ></div>
+            <img  class="avatar" src={{imgSelected}}>
+           
+        </div>
+
+       
+
+       
+
+        <div class="flex-column">
+          <P>{{title}}</P>
+          <!-- <div class="input-group">
+              <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
+              <label class="user-label">Usuário</label>
+            </div> -->
+        </div>
+      </div>
+      <div class="money">
+
+        <p> <ng-lottie height="30px" [options]="options" resizeMode='center'></ng-lottie></p>
+        <p>{{saldo}}</p>
+      </div>
+    </form>
+
+    <div class="space"></div>
+
+
+    <div class="descricao">
+      <div>Partidas jogadas: 3</div>
+      <div>Vitórias: {{vitorias}}</div>
+      <div>+ Detalhes</div>
+    </div>
+
+  </form>
+
+
+
+</div>

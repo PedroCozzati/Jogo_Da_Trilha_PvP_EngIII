@@ -1,0 +1,1282 @@
+#gameBoard {
+    border: 0.441vmin solid black;
+    display: none;
+    border-radius: 4.412vmin;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -38vmin 0 0 -45vmin;
+
+    width: 90vmin;
+    height: 76vmin;
+
+    padding: 0;
+}
+
+/* 10vmin fieldLength */
+
+.fieldLineHorizontal {
+    height: 0.6vmin;
+    margin: -0.3vmin 0 0 0;
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+}
+
+.fieldLineVertical {
+    width: 0.6vmin;
+    margin: 0 0 0 -0.3vmin;
+    padding: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+}
+
+.field {
+    height: 0vmin;
+    width: 0vmin;
+    margin: -4.5vmin 0 0 -4.5vmin;
+    padding: 0;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+}
+
+.field:after {
+    position: absolute;
+    content: "";
+    height: 2vmin;
+    width: 2vmin;
+    left: 3.5vmin;
+    top: 3.5vmin;
+    border-radius: 50%;
+    border: none;
+}
+
+.stoneWhite,
+.stoneBlack {
+    padding: 0;
+    border-radius: 50%;
+    z-index: 3;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transition: transform 0.4s ease-out, z-index 0.4s step-end;
+}
+
+.stoneMoveFast {
+    transition: transform 0.2s, z-index 0.2s step-end;
+}
+
+.stoneMoveInstant {
+    transition: transform 0s, z-index 0s;
+}
+
+.stoneActive {
+    z-index: 4;
+}
+
+
+.stoneSelected{
+    border: 0.6vmin solid #fcfcfc !important;
+    margin: -4.6vmin 0 0 -4.6vmin !important;
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.404) !important;
+}
+
+.stoneRemoved{
+    
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-40vmin,0vmin);
+
+}
+
+#winnerScreen {
+    width: 90vmin;
+    height: 76vmin;
+    padding: 0;
+    border: none;
+    display: table;
+    overflow: hidden;
+    border-radius: 4vmin;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 5;
+
+    color: black;
+    font-family: 'Arial';
+    font-size: 4.6vmin;
+    text-align: center;
+    transition: 0.4s;
+}
+
+#winnerScreen div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#winnerScreen span {
+    font-weight: bold;
+    font-size: 8.5vmin;
+    text-transform: uppercase;
+}
+
+#gameMenu {
+    width: 90vmin;
+    height: 76vmin;
+    padding: 0;
+    border: 0.441vmin solid black;
+    display: block;
+    /*margin: 2.5vmin auto;*/
+    border-radius: 4.412vmin;
+    /*position: relative;*/
+    box-shadow: 20px 10px 10px rgba(0, 0, 0, 0.8);
+    background-color: none;
+    transition: background 1s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -38vmin 0 0 -45vmin;
+}
+
+#gameMenu:after {
+    content: "";
+
+    background-size: cover;
+    border-radius: 4vmin;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    z-index: -1;
+    transition: opacity 1s;
+}
+
+#gameMenu table {
+    width: -moz-max-content;
+    /* otherwise text was wrapped inside Button & Labels in FF */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 5.882vmin;
+    /* 40px */
+}
+
+#gameMenu td {
+    padding: 0.735vmin;
+    /* 5px; */
+    color: black;
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 5vmin;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+#gameMenu button {
+    background-color: transparent;
+    border: 0.441vmin solid black;
+    /* 3px */
+    padding: 1.912vmin;
+    /* 13px; */
+    border-radius: 1.471vmin;
+    /* 10px; */
+    color: black;
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 5vmin;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#gameMenu button:hover {
+    background-color: rgba(238, 154, 77, 0.3);
+    outline: 0;
+}
+
+#gameMenu button:focus {
+    background-color: rgba(238, 154, 77, 0.3);
+    outline: 0;
+}
+
+#gameMenu button:active {
+    background-color: rgba(238, 154, 77, 1);
+}
+
+#gameMenu input[type="number"] {
+    background-color: transparent;
+    border: 0.441vmin solid black;
+    /* 3px */
+    padding: 0.294vmin;
+    /* 2px; */
+    border-radius: 1.471vmin;
+    /* 10px; */
+    color: black;
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 5vmin;
+    /* 34px */
+    text-transform: uppercase;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+#gameMenu input[type="number"]:hover {
+    background-color: rgba(238, 154, 77, 0.3);
+}
+
+#gameMenu input[type="number"]:focus {
+    background-color: rgba(238, 154, 77, 1);
+    outline: 0;
+}
+
+#gameMenu input[type=number]::-webkit-inner-spin-button,
+#gameMenu input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    vertical-align: text-bottom;
+    position: relative;
+    display: inline-block;
+    width: 9vmin;
+    height: 5vmin;
+}
+
+.switch:focus {
+    background-color: rgba(238, 154, 77, 0.3);
+    border-radius: 5vmin;
+    outline: 0;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    display: none;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border: 0.45vmin solid black;
+    /* 3px */
+    border-radius: 5vmin;
+}
+
+.slider:hover {
+    background-color: rgba(238, 154, 77, 0.3);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    width: 3.5vmin;
+    left: 0.3vmin;
+    top: 0.3vmin;
+    bottom: 0.3vmin;
+    background-color: black;
+    -webkit-transition: transform .4s;
+    transition: transform .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: rgba(238, 154, 77, 1);
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(4vmin);
+    -ms-transform: translateX(4vmin);
+    transform: translateX(4vmin);
+}
+
+
+.dropbtn {
+    min-width: 28vmin;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownButtonShow {
+    background-color: rgba(238, 154, 77, 1);
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(238, 154, 77, 1);
+    width: 100%;
+    border-radius: 1.471vmin;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 0.5vmin;
+    text-decoration: none;
+    font-weight: normal;
+    display: block;
+    border-radius: 1.471vmin;
+    cursor: pointer;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    /* lightens up background */
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display: block;
+}
+
+
+#infoOverlay {
+    margin: 0 0 -0.4vmin -0.4vmin;
+    padding: 0;
+    width: 90.8vmin;
+    height: 76.8vmin;
+    border: none;
+    display: table;
+    overflow: hidden;
+    border-radius: 4.2vmin;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 5;
+    display: none;
+
+    color: white;
+    font-family: 'Arial';
+    font-size: 4.6vmin;
+    text-align: center;
+    transition: 0.4s;
+}
+
+#infoOverlay div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#infoOverlay span {
+    font-weight: bold;
+    font-size: 8.5vmin;
+    text-transform: uppercase;
+}
+
+#infoOverlay p {
+    margin: 4vmin;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /*display: table-cell;*/
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Version one: Moving the background
+#background1 {
+    background: url(../../assets/pictures/background.jpg);
+    left: 0;
+}
+#background2 {
+    background: url(../../assets/pictures/background-nature.jpg);
+    left: -100vw;
+}
+#background1, #background2 {
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    transition: transform 1s ease-in-out;
+    z-index:-1;
+}
+*/
+#background1 {
+    background: url(../../assets/pictures/background-nature.jpg);
+    opacity: 1;
+    z-index: -1;
+    transition: opacity 1.5s;
+}
+
+#background2 {
+    background: url(../../assets/pictures/background.jpg);
+    z-index: -2;
+}
+
+#background1,
+#background2 {
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 5vmin;
+    text-align: left;
+    margin: 0 0 1vmin 0;
+    height: 7vmin;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    /* background-color: rgba(0,255,0,0.5); */
+}
+
+header td {
+    padding-left: 5vmin;
+    vertical-align: middle;
+}
+
+header button {
+    display: block;
+    background-color: transparent;
+    border: 0.3vmin solid white;
+    padding: 0.4vmin;
+    margin: 0;
+    border-radius: 1vmin;
+    color: white;
+    font-family: 'Arial';
+    font-size: 2.5vmin;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+header button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: 0;
+}
+
+header button:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: 0;
+}
+
+header button:active {
+    background-color: rgba(255, 255, 255, 1);
+    color: black;
+}
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    font-size: 2.353vmin;
+    /* std 16px */
+    width: 100%;
+    padding: 0;
+    margin: 2vmin 0 0 0;
+    height: 6vmin;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    /* background-color: rgba(255,0,0,0.5); */
+
+}
+
+footer p {
+    margin: 1.471vmin;
+    /* 10px */
+    padding: 0;
+}
+
+/*
+#background1 {
+    transform: translate(100vw,0);
+}
+#background2 {
+    transform: translate(100vw,0);
+}
+*/
+
+#gameMenu {
+    background-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.8);
+}
+
+#gameMenu:after {
+    opacity: 0 !important;
+}
+
+#gameBoard {
+    background-image: url("../../assets/tablebg.png");
+    background-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 6vmin rgba(0, 0, 0, 0.8);
+}
+
+.fieldLineHorizontal {
+    background-color: rgba(8, 0, 83, 0.6);
+}
+
+.fieldLineVertical {
+    background-color: rgba(47, 1, 85, 0.6);
+}
+
+.field:after {
+    background-color: rgb(8, 0, 82);
+}
+
+.fieldMoveable:after {
+    background-color: #7000b1;
+}
+
+.fieldMoveable:hover:after {
+    background-color: #ddff00;
+}
+
+.stoneWhite,
+.stoneBlack {
+    margin: -5vmin 0 0 -5vmin;
+    width: 10vmin;
+    height: 10vmin;
+}
+
+.stoneWhite {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneWhite.stoneMoveable {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneWhite.stoneMoveable.stoneHoverable:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+/* Its specified later so will override possible moveable */
+.stoneWhite.stoneActive {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneWhite.stoneActive:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneWhite.stoneRemoveable {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneWhite.stoneRemoveable.stoneHoverable:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack.stoneMoveable {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack.stoneMoveable.stoneHoverable:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+/* Its specified later so will override possible moveable */
+.stoneBlack.stoneActive {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack.stoneActive:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack.stoneRemoveable {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+.stoneBlack.stoneRemoveable.stoneHoverable:hover {
+    background-image: url("../../assets/peca1.png");
+    background-size: cover;
+}
+
+/*
+#gameMenu {
+    background: url(../../assets/pictures/wood.jpg);
+    background-size: cover;
+    box-shadow: 20px 10px 10px rgba(0,0,0,0.8);
+}
+*/
+#background1 {
+    opacity: 0 !important;
+}
+
+#gameBoard {
+    background-size: cover;
+    box-shadow: 2.353vmin 1.471vmin 1.471vmin rgba(0, 0, 0, 0.8);
+}
+
+.fieldLineHorizontal {
+    background-color: black;
+}
+
+.fieldLineVertical {
+    background-color: black;
+}
+
+.field:after {
+    background-color: black;
+}
+
+.fieldMoveable:after {
+    background-color: #371cad;
+}
+
+.fieldMoveable:hover:after {
+    background-color: #cd60ff;
+}
+
+.stoneWhite,
+.stoneBlack {
+    margin: -4.3vmin 0 0 -4.3vmin;
+    width: 7vmin;
+    height: 7vmin;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8);
+}
+
+.stoneWhite {
+    /* background-position needs to be set randomly between 0 and 8vmin */
+    background-image: url("../../assets/peca1.png");
+    background-repeat: repeat;
+    border: 0.3vmin solid black;
+}
+
+.stoneBlack {
+    background-image: url("../../assets/peca1.png");
+    background-repeat: repeat;
+    border: 0.3vmin solid rgb(0, 0, 0);
+}
+
+.stoneWhite:hover {
+    /* background-position needs to be set randomly between 0 and 8vmin */
+    
+    border: 1vmin solid black;
+}
+
+.stoneBlack:hover {
+   
+    border: 1vmin solid rgb(0, 0, 0);
+}
+
+.stoneMoveable {
+    border-color: #00ff00;
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(0, 255, 0, 0.1);
+}
+
+.stoneMoveable.stoneHoverable:hover {
+    margin: -4.6vmin 0 0 -4.6vmin;
+    border: 0.6vmin solid #ff7700;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 0 white;
+}
+
+/* Its specified later so will override possible moveable */
+.stoneActive {
+    border: 0.6vmin solid #fcfcfc;
+    margin: -4.6vmin 0 0 -4.6vmin;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.404);
+}
+
+.stoneActive:hover {
+    margin: -4.6vmin 0 0 -4.6vmin;
+    border: 0.6vmin solid #180c02;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.336);
+}
+
+.stoneRemoveable {
+    border-color: #ff0000;
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1000px rgba(255, 0, 0, 0.3);
+}
+
+.stoneRemoveable.stoneHoverable:hover {
+    margin: -4.6vmin 0 0 -4.6vmin;
+    border: 0.6vmin solid #ff7777;
+
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 120, 120, 0.5);
+}
+
+.player-card {
+    
+    position: absolute;
+}
+.infos{
+    width: 45%;
+    position:absolute;
+    border:#371cad 0.3rem solid;
+    border-radius: 1rem;
+    padding: 0.3rem;
+    margin-bottom: 2vh;
+    text-align: center;
+    bottom: 1%;
+    font-weight: bolder;
+    background-color: #e4dfff;
+    left: 27%;
+}
+
+.card-me{
+    color: aliceblue;
+    padding: 2vw;
+    background-color: rgba(14, 0, 138, 0.267);
+    border:#371cad 0.5vw solid;
+    border-radius: 20px;
+}
+
+.timer{
+    border-radius: 2rem;
+    border: white 2px solid;
+    text-align: center;
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-self: center;
+    width: 10vw;
+    font-weight: bold;
+    padding: 1vw;
+}
+
+
+.npecas{
+        border-radius: 2rem;
+        border: white 2px solid;
+        text-align: center;
+        align-self: center;
+        display: flex;
+        flex-direction: row;
+        justify-items: center;
+        align-content: center;
+        justify-content: space-around;
+        justify-self: center;
+        width: 10vw;
+        font-weight: bold;
+        padding: 1vw;
+}
+
+.peca-card{
+    width: 2rem;
+    background-color: blue;
+    color:blue;
+    height: 2rem;
+    border-radius: 100%;
+    border: 0.1rem solid black;
+}
+.peca-col{
+    display: flex;
+    flex-direction: column;
+}
+.peca-card-oponent{
+    background-image: url("../../assets/peca1.png");
+    width: 2rem;
+    background-color: rgb(255, 0, 21);
+    color:blue;
+    height: 2rem;
+    border-radius: 100%;
+    border: 0.3vmin solid rgb(0, 0, 0);
+}
+
+.ampulheta{
+    height: 7vh;
+    width: auto;
+    background-repeat: no-repeat;
+}
+
+.card-oponent{
+    background-image:url("../../assets/tablebg.png");
+    
+    color: aliceblue;
+    padding: 2vw;
+    background-color: rgba(207, 179, 21, 0.459);
+    
+    border-radius: 20px;
+}
+
+.card-body{
+    opacity: 1 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.player-card-oponent {
+    padding: 2vw;
+    top: 1%;
+    
+    right: 1%;
+    width: 20vw;
+}
+
+.card-me{
+    background-image: url("../../assets/tablebg.png");
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+}
+
+.card-oponent-color{
+    border: 2px 
+}
+
+.card-oponent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70vh;
+}
+.player-card-me {
+    padding: 2vw;
+    width: 20vw;
+    bottom: 1%;
+    left: 1%;
+}
+
+.card-img-top {
+    align-self: center;
+    border-radius: 100%;
+    width: 60%;
+    height: 20%;
+}
+
+.oponent-playing{
+    font-size: large;
+    text-align: center;
+}
+
+
+
+.m-none {
+    margin: 0;
+}
+
+
+
+
+
+.modal2 ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 30% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .modal2  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 55%;
+    left: 20%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .modal2 ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #0d0018;
+    opacity: 0;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.row-emoji{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.flex-column-emoji{
+    height: 16vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    
+    text-align: center;
+    justify-content: space-around;
+}
+
+.emoji{
+    cursor: pointer;
+    font-size: 2rem;
+    height: 6vh;
+    opacity: 0.7;
+    width: 6vh;
+}
+
+.emoji:hover{
+    opacity: 1;
+    filter: brightness(120%);
+    transform: scale(1.2);
+}
+
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_1_0.woff2') format('woff2'),
+        url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff2') format('woff2'),
+        url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/306FA6_0_0.woff') format('woff');
+    font-style: italic;
+    font-weight: 400;
+}
+
+blockquote.bubble {
+    background-position: center;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    text-align: center;
+    height: 0;
+    box-sizing: content-box;
+    line-height: 1;
+}
+
+blockquote.speech {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/speech-bubble.svg);
+    width: auto;
+    padding-bottom: 20%;
+    padding-left: 20%;
+}
+
+blockquote.whisper {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/whisper.svg);
+    width: 25%;
+    font-size: 2vw;
+    color: #ccc;
+    font-style: italic;
+    padding: 6% 5% 15%;
+}
+
+blockquote.electric {
+    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/electric.svg);
+    width: 25%;
+    font-size: 2.4vw;
+    font-style: italic;
+    padding: 4% 6% 12% 0%;
+}
+
+blockquote.electric span {
+    display: block;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.game-draw ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-draw  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-draw ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/ampulheta.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+
+.game-lose ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-lose  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-lose ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/clock.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+
+.game-win ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-win  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-win ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/win-gif.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.win-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/win.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
+}
+
+
+.lose-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/lose_image.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
+}
+
+
+.draw-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/draw.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
+}

@@ -29,7 +29,7 @@ export class EditaTabuleiroComponent implements OnInit {
   }
 
   editaTabuleiro(tabuleiro: any) {
-    this.http.put(`http://localhost:90/tabuleiro`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://localhost:90/tabuleiro/${this.tabuleiro._id}`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/tabuleiros'));
       })

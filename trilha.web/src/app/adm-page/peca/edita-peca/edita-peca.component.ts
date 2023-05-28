@@ -29,7 +29,7 @@ export class EditaPecaComponent {
   }
 
   editaPeca(peca: any) {
-    this.http.put(`http://localhost:90/peca`, peca, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://localhost:90/peca/${this.peca._id}`, peca, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/pecas'));
       })

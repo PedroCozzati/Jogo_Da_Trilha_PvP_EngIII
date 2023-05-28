@@ -27,7 +27,7 @@ export class AdmPageComponent implements OnInit{
     }
   
     exitButton(){
-      this.ngZone.run(() => this.router.navigateByUrl('/app-login'));
+      this.ngZone.run(() => this.router.navigateByUrl(''));
     }
 
 

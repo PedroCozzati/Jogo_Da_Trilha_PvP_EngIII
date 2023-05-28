@@ -1,23 +1,36 @@
 .form {
     background-color: #fff;
-    display: block;
+    display: flex;
     align-items: center;
     align-self: center;
-    align-content: center;
+    align-content: space-between;
+    justify-content: space-between;
+    flex-direction: column;
     padding: 0rem;
-    padding-top: 30px;
-    padding-bottom: 50px;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
   
     background-image: url("../../assets/bg.png");
     background-blend-mode:multiply;
     background-color: #e4dfffea ;
+    margin-top: 10px;
     background-size: cover;
     width: 40vw;
-    height: 52vh;
   
     border: 4px solid rgb(48, 24, 136);
     border-radius: 50px;
     box-shadow: 0 10px 15px -3px rgb(129, 51, 202), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .row-flex{
+    height: 14vh;
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    align-self: center;
   }
   
   .form-title {
@@ -46,8 +59,8 @@
     padding-right: 3rem;
     font-size: 0.875rem;
     line-height: 1.0rem;
-    width: 500px;
-    height: 10px;
+    width: 50vw;
+    height: 10vh;
     border-radius: 0.5rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   }
@@ -77,7 +90,7 @@
     align-content: center;
     display: flex;
   }
-  .flex{
+  .flex-column{
     flex-direction: column;
     flex: content;
     align-items: center;
@@ -85,13 +98,36 @@
     align-content: center;
     display: flex;
   }
+
+
+  .login-row{
+    flex-direction: row;
+    
+    align-items: center;
+    align-self: center;
+    align-content: space-around;
+    display: flex;
+  }
+  .flex-row{
+    flex-direction: row;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    align-content: space-between;
+    display: flex;
+  }
+
+  .div{
+    width: 2vw;
+    height: 40px;
+  }
   
   .submit {
     display: block;
-    padding-top: 0.75rem;
+    /* padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-right: 1.25rem; */
     background-color: #4F46E5;
     color: #ffffff;
     font-size: 0.875rem;
@@ -132,7 +168,39 @@
     transition: all ease 0.1s;
    
   }
+  .button3{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 9vw;
+    margin-left: 1vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
 
+  .button4{
+    height: 40px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 9vw;
+    margin-left: 1vw;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+   
+  }
   button:hover{
     background-color: rgb(60, 74, 169);
     color: white;
@@ -141,6 +209,94 @@
   button:active {
     transform: translateY(5px);
     box-shadow: 0px 0px 0px 0px #a29bfe;
+  }
+
+  .btnCadastro{
+    height: 18px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 40%;
+    font-size: 10px;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+  }
+
+  .btnSenha{
+    height: 18px;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    width: 40%;
+    font-size: 10px;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+  }
+
+
+  .input-row{
+    width: 20vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 1vh;
+  }
+
+
+  .flex-column2{
+    justify-content: space-between;
+    flex-direction: column;
+    flex: content;
+    align-items: center;
+    align-self: center;
+    margin-bottom: 1vh;
+    align-content: center;
+    display: flex;
+  }
+
+  .row-input{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    align-items: center;
+    align-self:center;
+    justify-self: center;
+    justify-items: center;
+    width: 65%;
+    justify-content: center;
+    align-content: center;
+  }
+
+ 
+  
+  .buttonEntrar{
+    height: 6vh;
+    font-weight: bold;
+    background-color: rgb(252, 229, 255);
+    border-radius: 20px;
+    box-shadow: 0px 5px rgb(55, 19, 185) ;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+    width: 90%;
+  }
+
+  .input-entrar{
+    justify-self: center;
   }
 
   /* .inputGroup {
@@ -189,13 +345,43 @@
   } */
 
 
+  #custom-modal-1{
+border-radius: 50px;
+
+  }
   .input-group {
-    margin-left: 120px;
+   
     margin-bottom: 20px;
     position: relative;
    }
+
+   .input-group-email {
+    position: relative;
+    display: flex;
+    flex-wrap: initial;
+    align-items: initial;
+    width: 100%;
+    flex-direction: column;
+  }
    
+
+   .input-group2 {
+   
+    margin-bottom: 20px;
+    position: relative;
+   }
    .input {
+    border: solid 1.5px #9e9e9e;
+    border-radius: 20px !important;
+    background-color: #f0f0f067;
+    padding: 0.7rem;
+
+    font-size: 1rem;
+    color: #000000;
+    transition: border 150ms cubic-bezier(0.4,0,0.2,1);
+   }
+
+   .input2 {
     border: solid 1.5px #9e9e9e;
     border-radius: 20px !important;
     background-color: #f0f0f067;
@@ -221,31 +407,50 @@
    
    .input:focus, input:valid {
     outline: none;
-    border: 1.5px solid #530372;
+    border: 1.5px solid #720303;
+   }
+
+   .input:focus, input:invalid {
+    outline: none;
+    border: 1.5px solid #380031;
    }
    
-   .input:focus ~ label, input:valid ~ label {
+   
+   .input:focus ~ .user-label, input:valid ~ .user-label {
     transform: translateY(-90%) scale(0.8);
     background-color: #82319b00;
     padding: 0 .2em;
     color: #000508;
    }
 
+
+   .input:focus ~ .user-label2, input:valid ~ .user-label2 {
+    
+    color: #000508;
+   }
+
   .avatar{
-    background-image: url("../../assets/user-profile-icon.webp");
-    background-size: cover;
-    border-radius: 1000px;
-    border:  2px solid blueviolet;
-    height: 100px;
-    width: 100px;
-    margin: 10px;
-    margin-left: 40px;
+    width: 14.7vw;
+    margin: -3vw;
+    margin-left: -6vw;
+    opacity: 0;
+    animation: opacityOn 5s normal forwards;
+    animation-iteration-count: infinite;
+    animation-delay: 0s;
+    
   }
   
   .test{
-    flex-direction: row;
+    flex-direction: column;
     display: flex;
     align-self: center;
+    justify-self: center;
+    justify-items: center;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    align-items: center;
+
   }
 
   .animation{
@@ -262,24 +467,197 @@
 
   .animation {
     opacity: 0;
-    animation: opacityOn 5s normal forwards;
+    animation: opacityOn 3s normal forwards;
     animation-iteration-count: infinite;
-    animation-delay: 12s;
 }
 @keyframes opacityOn {
   0% {
-      opacity: 0;
-  }
-  25% {
-      opacity: 0.3;
-  }
-  50% {
-      opacity: 0.6;
-  }
-  75% {
-      opacity: 0.8;
-  }
-  100% {
-      opacity: 0;
-  }
+    opacity: 1;
+}
+25% {
+    opacity: 0.2;
+}
+50% {
+    opacity: 1;
+}
+75% {
+    opacity: 0.2;
+}
+100% {
+    opacity: 1;
+}
+}
+
+
+.input{
+  width: 20vw;
+
+}
+
+.input-register{
+  width: 30vw;
+  border: solid 1.5px #9e9e9e;
+    border-radius: 20px !important;
+    background-color: #f0f0f067;
+    padding: 0.7rem;
+  
+
+    font-size: 1rem;
+    color: #000000;
+
+}
+
+
+
+.input-register:valid {
+  outline: none;
+  border: 1.5px solid #3c0372;
+ }
+
+ .input-register:invalid {
+  outline: none;
+  border: 1.5px solid #720303;
+ }
+
+
+.input2{
+  justify-content: space-between;
+  width: 20vw;
+
+}
+
+
+
+.backdropFix { 
+  z-index: -1 
+}
+.modal-backdrop {
+  color: #000000;
+  bottom: 0;
+  position: fixed;
+}
+
+.modal-backdrop.fade {
+  opacity: 0.7;
+}
+
+
+
+.modal{
+  align-self: center;
+  justify-content: center;
+}
+
+
+.modal1  ::ng-deep .jw-modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  border-radius: 50px;
+  border: 4px solid rgb(33, 6, 77);
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  width: 50vw !important;
+  padding: 20px;
+  background-image: url("../../assets/bg.png");
+background-blend-mode:multiply;
+background-color: #e4dfff ;
+background-size: cover;
+
+  /* margin exposes part of the modal background */
+}
+
+
+.modal1  ::ng-deep  .jw-modal {
+  justify-content: center;
+      align-self: center;
+      align-items: center;
+      align-content: center;
+  /* modal container fixed across whole screen */
+  position: fixed;
+  top: 25%;
+  left: 25%;
+
+  /* z-index must be higher than .jw-modal-background */
+  z-index: 1000;
+  
+  /* enables scrolling for tall modals */
+  overflow: auto;
+}
+.modal1  ::ng-deep  .jw-modal h3{
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+.modal2 ::ng-deep .jw-modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  border-radius: 50px;
+  border: 4px solid rgb(33, 6, 77);
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  width: 70% !important;
+  padding: 20px;
+  background-image: url("../../assets/bg.png");
+background-blend-mode:multiply;
+background-color: #e4dfff ;
+background-size: cover;
+
+  /* margin exposes part of the modal background */
+}
+
+
+.modal2  ::ng-deep  .jw-modal {
+  justify-content: center;
+      align-self: center;
+      align-items: center;
+      align-content: center;
+  /* modal container fixed across whole screen */
+  position: fixed;
+  top: 20%;
+  left: 25%;
+
+  /* z-index must be higher than .jw-modal-background */
+  z-index: 1000;
+  
+  /* enables scrolling for tall modals */
+  overflow: auto;
+}
+.modal2  ::ng-deep  .jw-modal h3{
+  margin-bottom: 20px;
+}
+
+.modal2  ::ng-deep  .jw-modal p{
+  margin-bottom: 2vh;
+}
+
+
+.foundEmail-user{
+  border: 0.1rem solid black;
+  padding: 1rem;
+  border-radius: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  width: 40%;
+  
 }

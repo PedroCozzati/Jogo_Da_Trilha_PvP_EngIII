@@ -1,0 +1,142 @@
+<section style="z-index:-100">
+  <div class="wave wave1" style="z-index:-900"></div>
+  <div class="wave wave2" style="z-index:-900"></div>
+  <div class="wave wave3" style="z-index:-900"></div>
+
+
+
+  <p *ngIf="div1" class="form-title">SELECIONE UM NÍVEL</p>
+  <ng-lottie *ngIf="div1" height="80px" [options]="options"></ng-lottie>
+  <div>
+
+    <div *ngIf="div1" class="profile">
+
+      <div class="image-cropper">
+        <img class="avatar-img" src="../../assets/{{avatar}}.png">
+      </div>
+
+      <div class="avatar">
+
+        {{jogador.nome}}
+      </div>
+
+      <div class="money">
+        <ng-lottie height="30px" [options]="moneyAnimation" resizeMode='center'></ng-lottie>
+        {{jogador.saldo.toString()}}
+      </div>
+
+
+    </div>
+
+
+
+
+    <div *ngIf="div3">
+      <div style="height: 50vh;width:50vw"></div>
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only"></span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <p-carousel *ngIf="div1" [value]="niveis" [numVisible]="3" [numScroll]="1" [circular]="true">
+      <ng-template let-nivel pTemplate="item">
+        <div
+          style="background-position: bottom bottom;background-size: cover;background-repeat: no-repeat;background:  url(../../assets/{{images[random2]}}.png);box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
+          class="item-slide" (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca_id)">
+          <div class="items_text" style="display: flex;flex-direction: column;margin-top: 2rem;">
+            <div style="filter: blur(0) !important;" >{{ nivel.nome }}</div>
+            <div style="filter: blur(0) !important;"> Valor de aposta: {{nivel.valorDeAposta}}🪙</div>
+
+          </div>
+
+          <div class="glow"
+            style="filter: blur(0) !important; border-radius: 1px;box-shadow: none !important;width:50%;height:50%;background-color: {{nivel.tab.cor}};">
+            <img style="width:100%; height:100%;" src="../../assets/image2.png">
+          </div>
+
+          <!-- <div style="background-color: {{nivel.tab.cor}};" class="glow"> -->
+          <!-- </div> -->
+
+        </div>
+
+      </ng-template>
+      <!-- <ng-template let-tab pTemplate="item">
+        <div class="item-slide">
+          
+          <p>{{tab.cor}}</p>
+          <div class="glow"></div>
+        </div>
+    </ng-template> -->
+    </p-carousel>
+
+    <p *ngIf="div1" class="tip">Conforme for avançando de nível, mais moedas você poderá conseguir :)</p>
+    <button *ngIf="div1" (click)="backButton()" class="button1">VOLTAR</button>
+
+  </div>
+
+  <jw-modal id="selectedLevel" class="selectedLevel">
+
+
+    <h3><b>SALDO INSUFICIENTE!</b></h3>
+
+    <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
+      Você pode comprar mais moedas na loja
+    </div>
+    <button class="buttonShop" (click)="closeModal('selectedLevel');">VOLTAR</button>
+  </jw-modal>
+
+  <div *ngIf="div2" class="div2">
+
+
+    <div class="loading-text">
+      Encontrando seu oponente!
+    </div>
+
+    <div>
+      <img src="../../assets/gif.gif">
+    </div>
+    <div class="loading">
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only"></span>
+        </div>
+
+      </div>
+      <!-- <div class="loading-text2">
+        Carregando....
+      </div> -->
+
+      <!-- <div class="cancelar">
+        <button class="button">CANCELAR</button>
+      </div> -->
+
+
+    </div>
+    <div class="loading-text">
+      {{tips[random]}}
+    </div>
+
+
+  </div>
+
+
+  <jw-modal id="custom-modal-2" class="modal">
+    <h3>Erro!</h3>
+    <p>Estamos em manutenção, tente novamente mais tarde</p>
+    <button class="button" (click)="closeModal('custom-modal-2');">OK</button>
+  </jw-modal>
+
+
+
+
+
+
+
+</section>
