@@ -84,7 +84,6 @@ export class GameComponent {
 
       this.tabuleiro[0][i] = this.tabuleiro2[0][i]
       this.tabuleiro[1][i] = this.tabuleiro2[1][i]
-      console.log(this.tabuleiro[0][1])
     }
   }
 
@@ -139,10 +138,10 @@ export class GameComponent {
     this.consultaPeca(this.nivel.id)
 
 
-    setTimeout(() => {
-      this.openModal('game-win')
+    // setTimeout(() => {
+    //   this.openModal('game-win')
 
-    }, 5000);
+    // }, 5000);
 
 
   }
@@ -209,7 +208,21 @@ export class GameComponent {
     }
   }
 
+
+  isNotPrimeiraFase() {
+    return this.tabuleiro.map(coordenadasPorJogador => {
+      return coordenadasPorJogador.every(coordenada => Math.abs(coordenada.at(0)) !== 4)
+    });
+  }
+
+
+
   stoneClick(coordenada: any[], indexJogador: number) {
+    if (!this.isNotPrimeiraFase().every(Boolean)) {
+      if (Math.abs(coordenada.at(0)) !== 4) {
+        return
+      }
+    }
     this.pecaSelecionada = { indexJogador, coordenada }
   }
 
