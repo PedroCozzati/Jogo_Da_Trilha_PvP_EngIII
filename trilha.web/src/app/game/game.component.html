@@ -127,11 +127,11 @@
 
 
             <!--PECA B-->
-            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1)}" *ngFor="let coordenada of tabuleiro[0]" (click)="stoneClick(coordenada,0)" class="stoneBlack"
+            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,0),'stoneRemoved': verificaPecaRemovida(coordenada,0)}" *ngFor="let coordenada of tabuleiro[0]" [@fadeAnimation]="{params: {coordenada: 0,coordenada1:0}}" (click)="stoneClick(coordenada,0)" class="stoneBlack"
                 style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};"></div>
 
             <!--PECA A-->
-            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1)}" *ngFor="let coordenada of tabuleiro[1]" (click)="stoneClick(coordenada,1)" class="stoneWhite"
+            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1),'stoneRemoved': verificaPecaRemovida(coordenada,1)}" *ngFor="let coordenada of tabuleiro[1]" [@fadeAnimation]="{params: {coordenada: 0,coordenada1:0}}" (click)="stoneClick(coordenada,1)" class="stoneWhite"
                 style="transform: translate({{coordenada[0]*10}}vmin, {{coordenada[1]*getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
             <!-- <div (click)="stoneClick(1,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -22.5vmin);background-color: {{nivelPeca.corLadoB}};">
@@ -220,6 +220,44 @@
         </div> -->
 
     </div>
+    
+    <jw-modal id="game-win" class="game-win">
+        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+           <div style="font-size: medium;"> <b>Você GANHOU!</b></div>
+           <div>+10 MOEDAS</div>    
+            <div class="win-image"></div>
+        </div>
+        <div style="display: flex;flex-direction: row;justify-content: space-around;">
+            <button style="margin-right: 2rem;" (click)="closeModal('game-win')" class="button">ACEITAR REVANCHE</button>
+            <button style="margin-left: 2rem;" (click)="closeModalGame('game-win')" class="button">VOLTAR</button>
+        </div>
+    </jw-modal>
+
+    <jw-modal id="game-lose" class="game-lose">
+        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+           <div style="font-size: medium;"> <b>Você PERDEU!</b></div>
+           <div>-{{nivel.valorDeAposta}} MOEDAS</div>    
+            <div class="lose-image"></div>
+        </div>
+        <div style="display: flex;flex-direction: row;justify-content: space-around;">
+            <button style="margin-right: 2rem;" (click)="closeModal('game-lose')" class="button">PEDIR REVANCHE</button>
+            <button style="margin-left: 2rem;" (click)="closeModalGame('game-lose')" class="button">VOLTAR</button>
+        </div>
+    </jw-modal>
+
+    <jw-modal id="game-draw" class="game-draw">
+        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+           <div style="font-size: medium;"> <b>EMPATE!</b></div>
+           <div>+ 10 MOEDAS</div>    
+            <div class="draw-image"></div>
+        </div>
+        <div style="display: flex;flex-direction: row;justify-content: space-around;">
+            <button (click)="closeModalGame('game-draw')" class="button">VOLTAR</button>
+        </div>
+    </jw-modal>
+
+
+
     <jw-modal id="gameemoji" class="modal2">
         <b>EMOJIS</b>
         <div class="flex-column-emoji">

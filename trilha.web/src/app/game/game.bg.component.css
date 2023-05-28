@@ -620,12 +620,13 @@ body {
     justify-content: space-between;
 }
 .button{
-    height: 7vh;
+  font-size: medium;
+    height: 8vh;
     font-weight: bold;
     background-color: rgb(252, 229, 255);
     border-radius: 20px;
     box-shadow: 0px 5px rgb(55, 19, 185) ;
-    width: 9vw;
+    width: 13vw;
     border-top: 2px red;
     border-left: 2px red;
     border-right: 2px red;

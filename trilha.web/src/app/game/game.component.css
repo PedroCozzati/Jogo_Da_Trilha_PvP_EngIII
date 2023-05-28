@@ -92,6 +92,14 @@
         inset 0 0 0 1000px rgba(255, 255, 255, 0.404) !important;
 }
 
+.stoneRemoved{
+    
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-40vmin,0vmin);
+
+}
+
 #winnerScreen {
     width: 90vmin;
     height: 76vmin;
@@ -915,6 +923,10 @@ footer p {
     margin: 0;
 }
 
+
+
+
+
 .modal2 ::ng-deep .jw-modal-body {
     display: flex;
     flex-direction: column;
@@ -1059,4 +1071,212 @@ blockquote.electric span {
     display: block;
     font-size: 3vw;
     font-weight: bold;
+}
+
+.game-draw ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-draw  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-draw ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/ampulheta.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+
+.game-lose ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-lose  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-lose ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/clock.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+
+.game-win ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    border-radius: 50px;
+    border: 4px solid rgb(33, 6, 77);
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 65% !important;
+
+    height: 40vh;
+    padding: 10px;
+    background-image: url("../../assets/bg.png");
+  background-blend-mode:multiply;
+  background-color: #e4dfff ;
+  background-size: cover;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .game-win  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 30%;
+    left: 25.5%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .game-win ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: url("../../assets/win-gif.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.4;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}
+
+.win-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/win.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
+}
+
+
+.lose-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/lose_image.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
+}
+
+
+.draw-image{
+    height: 18vh;
+    width: 14vw;
+    background-image: url("../../assets/draw.png");
+    background-size: cover;
+    background-clip: padding-box;
+
+    background-repeat: no-repeat;
 }

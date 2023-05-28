@@ -82,6 +82,7 @@ export function playerFactory() { // add this line
     
   ],
   imports: [
+
     LottieModule.forRoot({ player: playerFactory}),
     BrowserAnimationsModule,
     ModalModule,

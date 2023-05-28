@@ -139,10 +139,10 @@ export class GameComponent {
     this.consultaPeca(this.nivel.id)
 
 
-    // setTimeout(() => {
-    //   this.openModal('game-draw')
+    setTimeout(() => {
+      this.openModal('game-win')
 
-    // }, 5000);
+    }, 5000);
 
 
   }

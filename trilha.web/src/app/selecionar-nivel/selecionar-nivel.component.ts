@@ -253,6 +253,7 @@ export class SelecionarNivelComponent implements OnInit {
       id: nivel_id,
       nome: nomeNivel,
       corTab: corNivel,
+      valorDeAposta : valorDeAposta,
     }
 
     var item = {
