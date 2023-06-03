@@ -46,6 +46,8 @@ services:
     volumes:
       - ./volumes/logs:/app/logs
     environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - MONGODB_URI=mongodb://trilha:rry*UZ*4Xa82DH%5E4%40a0S98MBDN7*MAo9FyBt@mongo:27017/trilha?authSource=admin
       - PROMETHEUS_EXPORT_PORT=3090
       - OTEL_SERVICE_NAME=trilha
@@ -207,6 +209,14 @@ services:
       options:
         loki-url: http://localhost:3100/loki/api/v1/push
 
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis/data:/data
+
   minio:
     <<: *minio-common
     container_name: minio
@@ -242,8 +252,4 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 trilha s9wedR5LEvTR57SUSHUt2WrxIwVyvWkYCTejkpaGUgooYWtj40;
-      /usr/bin/mc mb tempo;
-      exit 0;
-      "
+      /bin/sh -c " /usr/bin/mc alias set myminio http://minio:9000 trilha s9wedR5LEvTR57SUSHUt2WrxIwVyvWkYCTejkpaGUgooYWtj40; /usr/bin/mc mb tempo; exit 0; "

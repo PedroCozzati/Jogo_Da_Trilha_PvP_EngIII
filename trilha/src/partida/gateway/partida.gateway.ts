@@ -6,17 +6,21 @@ import {
     OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Logger } from 'nestjs-pino';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { Cache } from 'cache-manager';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
     cors: { origin: '*' },
 })
+@Injectable()
 export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
 
     constructor(
         private readonly _logger: Logger,
+        @Inject(CACHE_MANAGER) private readonly _cacheService: Cache
     ) { }
 
     async emiteEstadoAtual(body) {
@@ -24,6 +28,8 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
+        this._cacheService.set(client.request.headers["Web-Socket-Client-Id"].toString(), client.id)
+
         this._logger.log("cliente conectado", { client_id: client.id });
     }
 
