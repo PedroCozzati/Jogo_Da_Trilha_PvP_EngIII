@@ -28,7 +28,8 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
-        this._cacheService.set(client.request.headers["Web-Socket-Client-Id"].toString(), client.id)
+
+        this._cacheService.set(client.handshake.headers["web-socket-client-id"].toString(), client.id)
 
         this._logger.log("cliente conectado", { client_id: client.id });
     }
