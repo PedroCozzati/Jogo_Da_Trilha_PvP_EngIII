@@ -21,8 +21,7 @@ import { LoginAuthenticatedComponent } from './login-authenticated/login-authent
 import { SelecionarNivelComponent } from './selecionar-nivel/selecionar-nivel.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'app-login' },
-
+  
   { path: 'tabuleiros', component: ListaTabuleirosComponent },
   { path: 'tabuleiro/novo', component: NovoTabuleiroComponent },
   { path: 'tabuleiro/:id', component: EditaTabuleiroComponent },
@@ -38,7 +37,7 @@ const routes: Routes = [
   { path: 'selecionar-nivel/:data/:image', component: SelecionarNivelComponent, },
  
   { path: 'game/:data/:nivel/:image', component: GameComponent },
-  { path: 'app-login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'login-authenticated/:data', component: LoginAuthenticatedComponent },
   { path: 'adm-page', component: AdmPageComponent },
   { path: 'edit-issue/:id', component: EditIssueComponent },
