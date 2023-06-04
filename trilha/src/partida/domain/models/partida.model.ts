@@ -19,7 +19,7 @@ export class Partida extends BaseModel {
   @Prop({ type: SchemaTypes.ObjectId })
   jogador2_id: Types.ObjectId
 
-  @Prop({ type: SchemaTypes.String })
+  @Prop({ type: SchemaTypes.ObjectId })
   nivel_id: Types.ObjectId
 
   @Prop({ type: SchemaTypes.Array })

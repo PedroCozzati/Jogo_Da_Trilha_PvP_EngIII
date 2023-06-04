@@ -123,11 +123,11 @@ export class PartidaRepository {
   }
 
   @Span()
-  public async buscaPartidaEmPareamento() {
+  public async buscaPartidaEmPareamento(nivel: string) {
     try {
       this._logger.log("executing repository method")
 
-      const partida = await this.repositoryBase.findOne({ $or: [{ jogador1_id: null }, { jogador2_id: null }] })
+      const partida = await this.repositoryBase.findOne({ $and: [{ $or: [{ jogador1_id: null }, { jogador2_id: null }] }, { nivel_id: new Types.ObjectId(nivel) }] })
 
       if (partida)
         return new Partida(partida)
