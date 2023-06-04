@@ -18,9 +18,11 @@ export class PartidaRepository {
     try {
       this._logger.log("executing repository method")
 
-      const partidaInserido = new Partida(await this.repositoryBase.insertOne(partida))
+      const partidaInserida = new Partida(await this.repositoryBase.insertOne(partida))
 
-      return partidaInserido
+      await partidaInserida.registraPartida()
+
+      return partidaInserida
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception

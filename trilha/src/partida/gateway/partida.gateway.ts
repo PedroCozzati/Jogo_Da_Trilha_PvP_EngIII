@@ -26,7 +26,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     ) { }
 
     async emiteEstadoAtual(body, jogadorId) {
-        const webSocketClientId = await this._cacheService.get(jogadorId)
+        const webSocketClientId = await this._cacheService.get(jogadorId);
         this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
     }
 
