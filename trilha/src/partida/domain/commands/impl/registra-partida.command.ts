@@ -1,8 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
-import { PartidaDto } from 'src/partida/application/dto/partida.dto';
+import { RegistraPartidaDto } from 'src/partida/application/dto/partida.dto';
 
 export class RegistraPartidaCommand implements ICommand {
   constructor(
-    public readonly partidaDto: PartidaDto,
+    public readonly registraPartidaDto: RegistraPartidaDto,
   ) { }
 }

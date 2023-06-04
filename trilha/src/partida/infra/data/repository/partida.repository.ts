@@ -20,9 +20,23 @@ export class PartidaRepository {
 
       const partidaInserido = new Partida(await this.repositoryBase.insertOne(partida))
 
-      await partidaInserido.registraPartida()
-
       return partidaInserido
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async atualizaPartida(partida: Partida) {
+    try {
+      this._logger.log("executing repository method")
+
+      const partidaAtualizada = new Partida(await this.repositoryBase.updateOne(partida))
+
+      await partidaAtualizada.registraPartida()
+
+      return partidaAtualizada
     } catch (exception) {
       this._logger.error("error on repository method")
       throw exception
@@ -106,4 +120,18 @@ export class PartidaRepository {
     }
   }
 
+  @Span()
+  public async buscaPartidaEmPareamento() {
+    try {
+      this._logger.log("executing repository method")
+
+      const partida = await this.repositoryBase.findOne({ $or: [{ jogador1_id: null }, { jogador2_id: null }] })
+
+      if (partida)
+        return new Partida(partida)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
 }

@@ -27,6 +27,16 @@ export class PartidaDto {
 
 }
 
+export class RegistraPartidaDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly jogador_id: string
+
+    @IsString()
+    @IsNotEmpty()
+    readonly nivel_id: string
+}
+
 export class MoinhoEfetuadoDto {
     @IsString()
     @IsNotEmpty()

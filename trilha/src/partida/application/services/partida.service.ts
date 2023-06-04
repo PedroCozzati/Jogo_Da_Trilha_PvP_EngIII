@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RegistraPartidaCommand } from 'src/partida/domain/commands/impl/registra-partida.command';
-import { JogadorPartidaDto, PartidaDto } from '../dto/partida.dto';
+import { JogadorPartidaDto, PartidaDto, RegistraPartidaDto } from '../dto/partida.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { EfetuaJogadaCommand } from '../../domain/commands/impl/efetua-jogada.command';
@@ -41,10 +41,10 @@ export class PartidaService {
 
 
   @Span()
-  async registraPartida(partida: PartidaDto) {
+  async registraPartida(registraPartidaDto: RegistraPartidaDto) {
     this._logger.log('starting service execution');
 
-    return await this.commandBus.execute(new RegistraPartidaCommand(partida));
+    return await this.commandBus.execute(new RegistraPartidaCommand(registraPartidaDto));
   }
 
   @Span()
