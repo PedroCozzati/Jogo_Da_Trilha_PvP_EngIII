@@ -14,13 +14,13 @@ import { PartidaFinalizadaEvent } from '../events/impl/partida-finalizada.event'
 export class Partida extends BaseModel {
 
   @Prop({ type: SchemaTypes.ObjectId })
-  jogador1_id: Types.ObjectId
+  jogador1_id: string
 
   @Prop({ type: SchemaTypes.ObjectId })
-  jogador2_id: Types.ObjectId
+  jogador2_id: string
 
   @Prop({ type: SchemaTypes.ObjectId })
-  nivel_id: Types.ObjectId
+  nivel_id: string
 
   @Prop({ type: SchemaTypes.Array })
   versaoPartida: Array<any> = []
