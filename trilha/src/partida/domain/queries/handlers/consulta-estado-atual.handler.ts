@@ -17,7 +17,10 @@ export class ConsultaEstadoAtualHandler
     async execute(query: ConsultaEstadoAtualQuery) {
         this._logger.log("executing query handler", { query_data: JSON.stringify(query) });
 
-        const { partidaDto } = query;
-        return partidaDto;
+        const { jogadorDto } = query;
+
+        const partidaEncontrada = await this.repository.buscaPartidaPorJogador(jogadorDto.id_jogador)
+
+        return partidaEncontrada.montaTabuleiro();
     }
 }

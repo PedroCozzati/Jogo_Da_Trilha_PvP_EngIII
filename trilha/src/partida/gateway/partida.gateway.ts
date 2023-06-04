@@ -9,6 +9,7 @@ import { Logger } from 'nestjs-pino';
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Server, Socket } from 'socket.io';
+import { PartidaService } from '../application/services/partida.service';
 
 @WebSocketGateway({
     cors: { origin: '*' },
@@ -20,16 +21,20 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
     constructor(
         private readonly _logger: Logger,
-        @Inject(CACHE_MANAGER) private readonly _cacheService: Cache
+        @Inject(CACHE_MANAGER) private readonly _cacheService: Cache,
+        private readonly _partidaService: PartidaService,
     ) { }
 
-    async emiteEstadoAtual(body) {
-        this.server.emit('partidaModificada', await body);
+    async emiteEstadoAtual(body, jogadorId) {
+        const webSocketClientId = await this._cacheService.get(jogadorId)
+        this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
+        const idJogador = client.handshake.headers["web-socket-client-id"].toString()
 
-        this._cacheService.set(client.handshake.headers["web-socket-client-id"].toString(), client.id)
+        await this._cacheService.set(idJogador, client.id)
+        this.server.emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
 
         this._logger.log("cliente conectado", { client_id: client.id });
     }

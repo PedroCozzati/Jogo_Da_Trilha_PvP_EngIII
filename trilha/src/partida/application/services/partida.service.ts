@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RegistraPartidaCommand } from 'src/partida/domain/commands/impl/registra-partida.command';
-import { PartidaDto } from '../dto/partida.dto';
+import { JogadorPartidaDto, PartidaDto } from '../dto/partida.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { EfetuaJogadaCommand } from '../../domain/commands/impl/efetua-jogada.command';
@@ -26,6 +26,13 @@ export class PartidaService {
   }
 
   @Span()
+  async buscaPartidaPorJogador(jogadorPartidaDto: JogadorPartidaDto) {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new ConsultaEstadoAtualQuery(jogadorPartidaDto));
+  }
+
+  @Span()
   async buscaPartidas() {
     this._logger.log('starting service execution');
 
@@ -46,14 +53,6 @@ export class PartidaService {
 
     return await this.commandBus.execute(new EfetuaJogadaCommand(partida));
   }
-
-  @Span()
-  async consultaEstadoAtual(partida: PartidaDto) {
-    this._logger.log('starting service execution');
-
-    return await this.queryBus.execute(new ConsultaEstadoAtualQuery(partida));
-  }
-
 
   @Span()
   async deletaPartida(partida: PartidaDto) {

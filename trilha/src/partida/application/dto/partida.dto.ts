@@ -41,3 +41,10 @@ export class PartidaFinalizadaDto {
 
 }
 
+export class JogadorPartidaDto {
+    @IsString()
+    @IsNotEmpty()
+    readonly id_jogador: string
+
+}
+

@@ -3,10 +3,10 @@ import { map, Observable } from 'rxjs';
 import { Logger } from 'nestjs-pino';
 import { ofType, Saga } from '@nestjs/cqrs';
 import { Span } from 'nestjs-otel';
-import { PartidaRegistradaEvent } from 'src/partida/domain/events/impl/partida-registrada.event';
 import { PartidaService } from '../services/partida.service';
 import { PartidaGateway } from 'src/partida/gateway/partida.gateway';
 import { JogadaEfetuadaEvent } from 'src/partida/domain/events/impl/jogada-efetuada.event';
+import { PartidaRegistradaEvent } from 'src/partida/domain/events/impl/partida-registrada.event';
 
 @Injectable()
 export class PartidaSagas {
@@ -24,11 +24,13 @@ export class PartidaSagas {
                 ofType(PartidaRegistradaEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    this.partidaGateway.emiteEstadoAtual(this.partidaService.consultaEstadoAtual(event.partidaDto));
+
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador1_id }), event.partidaDto.jogador1_id);
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
                 })
             )
     }
-    // comando de update da partida(){}
+
     @Span()
     @Saga()
     jogadaEfetuada(events$: Observable<any>): Observable<void> {
@@ -37,7 +39,9 @@ export class PartidaSagas {
                 ofType(JogadaEfetuadaEvent),
                 map(event => {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
-                    this.partidaGateway.emiteEstadoAtual(this.partidaService.consultaEstadoAtual(event.partidaDto));
+
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador1_id }), event.partidaDto.jogador1_id);
+                    this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
                 })
             )
     }

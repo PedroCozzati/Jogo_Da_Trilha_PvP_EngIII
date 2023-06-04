@@ -130,9 +130,10 @@ export class Partida extends BaseModel {
           mapaLadoOponente[i] = versao.at(1)
       }
       if (index === array.length - 1) {
-        if (mapaLadoOponente.filter(coordenadas => coordenadas != null).length < 3)
+        if (mapaLadoOponente.filter(coordenadas => coordenadas != null).length < 3) {
           this.apply(new PartidaFinalizadaEvent({ jogador_vencedor_id: this.versaoPartida.at(-1).at(2) }))
-
+          this.resultado = this.versaoPartida.at(-1).at(2)
+        }
       }
 
     });
@@ -144,6 +145,24 @@ export class Partida extends BaseModel {
       !moinhoAtivo.some(coordenada => coordenada.toString() === this.versaoPartida.at(-1).at(0).toString())
     );
   }
+
+  @Span()
+  public montaTabuleiro(): any {
+    const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
+    const mapaTabuleiro = versaoPartidaClone.shift();
+
+    versaoPartidaClone.forEach((versao) => {
+      mapaTabuleiro.forEach(mapaLadoAutor => {
+        for (let i = 0; i < mapaLadoAutor.length; i++) {
+          if (mapaLadoAutor[i]?.toString() === versao.at(0)?.toString())
+            mapaLadoAutor[i] = versao.at(1)
+        }
+      });
+    });
+
+    return mapaTabuleiro
+  }
+
 
   @Span()
   private obtemIndiceAutorJogada(versao: any[]) {

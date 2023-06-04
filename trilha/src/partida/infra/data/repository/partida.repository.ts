@@ -91,4 +91,19 @@ export class PartidaRepository {
     }
   }
 
+  @Span()
+  public async buscaPartidaPorJogador(id: string) {
+    try {
+      this._logger.log("executing repository method")
+
+      const partida = await this.repositoryBase.findOne({ $or: [{ jogador1_id: new Types.ObjectId(id) }, { jogador2_id: new Types.ObjectId(id) }] })
+
+      if (partida)
+        return new Partida(partida)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
 }
