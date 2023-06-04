@@ -45,14 +45,7 @@ export class AdmPageComponent implements OnInit{
   }
 
 
-  submitForm() {
-    alert("TEST")
-   
-    this.bugService.CreateBug(this.issueForm.value).subscribe((res) => {
-      console.log('Issue added!');
-      this.ngZone.run(() =>  window.location.reload());
-    });
-  }
+  
 
 
 }

@@ -50,41 +50,38 @@ export class GameComponent {
     [], []
   ]
 
-  tabuleiro2 = [
-    [
-      [-4, 4],
-      [-4, 3],
-      [-4, 2],
-      [-4, 1],
-      [-4, 0],
-      [-4, -1],
-      [-4, -2],
-      [-4, -3],
-      [-4, -4],
-    ],
-    [
-      [4, 4],
-      [4, 3],
-      [4, 2],
-      [4, 1],
-      [4, 0],
-      [4, -1],
-      [4, -2],
-      [4, -3],
-      [4, -4],
-    ]
-  ];
-
   async getTabuleiro() {
+    const tabuleiroFromBackend = [
+      [
+       null,
+        [-4, 3],
+        null,
+        [-4, 1],
+        null,
+        [-4, -1],
+        [-4, -2],
+        [-4, -3],
+        [-4, -4],
+      ],
+      [
+        null,
+        null,
+        [4, 2],
+        [4, 1],
+        [4, 0],
+        [4, -1],
+        null,
+        [4, -3],
+        null,
+      ]
+    ];
 
-    for (let i = 0; i < this.tabuleiro2[0].length; i++) {
+    this.deselectStone()
 
+    tabuleiroFromBackend.forEach(async (coordenadas, index) => {
       await new Promise((resolve) => setTimeout(resolve, 200))
-      this.deselectStone()
-
-      this.tabuleiro[0][i] = this.tabuleiro2[0][i]
-      this.tabuleiro[1][i] = this.tabuleiro2[1][i]
-    }
+      this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
+    });
   }
 
 
@@ -92,31 +89,7 @@ export class GameComponent {
 
     this.getTabuleiro()
 
-    // this.tabuleiro = [
-    //   [
-    //     [-4, 4],
-    //     [-4, 3],
-    //     [-4, 2],
-    //     [-4, 1],
-    //     [-4, 0],
-    //     [-4, -1],
-    //     [-4, -2],
-    //     [-4, -3],
-    //     [-4, -4],
-    //   ],
-    //   [
-    //     [4, 4],
-    //     [4, 3],
-    //     [4, 2],
-    //     [4, 1],
-    //     [4, 0],
-    //     [4, -1],
-    //     [4, -2],
-    //     [4, -3],
-    //     [4, -4],
-    //   ]
 
-    // ];
 
     if (this.state == "closed") {
       setTimeout(() => this.state = "wided")
@@ -176,6 +149,11 @@ export class GameComponent {
     for (; index < length; index++) {
       elems[index].style['box-shadow'] = `0.8vmin 0.4vmin 0.4vmin ${this.nivelPeca.corLadoB}`
     }
+  }
+
+
+  filtraPecasEmJogo(coordenadas: any[]) {
+    return coordenadas.filter(coordenada => coordenada)
   }
 
   verificaPecaRemovida(coordenada: any[], indexJogador: number) {
