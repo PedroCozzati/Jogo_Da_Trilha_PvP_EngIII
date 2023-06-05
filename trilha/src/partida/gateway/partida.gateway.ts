@@ -31,7 +31,10 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
-        const idJogador = client.handshake.headers["web-socket-client-id"].toString()
+        const idJogador = client.handshake.headers["web-socket-jogador-id"]?.toString()
+
+        if (!idJogador)
+            return
 
         await this._cacheService.set(idJogador, client.id)
         this.server.emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
