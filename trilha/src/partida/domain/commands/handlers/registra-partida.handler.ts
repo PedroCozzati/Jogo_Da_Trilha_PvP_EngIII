@@ -17,10 +17,18 @@ export class RegistraPartidaHandler
   @Span()
   async execute(command: RegistraPartidaCommand) {
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
-
+    
     const { registraPartidaDto } = command;
     const partidaEmPareamento = await this.repository.buscaPartidaEmPareamento(registraPartidaDto.nivel_id);
-    const partida = partidaEmPareamento ? new Partida({ ...partidaEmPareamento, jogador2_id: registraPartidaDto.jogador_id }) : new Partida({ jogador1_id: registraPartidaDto.jogador_id, nivel_id: registraPartidaDto.nivel_id })
+    const partida = partidaEmPareamento
+      ? new Partida({
+        ...partidaEmPareamento,
+        jogador2_id: partidaEmPareamento.jogador1_id != registraPartidaDto.jogador_id ? registraPartidaDto.jogador_id : null
+      })
+      : new Partida({
+        jogador1_id: registraPartidaDto.jogador_id,
+        nivel_id: registraPartidaDto.nivel_id
+      })
 
     if (!partida._id) {
       partida.registraPosicoesIniciais();

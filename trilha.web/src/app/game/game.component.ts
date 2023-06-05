@@ -50,9 +50,7 @@ export class GameComponent {
   }
 
 
-  tabuleiro: any = [
-    [], []
-  ]
+  tabuleiro: any = this.appService.gameInfo.tabuleiro
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {

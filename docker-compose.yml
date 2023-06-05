@@ -245,11 +245,3 @@ services:
       driver: loki
       options:
         loki-url: http://localhost:3100/loki/api/v1/push
-
-  createbuckets:
-    image: minio/mc
-    container_name: createbuckets
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c " /usr/bin/mc alias set myminio http://minio:9000 trilha s9wedR5LEvTR57SUSHUt2WrxIwVyvWkYCTejkpaGUgooYWtj40; /usr/bin/mc mb tempo; exit 0; "

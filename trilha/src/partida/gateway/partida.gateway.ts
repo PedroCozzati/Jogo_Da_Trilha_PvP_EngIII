@@ -26,7 +26,6 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     ) { }
 
     async emiteEstadoAtual(body, jogadorId: string) {
-        this._logger.log("tipo do id do jogador", { tipo: typeof(jogadorId), id: jogadorId });
         const webSocketClientId = await this._cacheService.get(jogadorId.toString());
         this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
     }
@@ -44,8 +43,9 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     }
 
     async handleDisconnect(client: any) {
-        this._logger.log("argumentos no disconnect", { args: JSON.stringify(client.handshake.query) });
+        const idJogador = client.handshake.query.jogadorId.toString();
         this._logger.log("cliente desconectado", { client_id: client.id });
+        await this._cacheService.del(idJogador);
     }
 
     afterInit(server: Server) {
