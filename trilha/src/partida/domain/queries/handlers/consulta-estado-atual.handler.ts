@@ -21,6 +21,6 @@ export class ConsultaEstadoAtualHandler
 
         const partidaEncontrada = await this.repository.buscaPartidaPorJogador(jogadorDto.id_jogador)
 
-        return partidaEncontrada?.montaTabuleiro();
+        return { partida: partidaEncontrada, tabuleiro: partidaEncontrada?.montaTabuleiro() };
     }
 }

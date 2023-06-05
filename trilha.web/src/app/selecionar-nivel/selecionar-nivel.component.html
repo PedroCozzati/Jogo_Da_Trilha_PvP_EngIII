@@ -48,7 +48,7 @@
       <ng-template let-nivel pTemplate="item">
         <div
           style="background-position: bottom bottom;background-size: cover;background-repeat: no-repeat;background:  url(../../assets/{{images[random2]}}.png);box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
-          class="item-slide" (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca_id)">
+          class="item-slide" (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca,nivel._id)">
           <div class="items_text" style="display: flex;flex-direction: column;margin-top: 2rem;">
             <div style="filter: blur(0) !important;" >{{ nivel.nome }}</div>
             <div style="filter: blur(0) !important;"> Valor de aposta: {{nivel.valorDeAposta}}🪙</div>

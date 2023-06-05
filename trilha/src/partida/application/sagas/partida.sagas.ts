@@ -26,7 +26,9 @@ export class PartidaSagas {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
 
                     this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador1_id }), event.partidaDto.jogador1_id);
-                    this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
+                    
+                    if (event.partidaDto.jogador2_id)
+                        this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
                 })
             )
     }

@@ -18,24 +18,23 @@ import { AppService } from '../shared/services/app.service';
 
 export class GameComponent {
   state = "closed";
-  jogador: Jogador;
+  jogador: any = {};
   nivel: any = {}
-  nivelPeca: any
+  nivelPeca: any = {}
   avatar: string
   teste: Map<string, string>
   pecaSelecionada: any;
+  userInfos: any = {};
   infoTitle: string;
   playerStone: any = '';
   gameSides: any = []
-  appService1:any
+
 
   matrixString: string;
 
   constructor(
-    private appService:AppService,
+    private appService: AppService,
     private webSocket: WebSocketTrilhaService,
-    private renderer: Renderer2,
-    private route: ActivatedRoute,
     private ngZone: NgZone,
     private http: HttpClient,
     private router: Router,
@@ -56,27 +55,18 @@ export class GameComponent {
   ]
 
   async getTabuleiro() {
-    
-    this.webSocket.partidaModificada$.subscribe(data=>{
+    this.webSocket.partidaModificada$.subscribe(data => {
       this.deselectStone()
-
-      data.forEach(async (coordenadas, index) => {
+      data.tabuleiro.forEach(async (coordenadas, index) => {
         await new Promise((resolve) => setTimeout(resolve, 200))
         this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
       });
     })
-
-    
   }
 
 
 
-  ngOnInit() {
-    this.appService1 =this.appService
-
-    this.getTabuleiro()
-
-
+  async ngOnInit() {
 
     if (this.state == "closed") {
       setTimeout(() => this.state = "wided")
@@ -86,24 +76,18 @@ export class GameComponent {
     var random = Math.floor(Math.random() * this.gameSides.length);
     this.playerStone = this.gameSides[random]
     this.infoTitle = 'Primeira Fase - Posicione suas peças livremente!'
-    this.jogador = JSON.parse(this.route.snapshot.params['data']);
-    this.nivel = JSON.parse(this.route.snapshot.params['nivel']);
-    this.avatar = this.route.snapshot.params['image'];
+    this.jogador = this.appService.userInfos;
+    this.nivel = this.appService.gameInfo;
+    this.nivelPeca = this.appService.gameInfo.peca;
+    this.avatar = this.appService.avatar;//this.route.snapshot.params['image'];
+    this.avatar = this.appService.avatar;//this.route.snapshot.params['image'];
 
     history.pushState(null, '', location.href);
     window.onpopstate = function () {
       history.go(1);
     };
 
-    this.consultaPeca(this.nivel.id)
-
-
-    // setTimeout(() => {
-    //   this.openModal('game-win')
-
-    // }, 5000);
-
-
+    await this.getTabuleiro()
   }
 
   ngAfterViewInit() {
@@ -112,14 +96,6 @@ export class GameComponent {
 
   isError() {
     return false
-  }
-
-  consultaPeca(id: string) {
-    this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
-        this.nivelPeca = response
-        console.log(response)
-      })
   }
 
   getMultiplicadorEixoY(coordenada: any[]) {
@@ -180,7 +156,7 @@ export class GameComponent {
     return this.tabuleiro.map(coordenadasPorJogador => {
 
       return coordenadasPorJogador.every(coordenada => Math.abs(coordenada.at(0)) !== 4)
-      
+
     });
 
   }
@@ -196,7 +172,7 @@ export class GameComponent {
         }, 1500);
         return
       }
-      
+
     }
 
     this.pecaSelecionada = { indexJogador, coordenada }
@@ -239,7 +215,7 @@ export class GameComponent {
 
   validaMovimentacao(origem: any[], destino: any[]) {
     if (destino && Math.abs(origem?.at(0)) < 4) {
-    this.infoTitle = 'Segunda Fase'
+      this.infoTitle = 'Segunda Fase'
 
       if (this.isMovimentacaoDiagonal(origem, destino))
         return false

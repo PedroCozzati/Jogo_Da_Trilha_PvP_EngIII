@@ -60,7 +60,6 @@ export class SelecionarNivelComponent implements OnInit {
     private modalService: ModalService,
     private http: HttpClient,
     public bugService: BugService,
-    private route: ActivatedRoute,
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,
@@ -79,42 +78,11 @@ export class SelecionarNivelComponent implements OnInit {
   tabsSorted: any = []
 
   tabuleiros: any = []
+  pecas: any = []
   peca: any = {}
   random: any
   random2: any
   @Input() nivel: any = {}
-
-  @Output()
-  nivelDeletado = new EventEmitter<string>();
-
-
-
-  deletaNivel(nivel: any) {
-    this.http.delete(`http://localhost:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
-        this.nivelDeletado.emit()
-      })
-  }
-
-  registraPartida() {
-    this.http.post(`http://localhost:90/partida`,
-      {
-        jogador_id: this.appService.userInfos._id,
-        nivel_id: this.selectedNivelId,
-      },
-      { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
-        this.nivelDeletado.emit()
-      })
-  }
-
-
-
-  consultaTabuleiroPorId(nivel: any) {
-
-
-    // this.tabuleiros.push(this.tabuleiro);
-  }
 
   // this.http.get(`http://localhost:90/tabuleiro/643d8198e01fe1cfdaca03d4`, { headers: { "Content-Type": 'application/json' } })
   //   .subscribe(response => {
@@ -124,18 +92,9 @@ export class SelecionarNivelComponent implements OnInit {
   //     console.log(this.tabuleiros[0].cor);
   //   })
 
-
-  consultaPecaPorId(nivel: any) {
-    this.http.get(`http://localhost:90/peca/${nivel.peca_id}`, { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
-        this.peca = response
-      })
-  }
-
   ngOnInit() {
     this.appService1=this.appService
 
-    alert(this.appService.userInfos.nome)
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
@@ -151,25 +110,7 @@ export class SelecionarNivelComponent implements OnInit {
     this.div3 = true
     this.div1 = false
 
-    this.user = this.route.snapshot.params['user'];
-    this.saldo = this.route.snapshot.params['saldo'];
-    console.log(this.route.snapshot.params['user']);
-
-   
-
-    this.avatar = this.route.snapshot.params['image']
-
-
-
-
     this.consultaNiveis()
-
-    this.consultaTabuleiroPorId(this.nivel)
-    this.consultaPecaPorId(this.nivel)
-
-    this.consultaPeca(this.nivel.peca_id)
-
-
 
     this.slides[0] = {
       src: "",
@@ -235,19 +176,6 @@ export class SelecionarNivelComponent implements OnInit {
     this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
   }
 
-  consultaPeca(id: string): Promise<any> {
-    return this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } }).toPromise().then(response => this.nivelPeca = response)
-
-  }
-
-  getPeca = (id: string) => {
-    this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => {
-        this.nivelPeca = response
-        console.log(response)
-      })
-  }
-
   updateBalance(jogador_id: string, saldo: number) {
     this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
       saldo: saldo,
@@ -260,33 +188,20 @@ export class SelecionarNivelComponent implements OnInit {
 
   }
 
-  selectLevelButton(valorDeAposta: number, nomeNivel: string, corNivel: string, nivel_id: string) {
-
-    this.consultaPeca(nivel_id)
-
-    console.log(this.nivel)
-
-    console.log(nivel_id)
-
-    console.log(this.nivelPeca)
-
+  selectLevelButton(valorDeAposta: number, nomeNivel: string, corTabuleiro: string, peca: any, nivel_id: string) {
     this.selectedNivelId = nivel_id
-
-    
 
     var nivel = {
       id: nivel_id,
       nome: nomeNivel,
-      corTab: corNivel,
+      corTab: corTabuleiro,
+      peca: peca,
       valorDeAposta: valorDeAposta,
     }
 
     var item = {
       url: `game`
     };
-
-  
-    console.log(valorDeAposta)
 
     if (this.appService1.userInfos.saldo >= valorDeAposta) {
 
@@ -328,20 +243,10 @@ export class SelecionarNivelComponent implements OnInit {
 
 
   consultaNiveis() {
-
     try {
       this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
         .subscribe(response => {
-
           this.niveis = response
-
-          console.log(this.niveis)
-
-
-
-
-
-
           for (let i = 0; i < this.niveis.length; i++) {
             let niv = this.niveis[i]
             this.http.get(`http://localhost:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
@@ -353,18 +258,20 @@ export class SelecionarNivelComponent implements OnInit {
                 this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
                 this.tabuleiros.push(this.tabuleiro);
 
-
-                // this.tabsSorted = this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
-
-
-                // this.objectTab.tabs = this.tabsSorted
-
-
                 this.niveis[i].tab = this.tabuleiro
+              },
+                (error) => {
+                  this.openModal('custom-modal-2');
+                })
+            
+            this.http.get(`http://localhost:90/peca/${niv.peca_id}`, { headers: { "Content-Type": 'application/json' } })
+              .subscribe(response => {
+                this.peca = response
 
+                this.pecas.sort((a, b) => a._created_at.localeCompare(b._created_at))
+                this.pecas.push(this.peca);
 
-                console.log(this.niveis)
-
+                this.niveis[i].peca = this.peca
               },
                 (error) => {
                   this.openModal('custom-modal-2');

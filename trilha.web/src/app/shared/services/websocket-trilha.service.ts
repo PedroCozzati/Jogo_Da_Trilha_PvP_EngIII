@@ -9,8 +9,8 @@ export class SocketTrilha extends Socket {
     ) {
     super({
       url: 'http://localhost:90', options: {
-        extraHeaders: {
-          "web-socket-jogador-id": appService.userInfos._id
+        query: {
+          "jogadorId": appService.userInfos._id
         }
       }
     });
