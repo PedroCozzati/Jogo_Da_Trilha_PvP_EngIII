@@ -4,6 +4,7 @@ import { Jogador } from '../shared/services/jogador';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { fadeAnimation } from './animations';
+import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.service';
 
 @Component({
   selector: 'app-game',
@@ -29,6 +30,7 @@ export class GameComponent {
   matrixString: string;
 
   constructor(
+    private webSocket: WebSocketTrilhaService,
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private ngZone: NgZone,
@@ -51,39 +53,20 @@ export class GameComponent {
   ]
 
   async getTabuleiro() {
-    const tabuleiroFromBackend = [
-      [
-       null,
-        [-4, 3],
-        null,
-        [-4, 1],
-        null,
-        [-4, -1],
-        [-4, -2],
-        [-4, -3],
-        [-4, -4],
-      ],
-      [
-        null,
-        null,
-        [4, 2],
-        [4, 1],
-        [4, 0],
-        [4, -1],
-        null,
-        [4, -3],
-        null,
-      ]
-    ];
+    
+    this.webSocket.partidaModificada$.subscribe(data=>{
+      this.deselectStone()
 
-    this.deselectStone()
+      data.forEach(async (coordenadas, index) => {
+        await new Promise((resolve) => setTimeout(resolve, 200))
+        this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
+      });
+    })
 
-    tabuleiroFromBackend.forEach(async (coordenadas, index) => {
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
-    });
+    
   }
 
+  
 
   ngOnInit() {
 
@@ -188,9 +171,14 @@ export class GameComponent {
 
 
   isNotPrimeiraFase() {
+
+
     return this.tabuleiro.map(coordenadasPorJogador => {
+
       return coordenadasPorJogador.every(coordenada => Math.abs(coordenada.at(0)) !== 4)
+      
     });
+
   }
 
 
@@ -198,14 +186,22 @@ export class GameComponent {
   stoneClick(coordenada: any[], indexJogador: number) {
     if (!this.isNotPrimeiraFase().every(Boolean)) {
       if (Math.abs(coordenada.at(0)) !== 4) {
+        this.infoTitle = "Você ainda não posicionou todas as suas peças!"
+        setTimeout(() => {
+          this.infoTitle = 'Primeira Fase - Posicione suas peças livremente!'
+        }, 1500);
         return
       }
+      
     }
+
     this.pecaSelecionada = { indexJogador, coordenada }
+
   }
 
 
   movePeca(coordenada: any) {
+
     if (!this.validaMovimentacao(this.pecaSelecionada?.coordenada, coordenada))
       return
 
@@ -239,6 +235,8 @@ export class GameComponent {
 
   validaMovimentacao(origem: any[], destino: any[]) {
     if (destino && Math.abs(origem?.at(0)) < 4) {
+    this.infoTitle = 'Segunda Fase'
+
       if (this.isMovimentacaoDiagonal(origem, destino))
         return false
 

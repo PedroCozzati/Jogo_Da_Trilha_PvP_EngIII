@@ -7,6 +7,8 @@ import { BugService } from '../shared/services/bug.service';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { ModalService } from '../_modal';
 import { Jogador } from '../shared/services/jogador';
+import { AppService } from '../shared/services/app.service';
+import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.service';
 
 @Component({
   selector: 'app-selecionar-nivel',
@@ -33,8 +35,9 @@ export class SelecionarNivelComponent implements OnInit {
   div1: boolean;
   div2: boolean;
   div3 = true;
-  tips:any=[]
-  images: any=[]
+  tips: any = []
+  images: any = []
+  selectedNivelId: string
 
   jogador: Jogador;
   avatar: any
@@ -51,6 +54,8 @@ export class SelecionarNivelComponent implements OnInit {
 
 
   constructor(
+    private websocketService: WebSocketTrilhaService,
+    private appService: AppService,
     private modalService: ModalService,
     private http: HttpClient,
     public bugService: BugService,
@@ -74,8 +79,8 @@ export class SelecionarNivelComponent implements OnInit {
 
   tabuleiros: any = []
   peca: any = {}
- random:any
- random2:any
+  random: any
+  random2: any
   @Input() nivel: any = {}
 
   @Output()
@@ -85,6 +90,18 @@ export class SelecionarNivelComponent implements OnInit {
 
   deletaNivel(nivel: any) {
     this.http.delete(`http://localhost:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+        this.nivelDeletado.emit()
+      })
+  }
+
+  registraPartida() {
+    this.http.post(`http://localhost:90/partida`,
+      {
+        jogador_id: this.appService.userInfos._id,
+        nivel_id: this.selectedNivelId,
+      },
+      { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.nivelDeletado.emit()
       })
@@ -115,14 +132,14 @@ export class SelecionarNivelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tips=[
+    this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
       'Procure neutralizar as jogadas do seu oponente',
       'Procure deixar uma peça livre para o plano de fuga em caso de trancamento',
       'Aproveite a fase inicial para posicionar as suas peças estrategicamente',
     ]
-    this.images =['draw']
+    this.images = ['draw']
     this.random = Math.floor(Math.random() * this.tips.length);
     this.random2 = Math.floor(Math.random() * this.images.length);
     this.div2 = false
@@ -215,16 +232,16 @@ export class SelecionarNivelComponent implements OnInit {
   }
 
   consultaPeca(id: string): Promise<any> {
-    return this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } }).toPromise().then(response=>this.nivelPeca=response)
-      
+    return this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } }).toPromise().then(response => this.nivelPeca = response)
+
   }
 
-  getPeca=(id:string)=>{
+  getPeca = (id: string) => {
     this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
-    .subscribe( response => {
-      this.nivelPeca =  response
-      console.log(response)
-    })
+      .subscribe(response => {
+        this.nivelPeca = response
+        console.log(response)
+      })
   }
 
   updateBalance(jogador_id: string, saldo: number) {
@@ -239,7 +256,7 @@ export class SelecionarNivelComponent implements OnInit {
 
   }
 
-  selectLevelButton(valorDeAposta: number, nomeNivel: string, corNivel: string, nivel_id:string) {
+  selectLevelButton(valorDeAposta: number, nomeNivel: string, corNivel: string, nivel_id: string) {
 
     this.consultaPeca(nivel_id)
 
@@ -249,11 +266,13 @@ export class SelecionarNivelComponent implements OnInit {
 
     console.log(this.nivelPeca)
 
+    this.selectedNivelId = nivel_id
+
     var nivel = {
       id: nivel_id,
       nome: nomeNivel,
       corTab: corNivel,
-      valorDeAposta : valorDeAposta,
+      valorDeAposta: valorDeAposta,
     }
 
     var item = {
@@ -270,9 +289,20 @@ export class SelecionarNivelComponent implements OnInit {
       this.div1 = false;
       this.div3 = false;
       this.div2 = true;
-      setTimeout(() => {
-        this.ngZone.run(() => this.router.navigateByUrl(item.url+this.avatar));
-      }, 5000);
+      this.registraPartida()
+
+      this.websocketService.partidaModificada$.subscribe(data => {
+        if (data?.jogador2_id) {
+          this.ngZone.run(() => this.router.navigateByUrl(item.url + this.avatar));
+        }
+
+        // data.forEach(async (coordenadas, index) => {
+        //   await new Promise((resolve) => setTimeout(resolve, 200))
+        //   this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
+        // });
+      })
+
+
 
 
     } else {

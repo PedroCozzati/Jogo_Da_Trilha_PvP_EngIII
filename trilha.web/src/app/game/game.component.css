@@ -1280,3 +1280,22 @@ blockquote.electric span {
 
     background-repeat: no-repeat;
 }
+
+
+.ad{
+    position: absolute;
+    margin-left: 2.5rem;
+    width: 20vh;
+    height: 20vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.ad2{
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    width: 20vh;
+    height: 20vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

@@ -13,6 +13,7 @@ import { Jogador } from '../shared/services/jogador';
 import { ModalService } from '../_modal';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { AppService } from '../shared/services/app.service';
 
 @Component({
   animations: [
@@ -278,6 +279,7 @@ export class FormComponent implements OnInit {
 
 
   constructor(
+    private appService:AppService,
     private http: HttpClient,
     private modalService: ModalService,
     private modalService2: MdbModalService,
@@ -357,12 +359,11 @@ export class FormComponent implements OnInit {
         if (
           foundUser.nome == this.loginForm.controls['name'].value &&
           foundUser.senha == this.loginForm.controls['senha'].value) {
+
+          this.appService.userInfos = foundUser
+          
           this.tryLogin = false
-
-
           this.user = this.loginForm.controls['name'].value;
-
-
 
           var found = this.userList.find((obj) => {
             return obj.nome === this.user;
@@ -375,10 +376,6 @@ export class FormComponent implements OnInit {
             saldo: found.saldo,
             vitoria: found.vitoria
           }
-
-
-
-
 
           var data: Jogador = jogador;
 

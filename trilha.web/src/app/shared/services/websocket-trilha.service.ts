@@ -1,17 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Socket } from "ngx-socket-io";
+import { AppService } from "./app.service";
 
 @Injectable()
 export class SocketTrilha extends Socket {
-  constructor() {
-    super({ url: 'http://localhost:90', options: {  } });
+  constructor(
+    appService: AppService
+    ) {
+    super({
+      url: 'http://localhost:90', options: {
+        extraHeaders: {
+          "web-socket-jogador-id": appService.userInfos._id
+        }
+      }
+    });
   }
 }
 
 @Injectable()
 export class WebSocketTrilhaService {
 
-  novoJogadorRegistrado$ = this.socket.fromEvent<any>('jogadorRegistrado');
+  partidaModificada$ = this.socket.fromEvent<any>('partidaModificada');
 
   constructor(private socket: SocketTrilha) { }
 }
