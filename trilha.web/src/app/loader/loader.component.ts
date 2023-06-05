@@ -36,13 +36,9 @@ export class LoaderComponent {
 
     this.websocketService.partidaModificada$.subscribe(data => {
       if (data.partida?.jogador2_id) {
+        this.websocketService.disconnect();
         this.ngZone.run(() => this.router.navigateByUrl('game'));
       }
-
-      // data.forEach(async (coordenadas, index) => {
-      //   await new Promise((resolve) => setTimeout(resolve, 200))
-      //   this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
-      // });
     })
 
     this.registraPartida();

@@ -38,7 +38,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
             return
 
         await this._cacheService.set(idJogador, client.id)
-        this.server.emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
+        this.server.to(client.id).emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
 
         this._logger.log("cliente conectado", { client_id: client.id, jogador_id: idJogador });
     }
