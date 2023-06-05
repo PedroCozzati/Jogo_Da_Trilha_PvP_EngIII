@@ -19,6 +19,7 @@ import { EditaNivelComponent } from './adm-page/nivel/edita-nivel/edita-nivel.co
 import { GameComponent } from './game/game.component';
 import { LoginAuthenticatedComponent } from './login-authenticated/login-authenticated.component';
 import { SelecionarNivelComponent } from './selecionar-nivel/selecionar-nivel.component';
+import { LoaderComponent } from './loader/loader.component';
 
 const routes: Routes = [
   
@@ -34,11 +35,12 @@ const routes: Routes = [
   { path: 'nivel/novo', component: NovoNivelComponent },
   { path: 'nivel/:id', component: EditaNivelComponent },
 
-  { path: 'selecionar-nivel/:data/:image', component: SelecionarNivelComponent, },
+  { path: 'selecionar-nivel', component: SelecionarNivelComponent, },
  
-  { path: 'game/:data/:nivel/:image', component: GameComponent },
+  { path: 'game', component: GameComponent },
+  { path: 'loader', component: LoaderComponent },
   { path: '', component: LoginComponent },
-  { path: 'login-authenticated/:data', component: LoginAuthenticatedComponent },
+  { path: 'login-authenticated', component: LoginAuthenticatedComponent },
   { path: 'adm-page', component: AdmPageComponent },
   { path: 'edit-issue/:id', component: EditIssueComponent },
   { path: 'issues-list', component: IssueListComponent },

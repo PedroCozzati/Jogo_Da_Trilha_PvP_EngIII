@@ -40,6 +40,7 @@ export class SelecionarNivelComponent implements OnInit {
   selectedNivelId: string
 
   jogador: Jogador;
+  appService1:any
   avatar: any
   nivelPeca: any;
 
@@ -132,6 +133,9 @@ export class SelecionarNivelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appService1=this.appService
+
+    alert(this.appService.userInfos.nome)
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
@@ -151,7 +155,7 @@ export class SelecionarNivelComponent implements OnInit {
     this.saldo = this.route.snapshot.params['saldo'];
     console.log(this.route.snapshot.params['user']);
 
-    this.jogador = JSON.parse(this.route.snapshot.params['data']);
+   
 
     this.avatar = this.route.snapshot.params['image']
 
@@ -228,7 +232,7 @@ export class SelecionarNivelComponent implements OnInit {
       url: `login-authenticated/${JSON.stringify(this.jogador)}`
     };
 
-    this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
+    this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
   }
 
   consultaPeca(id: string): Promise<any> {
@@ -268,6 +272,8 @@ export class SelecionarNivelComponent implements OnInit {
 
     this.selectedNivelId = nivel_id
 
+    
+
     var nivel = {
       id: nivel_id,
       nome: nomeNivel,
@@ -276,31 +282,31 @@ export class SelecionarNivelComponent implements OnInit {
     }
 
     var item = {
-      url: `game/${JSON.stringify(this.jogador)}/${JSON.stringify(nivel)}/`
+      url: `game`
     };
 
-    console.log(this.jogador.saldo)
+  
     console.log(valorDeAposta)
 
-    if (this.jogador.saldo >= valorDeAposta) {
+    if (this.appService1.userInfos.saldo >= valorDeAposta) {
 
-      this.updateBalance(this.jogador._id, -valorDeAposta)
+      this.updateBalance(this.appService1.userInfos._id, -valorDeAposta)
+      
+      this.appService.gameInfo=nivel
 
-      this.div1 = false;
-      this.div3 = false;
-      this.div2 = true;
-      this.registraPartida()
+      this.ngZone.run(() => this.router.navigateByUrl('loader'));
+      
 
-      this.websocketService.partidaModificada$.subscribe(data => {
-        if (data?.jogador2_id) {
-          this.ngZone.run(() => this.router.navigateByUrl(item.url + this.avatar));
-        }
+      // this.websocketService.partidaModificada$.subscribe(data => {
+      //   if (data?.jogador2_id) {
+      //     this.ngZone.run(() => this.router.navigateByUrl('game'));
+      //   }
 
-        // data.forEach(async (coordenadas, index) => {
-        //   await new Promise((resolve) => setTimeout(resolve, 200))
-        //   this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
-        // });
-      })
+      //   // data.forEach(async (coordenadas, index) => {
+      //   //   await new Promise((resolve) => setTimeout(resolve, 200))
+      //   //   this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
+      //   // });
+      // })
 
 
 

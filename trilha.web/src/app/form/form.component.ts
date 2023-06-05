@@ -360,7 +360,7 @@ export class FormComponent implements OnInit {
           foundUser.nome == this.loginForm.controls['name'].value &&
           foundUser.senha == this.loginForm.controls['senha'].value) {
 
-          this.appService.userInfos = foundUser
+          
           
           this.tryLogin = false
           this.user = this.loginForm.controls['name'].value;
@@ -379,13 +379,18 @@ export class FormComponent implements OnInit {
 
           var data: Jogador = jogador;
 
+          this.appService.userInfos = found
+
+          
+          
+
           this.item = {
-            url: `login-authenticated/${JSON.stringify(data)}`
+            url: `login-authenticated/`
           };
 
           this.successLogin = true;
           setTimeout(() => {
-            this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
+            this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
           }, 3000);
 
         }

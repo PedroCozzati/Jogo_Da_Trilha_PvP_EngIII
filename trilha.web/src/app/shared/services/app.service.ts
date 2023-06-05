@@ -6,4 +6,6 @@ import { Injectable } from "@angular/core";
 
 export class AppService{
   userInfos:any
+  avatar:any
+  gameInfo:any
 }

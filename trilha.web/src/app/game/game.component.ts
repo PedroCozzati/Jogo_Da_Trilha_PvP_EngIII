@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { fadeAnimation } from './animations';
 import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.service';
+import { AppService } from '../shared/services/app.service';
 
 @Component({
   selector: 'app-game',
@@ -26,10 +27,12 @@ export class GameComponent {
   infoTitle: string;
   playerStone: any = '';
   gameSides: any = []
+  appService1:any
 
   matrixString: string;
 
   constructor(
+    private appService:AppService,
     private webSocket: WebSocketTrilhaService,
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -66,9 +69,10 @@ export class GameComponent {
     
   }
 
-  
+
 
   ngOnInit() {
+    this.appService1 =this.appService
 
     this.getTabuleiro()
 

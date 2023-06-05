@@ -6,6 +6,7 @@ import { BugService } from '../shared/services/bug.service';
 import { ModalService } from '../_modal';
 import { Jogador } from '../shared/services/jogador';
 import { HttpClient } from '@angular/common/http';
+import { AppService } from '../shared/services/app.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LoginAuthenticatedComponent {
   buyCoin: boolean;
   coinBought: boolean;
   userList:  [Jogador];
-  jogador: Jogador;
+ 
   wins:number;
   position:any=[];
   imgSelected:string;
@@ -40,7 +41,7 @@ export class LoginAuthenticatedComponent {
   div2:boolean=false;
 
   getUserByID() {
-    this.http.get<Jogador>(`http://localhost:90/jogador/${this.jogador._id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get<Jogador>(`http://localhost:90/jogador/${this.appService.userInfos._id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => { this.playerObject = response });
   }
 
@@ -67,12 +68,11 @@ export class LoginAuthenticatedComponent {
     this.coinsQtd=0;
     this.div1=true;
     this.div2=false;
-      this.user = this.route.snapshot.params['user']; 
-      this.saldo = this.route.snapshot.params['saldo'];
-      this.jogador = JSON.parse(this.route.snapshot.params['data']);
+      
+      
 
       this.getUserByID()
-      console.log(this.jogador)
+     
 
     this.addIssue();
    
@@ -166,6 +166,7 @@ openModalRanking() {
   
 
   constructor(
+    public appService: AppService,
     private modalService: ModalService,
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -208,37 +209,39 @@ openModalRanking() {
   
 
     item = {
-      url: `selecionar-nivel/${JSON.stringify(this.playerObject)}/`
+      url: `selecionar-nivel`
     };
+
+    this.appService.avatar = this.avatarImage
   
 
-    this.ngZone.run(() => this.router.navigateByUrl(item.url+this.avatarImage));
+    this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'));
 
 
   }
 
 
   buyCoins=async (coinQtd:number) => {
-    this.jogador.saldo = this.playerObject.saldo
+    
 
 
 
-    var test =  this.jogador.saldo + coinQtd
+  
 
 
 
 
   
     this.updateBalance(
-      this.jogador._id,
+      this.appService.userInfos._id,
       coinQtd,
     )
 
     this.buyCoin=false;
     this.coinBought=true;
-    this.playerObject.saldo =+ this.jogador.saldo + coinQtd
+    this.appService.userInfos.saldo =+ this.appService.userInfos.saldo + coinQtd
     
-    console.log(this.jogador)
+    
 
     setTimeout (() => {
       this.coinsQtd=coinQtd;
