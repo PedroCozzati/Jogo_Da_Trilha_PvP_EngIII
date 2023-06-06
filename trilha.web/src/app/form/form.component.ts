@@ -31,14 +31,12 @@ import { AppService } from '../shared/services/app.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css', './modal.component.less']
 })
-export class FormComponent implements OnInit {
 
+export class FormComponent implements OnInit {
 
   found: string;
   loginForm: FormGroup;
   registerForm: FormGroup;
-  modalRef: MdbModalRef<ModalComponent> | null = null;
-  modalRef2: MdbModalRef<ModalCadastroComponent> | null = null;
   user: string;
   userExists: boolean;
   userList: any = [];
@@ -92,7 +90,6 @@ export class FormComponent implements OnInit {
   }
 
   registerUser(nome: string, email: string, senha: string, saldo: 100, dataNasc: Date, vitorias: 0) {
-
     this.http.post(`http://localhost:90/jogador`, {
       nome: nome,
       senha: senha,
@@ -134,11 +131,6 @@ export class FormComponent implements OnInit {
     this.usernameAlreadyTaken = false
     this.emailAlreadyTaken = false
 
-
-    var now = new Date()
-
-
-
     this.loginForm = this.fb.group({
       name: [''],
       senha: [''],
@@ -149,10 +141,7 @@ export class FormComponent implements OnInit {
       emailCadastro: new FormControl('', [
         Validators.required,
         Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-
-
     });
-
 
     this.userEmails2 = new FormGroup({
 
@@ -178,16 +167,7 @@ export class FormComponent implements OnInit {
 
 
     this.getAllUsers()
-    var now = new Date()
 
-
-    console.log(this.userList)
-
-
-
-
-
-    this.bodyText = 'This text can be updated in modal 1';
   }
 
 
@@ -207,8 +187,6 @@ export class FormComponent implements OnInit {
   }
 
   closeModalRecSenha() {
-
-
     console.log(this.userList)
     this.clearForm()
     this.canResetPwd = false;
@@ -219,8 +197,6 @@ export class FormComponent implements OnInit {
   }
 
   closeModalCadastro() {
-
-
     console.log(this.userList)
     this.modalService.close('cadastro');
     this.clearForm()
@@ -232,10 +208,7 @@ export class FormComponent implements OnInit {
   }
 
   registerUserModal() {
-
     const now = new Date()
-
-
 
     if (this.userList.find((obj) => {
       return obj.email == this.userEmails.controls['primaryEmail'].value;
@@ -249,7 +222,6 @@ export class FormComponent implements OnInit {
     else if (this.userList.find((obj) => {
       return obj.nome == this.userEmails.controls['nameCadastro'].value;
     })
-
     ) {
       this.usernameAlreadyTaken = true;
       setTimeout(() => {
@@ -271,7 +243,6 @@ export class FormComponent implements OnInit {
 
     }
 
-
     console.log(this.userEmails.controls['primaryEmail'].value)
     console.log(this.userList)
 
@@ -279,7 +250,7 @@ export class FormComponent implements OnInit {
 
 
   constructor(
-    private appService:AppService,
+    private appService: AppService,
     private http: HttpClient,
     private modalService: ModalService,
     private modalService2: MdbModalService,
@@ -320,32 +291,17 @@ export class FormComponent implements OnInit {
     keyboard: true,
   }
 
-
-
-
   openModalCadastro() {
     this.openModal('cadastro');
   }
 
-
-
-
-
-
-
-
   submitForm() {
     this.successLogin = false;
-
     this.tryLogin = true
-
-
-    const user = this.userList.find(({ nome }) => nome == this.loginForm.controls['name'].value)
 
     var foundUser = this.userList.find((obj) => {
       return obj.nome === this.loginForm.controls['name'].value;
     });
-
 
     if (
       this.loginForm.controls['name'].value == "useradm" && this.loginForm.controls['senha'].value == "1234") {
@@ -359,9 +315,6 @@ export class FormComponent implements OnInit {
         if (
           foundUser.nome == this.loginForm.controls['name'].value &&
           foundUser.senha == this.loginForm.controls['senha'].value) {
-
-          
-          
           this.tryLogin = false
           this.user = this.loginForm.controls['name'].value;
 
@@ -377,16 +330,7 @@ export class FormComponent implements OnInit {
             vitoria: found.vitoria
           }
 
-          var data: Jogador = jogador;
-
           this.appService.userInfos = found
-
-          
-          
-
-          this.item = {
-            url: `login-authenticated/`
-          };
 
           this.successLogin = true;
           setTimeout(() => {
@@ -395,30 +339,20 @@ export class FormComponent implements OnInit {
 
         }
 
-
-
         else if (
           foundUser.nome == this.loginForm.controls['name'].value &&
           foundUser.senha != this.loginForm.controls['senha'].value
         ) {
           this.successLogin = false;
-
           this.openModal('custom-modal-0')
         }
-
-
       }
 
       else {
         this.successLogin = false;
-
         this.openModal('custom-modal-1');
       }
     }
-
-
-
-
   }
 
   checkUserModal() {
@@ -428,26 +362,10 @@ export class FormComponent implements OnInit {
     if (foundEmail) {
       this.canResetPwd = true
       this.userEmails2.controls['secundaryEmail'].disable()
-
-      // this.user = this.loginForm.controls['name'].value;
-
-      // const found = this.userList.find((obj) => {
-      //   return obj.nome === this.user;
-      // });
-      // this.item = {
-      //   url: `login-authenticated/${this.user}/${found.saldo}`
-      // };
-
-      // this.successLogin = true;
-      // setTimeout (() => {
-      //   this.ngZone.run(() => this.router.navigateByUrl(this.item.url));
-      // },3000);
-
     }
     else {
       this.userEmails2.controls['secundaryEmail'].enable()
       this.canResetPwd = false
-
       this.neverUsedEmail = true
 
       setTimeout(() => {
@@ -458,9 +376,7 @@ export class FormComponent implements OnInit {
   }
 
   recSenha() {
-
     this.canResetPwd = false
-
 
     const found = this.userList.find((obj) => {
       return obj.email === this.userEmails2.controls['secundaryEmail'].value;

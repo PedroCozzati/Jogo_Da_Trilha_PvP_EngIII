@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { fadeAnimation } from './animations';
 import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.service';
 import { AppService } from '../shared/services/app.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -18,7 +19,10 @@ import { AppService } from '../shared/services/app.service';
 
 export class GameComponent {
   state = "closed";
-  jogador: any = {};
+  jogador1: any = {};
+  jogador2: any = {};
+  isThePlayer1Active: Boolean;
+  isThePlayer2Active: Boolean;
   nivel: any = {}
   nivelPeca: any = {}
   avatar: string
@@ -63,18 +67,27 @@ export class GameComponent {
   }
 
 
+  async getJogadorByID(jogador_id: string) {
+    return await lastValueFrom(
+      this.http.get(`http://localhost:90/jogador/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
+    )
+  }
+
 
   async ngOnInit() {
 
-    if (this.state == "closed") {
-      setTimeout(() => this.state = "wided")
-    }
+    this.jogador1 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador1_id)
+    this.jogador2 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador2_id)
+
+    this.isThePlayer1Active = this.appService.userInfos.nome == this.jogador1.nome
+    this.isThePlayer2Active = this.appService.userInfos.nome == this.jogador2.nome
+
 
     this.gameSides = ['.stoneBlack', '.stoneWhite']
     var random = Math.floor(Math.random() * this.gameSides.length);
     this.playerStone = this.gameSides[random]
     this.infoTitle = 'Primeira Fase - Posicione suas peças livremente!'
-    this.jogador = this.appService.userInfos;
+
     this.nivel = this.appService.gameInfo;
     this.nivelPeca = this.appService.gameInfo.peca;
     this.avatar = this.appService.avatar;//this.route.snapshot.params['image'];
@@ -148,6 +161,19 @@ export class GameComponent {
   }
 
 
+  async efetuaJogada(jogador_id: string, coordenada_atual: any[], coordenada_nova: any[], partida_id: string) {
+    return await lastValueFrom(
+      this.http.put(`http://localhost:90/partida/${partida_id}`, {
+        "versaoPartida": [
+          coordenada_atual,
+          coordenada_nova,
+          jogador_id
+        ]
+      }, { headers: { "Content-Type": 'application/json' } })
+    )
+  }
+
+
   isNotPrimeiraFase() {
 
 
@@ -186,6 +212,13 @@ export class GameComponent {
     coordenada.forEach((ponto, index) => {
       this.pecaSelecionada?.coordenada.splice(index, 1, ponto)
     })
+
+    this.efetuaJogada(
+      this.appService.userInfos._id,
+      coordenada,
+      this.pecaSelecionada?.coordenada,
+      this.appService.gameInfo.partida._id
+    )
 
     this.deselectStone();
   }
@@ -238,11 +271,8 @@ export class GameComponent {
   }
 
   closeModalGame(id: string) {
-    var item = {
-      url: `login-authenticated/${JSON.stringify(this.jogador)}`
-    };
 
-    this.ngZone.run(() => this.router.navigateByUrl(item.url));
+    this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
   }
 
   corLadoA = 'red'

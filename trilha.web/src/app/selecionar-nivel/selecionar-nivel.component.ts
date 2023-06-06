@@ -16,16 +16,10 @@ import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.serv
   styleUrls: ['./selecionar-nivel.component.css', './selecionar-nivel.component.scss']
 })
 export class SelecionarNivelComponent implements OnInit {
-  slides: any[] = new Array(3).fill({ src: "", title: "" });
-
-  public user: string;
-  saldo: string;
 
   options: AnimationOptions = {
     path: "../../assets/select-level.json",
-
   };
-
 
   moneyAnimation: AnimationOptions = {
     path: '../../../assets/511-money.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
@@ -38,11 +32,16 @@ export class SelecionarNivelComponent implements OnInit {
   tips: any = []
   images: any = []
   selectedNivelId: string
-
-  jogador: Jogador;
-  appService1:any
   avatar: any
   nivelPeca: any;
+  tabuleiro: any = {}
+  item: any
+  tabsSorted: any = []
+  tabuleiros: any = []
+  pecas: any = []
+  peca: any = {}
+  random: any
+  random2: any
 
   openModal(id: string) {
     this.modalService.open(id);
@@ -52,11 +51,9 @@ export class SelecionarNivelComponent implements OnInit {
     this.modalService.close(id);
   }
 
-
-
   constructor(
     private websocketService: WebSocketTrilhaService,
-    private appService: AppService,
+    public appService: AppService,
     private modalService: ModalService,
     private http: HttpClient,
     public bugService: BugService,
@@ -65,36 +62,7 @@ export class SelecionarNivelComponent implements OnInit {
     private router: Router,
   ) { }
 
-
-  tabuleiro: any = {}
-
-
-  objectTab: any = {
-    tabs: []
-  }
-
-  item: any
-
-  tabsSorted: any = []
-
-  tabuleiros: any = []
-  pecas: any = []
-  peca: any = {}
-  random: any
-  random2: any
-  @Input() nivel: any = {}
-
-  // this.http.get(`http://localhost:90/tabuleiro/643d8198e01fe1cfdaca03d4`, { headers: { "Content-Type": 'application/json' } })
-  //   .subscribe(response => {
-  //     this.tabuleiro = response
-  //     this.tabuleiros.push(this.tabuleiro);
-
-  //     console.log(this.tabuleiros[0].cor);
-  //   })
-
   ngOnInit() {
-    this.appService1=this.appService
-
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
@@ -112,67 +80,9 @@ export class SelecionarNivelComponent implements OnInit {
 
     this.consultaNiveis()
 
-    this.slides[0] = {
-      src: "",
-      title: `
-      FACIL
-      `
-    };
-
-    this.slides[1] = {
-      src: "",
-      title: `
-      MEDIO
-      `
-    }
-
-
-
-
-    this.slides[2] = {
-      src: "",
-      title: `
-      (1ª FASE) Cada jogador coloca uma peça alternando entre jogadores, caso um dos
-        jogadores forme uma linha horizontal ou vertical com três peças (um moinho), ele terá o direito de remover
-          uma peça de seu adversário do tabuleiro.
-     
-      `
-    }
-    this.slides[3] = {
-      src: "",
-      title: `
-      Após todos colocarem suas nove peças em jogo, eles movem suas peças ao longo de uma das
-      linhas do tabuleiro para uma outra casa adjacente.
-      `
-    }
-    this.slides[4] = {
-      src: "",
-      title: `
-      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário, contudo ele não poderá
-        remover uma peça do adversário que faz parte de um moinho dele, a não ser que não exista outra peça para
-        remover.
-      `
-    }
-    this.slides[5] = {
-      src: "",
-      title: `
-      Extra:
-        Se ambos jogadores ficarem com 3 peças em jogo e em 10 jogadas não houver vencedor, o jogo terminará e será
-        declarado um empate.
-      `
-    }
   }
 
-
-
-
-
   backButton() {
-
-    this.item = {
-      url: `login-authenticated/${JSON.stringify(this.jogador)}`
-    };
-
     this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
   }
 
@@ -181,11 +91,8 @@ export class SelecionarNivelComponent implements OnInit {
       saldo: saldo,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
-
       }, err => {
-
       })
-
   }
 
   selectLevelButton(valorDeAposta: number, nomeNivel: string, corTabuleiro: string, peca: any, nivel_id: string) {
@@ -199,48 +106,22 @@ export class SelecionarNivelComponent implements OnInit {
       valorDeAposta: valorDeAposta,
     }
 
-    var item = {
-      url: `game`
-    };
+    if (this.appService.userInfos.saldo >= valorDeAposta) {
 
-    if (this.appService1.userInfos.saldo >= valorDeAposta) {
+      this.updateBalance(this.appService.userInfos._id, -valorDeAposta)
 
-      this.updateBalance(this.appService1.userInfos._id, -valorDeAposta)
-      
-      this.appService.gameInfo=nivel
+      this.appService.gameInfo = nivel
 
       this.ngZone.run(() => this.router.navigateByUrl('loader'));
-      
-
-      // this.websocketService.partidaModificada$.subscribe(data => {
-      //   if (data?.jogador2_id) {
-      //     this.ngZone.run(() => this.router.navigateByUrl('game'));
-      //   }
-
-      //   // data.forEach(async (coordenadas, index) => {
-      //   //   await new Promise((resolve) => setTimeout(resolve, 200))
-      //   //   this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
-      //   // });
-      // })
-
-
-
 
     } else {
       this.openModal('selectedLevel')
     }
-
-
-
   }
 
-  test() {
-
-  }
   exitButton() {
     this.ngZone.run(() => this.router.navigateByUrl('/'));
   }
-
 
   consultaNiveis() {
     try {
@@ -251,8 +132,8 @@ export class SelecionarNivelComponent implements OnInit {
             let niv = this.niveis[i]
             this.http.get(`http://localhost:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
               .subscribe(response => {
-                this.div1 = true;
-                this.div3 = false;
+                this.div1 = true
+                this.div3 = false
                 this.tabuleiro = response
 
                 this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
@@ -263,7 +144,7 @@ export class SelecionarNivelComponent implements OnInit {
                 (error) => {
                   this.openModal('custom-modal-2');
                 })
-            
+
             this.http.get(`http://localhost:90/peca/${niv.peca_id}`, { headers: { "Content-Type": 'application/json' } })
               .subscribe(response => {
                 this.peca = response
