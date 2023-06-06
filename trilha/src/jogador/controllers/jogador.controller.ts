@@ -26,6 +26,19 @@ export class JogadorController {
   }
 
   @Span()
+  @Get("/recuperacao")
+  async getByEmail(@Query('email') email: string, @Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.buscaJogadorPorEmail(email))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
   @Get(":id")
   async getById(@Param('id') id: string, @Res() response: Response): Promise<any> {
     try {
