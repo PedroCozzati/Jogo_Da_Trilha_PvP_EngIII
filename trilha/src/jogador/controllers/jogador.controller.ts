@@ -13,6 +13,19 @@ export class JogadorController {
   ) { }
 
   @Span()
+  @Get("/login")
+  async getByNomeESenha(@Query('nome') nome: string, @Query('senha') senha: string, @Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.jogadorService.buscaJogadorPorNomeESenha(nome, senha))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
   @Get(":id")
   async getById(@Param('id') id: string, @Res() response: Response): Promise<any> {
     try {

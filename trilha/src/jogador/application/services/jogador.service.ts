@@ -9,6 +9,7 @@ import { DeletaJogadorCommand } from 'src/jogador/domain/commands/impl/deleta-jo
 import { BuscaJogadorsQuery } from 'src/jogador/domain/queries/impl/busca-jogadors.query';
 import { BuscaJogadorPorIdQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-id.query';
 import { AtualizaSaldoJogadorCommand } from 'src/jogador/domain/commands/impl/atualiza-saldo-jogador.command';
+import { BuscaJogadorPorNomeESenhaQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-nome-senha.query';
 
 @Injectable()
 export class JogadorService {
@@ -23,6 +24,13 @@ export class JogadorService {
     this._logger.log('starting service execution');
 
     return await this.queryBus.execute(new BuscaJogadorPorIdQuery(id));
+  }
+
+  @Span()
+  async buscaJogadorPorNomeESenha(nome: string, senha: string) {
+    this._logger.log('starting service execution');
+
+    return await this.queryBus.execute(new BuscaJogadorPorNomeESenhaQuery(nome, senha));
   }
 
   @Span()

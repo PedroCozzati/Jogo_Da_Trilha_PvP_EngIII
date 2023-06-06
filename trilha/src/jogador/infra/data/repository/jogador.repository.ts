@@ -121,6 +121,21 @@ export class JogadorRepository {
     }
   }
 
+  @Span()
+  public async buscaJogadorPorNomeESenha(nome: string, senha: string) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogador = await this.repositoryBase.findOne({ $and: [{ nome: nome }, { senha: senha }] })
+
+      if (jogador)
+        return new Jogador(jogador)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
 
   @Span()
   public async buscaJogadors() {
