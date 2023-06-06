@@ -12,24 +12,20 @@
     <div *ngIf="div1" class="profile">
 
       <div class="image-cropper">
-        <img class="avatar-img" src="../../assets/{{appService1.avatar}}.png">
+        <img class="avatar-img" src="../../assets/{{appService.avatar}}.png">
       </div>
 
       <div class="avatar">
 
-        {{appService1.userInfos.nome}}
+        {{appService.userInfos.nome}}
       </div>
 
       <div class="money">
         <ng-lottie height="30px" [options]="moneyAnimation" resizeMode='center'></ng-lottie>
-        {{appService1.userInfos.saldo.toString()}}
+        {{appService.userInfos.saldo.toString()}}
       </div>
 
-
     </div>
-
-
-
 
     <div *ngIf="div3">
       <div style="height: 50vh;width:50vw"></div>
@@ -38,41 +34,57 @@
         <div class="spinner-border text-light" role="status">
           <span class="sr-only"></span>
         </div>
-
       </div>
-
     </div>
-
 
     <p-carousel *ngIf="div1" [value]="niveis" [numVisible]="3" [numScroll]="1" [circular]="true">
       <ng-template let-nivel pTemplate="item">
-        <div
-          style="background-position: bottom bottom;background-size: cover;background-repeat: no-repeat;background:  url(../../assets/{{images[random2]}}.png);box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
-          class="item-slide" (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca,nivel._id)">
-          <div class="items_text" style="display: flex;flex-direction: column;margin-top: 2rem;">
-            <div style="filter: blur(0) !important;" >{{ nivel.nome }}</div>
-            <div style="filter: blur(0) !important;"> Valor de aposta: {{nivel.valorDeAposta}}🪙</div>
+        <div style="box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
+          class="item-slide"
+          (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca,nivel._id)">
 
+
+          <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <div class="items_text" style="display: flex;flex-direction: column;">
+              <div style="height: 10vh;display: flex;flex-direction: row;justify-content: space-around;">
+                <div class="items_text" style="display: flex;flex-direction: column;">
+                  <div style="filter: blur(0) !important;">{{ nivel.nome }}</div>
+
+                  <div style="display: flex;flex-direction: row;justify-content: space-around;">
+                    <div style="filter: blur(0) !important;"> Aposta: {{nivel.valorDeAposta}}</div>
+                    <div style="height:1rem;width:1rem;background-image: url('../../assets/coinvitao.jpeg')"></div>
+                  </div>
+
+                </div>
+                <div style="height: 1px;width: 1px;">
+
+                </div>
+
+                <div class="glow"
+                  style="filter: blur(0) !important; border-radius: 1px;box-shadow: none !important;width:40%;height:70%;background-color: {{nivel.tab.cor}};">
+                  <img style="width:100%; height:100%;" src="../../assets/image2.png">
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex;flex-direction: row;justify-content: space-around;">
+
+              <div style="
+              height: 20vh;
+              width: 25vw;
+              background-position:center center;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background:  url(../../assets/{{images[random2]}}.png);">
+              </div>
+
+            </div>
           </div>
-
-          <div class="glow"
-            style="filter: blur(0) !important; border-radius: 1px;box-shadow: none !important;width:50%;height:50%;background-color: {{nivel.tab.cor}};">
-            <img style="width:100%; height:100%;" src="../../assets/image2.png">
-          </div>
-
-          <!-- <div style="background-color: {{nivel.tab.cor}};" class="glow"> -->
-          <!-- </div> -->
 
         </div>
 
       </ng-template>
-      <!-- <ng-template let-tab pTemplate="item">
-        <div class="item-slide">
-          
-          <p>{{tab.cor}}</p>
-          <div class="glow"></div>
-        </div>
-    </ng-template> -->
+     
     </p-carousel>
 
     <p *ngIf="div1" class="tip">Conforme for avançando de nível, mais moedas você poderá conseguir :)</p>
@@ -81,24 +93,17 @@
   </div>
 
   <jw-modal id="selectedLevel" class="selectedLevel">
-
-
     <h3><b>SALDO INSUFICIENTE!</b></h3>
-
     <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
       Você pode comprar mais moedas na loja
     </div>
     <button class="buttonShop" (click)="closeModal('selectedLevel');">VOLTAR</button>
   </jw-modal>
 
-  
-
   <jw-modal id="custom-modal-2" class="modal">
     <h3>Erro!</h3>
     <p>Estamos em manutenção, tente novamente mais tarde</p>
     <button class="button" (click)="closeModal('custom-modal-2');">OK</button>
   </jw-modal>
-
-
 
 </section>

@@ -31,10 +31,10 @@
                     <!-- <section> -->
                     <!-- </section> -->
 
-                    <h5 class="card-title text-center">Mariazinha</h5>
+                    <h5 class="card-title text-center">{{jogador2.nome}} {{isThePlayer2Active?'(Você)':''}}</h5>
                     <div class="peca-col">
                         <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
-                            Peças restantes</div>
+                            Peças roubadas</div>
                         <div class="npecas">
 
                             <div class="peca-card-oponent" style="background-color: {{nivelPeca.corLadoA}}"></div>
@@ -44,9 +44,18 @@
 
                         </div>
                     </div>
-                    <div class="oponent-playing" *ngIf="isPlaying">
-                        <div><b>JOGANDO...</b></div>
+
+                    <div *ngIf="isThePlayer2Active" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
+                        <div>
+                            <button (click)="openModal('gameemoji')" class="button" style="align-self: center;width: 100%;">
+                                <img src="../../assets/emoji-icon.png" style="height: 80%;">
+                            </button>
+                        </div>
+                       
                     </div>
+                    <!-- <div class="oponent-playing" *ngIf="isPlaying">
+                        <div><b>JOGANDO...</b></div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -175,30 +184,12 @@
                 <div class="card-body">
                     <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
                         alt="Card image cap">
-                    <h5 class="card-title text-center">{{jogador.nome}} [Você] </h5>
-                    <div class="row">
-                        <!-- <p class="card-text m-none col-sm-8">
-                            Peças: 9 <br />
-                            Peças conquistas: 2 <br />
-                        </p> -->
-                        <!-- <div class="col-sm-4 m-none">
-                            <a class="btn btn-primary">Emote</a>
-                        </div> -->
-                    </div>
+                    <h5 class="card-title text-center">{{jogador1.nome}} {{isThePlayer1Active?'(Você)':''}} </h5>
+                   
                     <div class="timer">
 
                         <img class="ampulheta" src="../../assets/clock.gif">
-
-
                     </div>
-                    <!-- <div class="npecas">
-
-                        <div class="peca-card"></div>
-                        <div style="font-size: 1.1rem;">
-                            x9
-                        </div>
-
-                    </div> -->
                     <div class="peca-col">
                         <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
                             Peças roubadas</div>
@@ -211,9 +202,15 @@
 
                         </div>
                     </div>
-                    <button (click)="openModal('gameemoji')" class="button" style="align-self: center;width: 50%;">
-                        <img src="../../assets/emoji-icon.png" style="height: 80%;">
-                    </button>
+                    <div *ngIf="isThePlayer1Active" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
+                        <div>
+                            <button (click)="openModal('gameemoji')" class="button" style="align-self: center;width: 100%;">
+                                <img src="../../assets/emoji-icon.png" style="height: 80%;">
+                            </button>
+                        </div>
+                       
+                    </div>
+                   
                 </div>
             </div>
         </div>

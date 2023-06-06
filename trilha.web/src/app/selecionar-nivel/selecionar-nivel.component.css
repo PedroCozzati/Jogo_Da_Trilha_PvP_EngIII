@@ -855,6 +855,7 @@ html, body {
 
 
   .item-slide{
+    align-self: center;
     border:  2px solid purple;
     border-radius: 30px;
     margin-right: 4vw;
@@ -864,9 +865,36 @@ html, body {
     color: #e8e8e8;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     margin-left: 4vw;
-    height: 30vh;
+    height: 35vh;
+    width: 60%;
+    
+  }
+
+
+  /* ::ng-deep div.p-carousel-items-content{
+    align-items: center;
+    align-self: center;
+    align-content: center !important;
+    justify-items: center;
+    justify-content: center;
+    justify-self: center;
+    flex-direction: row;
+    display: flex;
+  } */
+
+  ::ng-deep  div.p-carousel-item{
+    
+    align-items: center;
+    align-self: center;
+    align-content: center !important;
+    justify-items: center;
+    justify-content: center;
+    justify-self: center;
+    flex-direction: row;
+    display: flex;
+
   }
 
   .items_text{
