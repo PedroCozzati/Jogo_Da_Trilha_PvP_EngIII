@@ -14,6 +14,7 @@ import { ModalService } from '../_modal';
 import { HttpClient } from '@angular/common/http';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AppService } from '../shared/services/app.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   animations: [
@@ -34,12 +35,13 @@ import { AppService } from '../shared/services/app.service';
 
 export class FormComponent implements OnInit {
 
-  found: string;
+ 
   loginForm: FormGroup;
   registerForm: FormGroup;
   user: string;
   userExists: boolean;
-  userList: any = [];
+  userFound: any;
+
   item: any;
   bodyText: string;
   usernameAlreadyTaken: boolean;
@@ -54,6 +56,10 @@ export class FormComponent implements OnInit {
   canResetPwd: boolean;
   neverUsedEmail: boolean;
   pwdChanged: boolean;
+
+  registerUserByEmail:any;
+
+  userFoundRecSenha:any;
 
 
   clearForm() {
@@ -83,10 +89,21 @@ export class FormComponent implements OnInit {
     return this.userEmails.get('senhaCadastro')
   }
 
+  async getUserByUsername() {
+    return await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+      params: {
+        "nome": this.loginForm.controls['name'].value,
+        "senha": this.loginForm.controls['senha'].value,
+      }
+    }))
+  }
 
-  getAllUsers() {
-    this.http.get(`http://localhost:90/jogador`, { headers: { "Content-Type": 'application/json' } })
-      .subscribe(response => { this.userList = response });
+  async getUserByEmail() {
+    return await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+      params: {
+        "email": this.userEmails.controls['primaryEmail'].value
+      }
+    }))
   }
 
   registerUser(nome: string, email: string, senha: string, saldo: 100, dataNasc: Date, vitorias: 0) {
@@ -120,8 +137,12 @@ export class FormComponent implements OnInit {
       })
   }
 
+  checkUserByEmail
+
 
   ngOnInit() {
+    console.log(localStorage.getItem('cache'))
+
     this.pwdChanged = false;
     this.canResetPwd = false
     this.tryLogin = false
@@ -165,9 +186,6 @@ export class FormComponent implements OnInit {
         Validators.pattern("^.{6,12}$")])
     });
 
-
-    this.getAllUsers()
-
   }
 
 
@@ -181,13 +199,13 @@ export class FormComponent implements OnInit {
   closeModal(id: string) {
 
 
-    console.log(this.userList)
+    console.log(this.userFound)
     this.clearForm()
     this.modalService.close(id);
   }
 
   closeModalRecSenha() {
-    console.log(this.userList)
+    console.log(this.userFound)
     this.clearForm()
     this.canResetPwd = false;
     this.userEmails2.controls['secundaryEmail'].enable()
@@ -197,7 +215,7 @@ export class FormComponent implements OnInit {
   }
 
   closeModalCadastro() {
-    console.log(this.userList)
+    console.log(this.userFound)
     this.modalService.close('cadastro');
     this.clearForm()
 
@@ -207,22 +225,32 @@ export class FormComponent implements OnInit {
 
   }
 
-  registerUserModal() {
+  async registerUserModal() {
+    
+    // this.userList = await lastValueFrom(this.http.get(`http://localhost:90/jogador`, { headers: { "Content-Type": 'application/json' } }))
+    this.registerUserByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+      params: {
+        "nome": this.userEmails.controls['nameCadastro'].value,
+        "senha": this.userEmails.controls['senhaCadastro'].value,
+      }
+    }))
+    var userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+      params: {
+        "email": this.userEmails.controls['primaryEmail'].value
+      }
+    
+    }))
+   
     const now = new Date()
 
-    if (this.userList.find((obj) => {
-      return obj.email == this.userEmails.controls['primaryEmail'].value;
-    })) {
+    if (userByEmail!=null) {
       this.emailAlreadyTaken = true;
       setTimeout(() => {
         this.emailAlreadyTaken = false;
       }, 2000);
     }
 
-    else if (this.userList.find((obj) => {
-      return obj.nome == this.userEmails.controls['nameCadastro'].value;
-    })
-    ) {
+    else if (this.registerUserByEmail?.nome !=null) {
       this.usernameAlreadyTaken = true;
       setTimeout(() => {
         this.usernameAlreadyTaken = false;
@@ -232,6 +260,7 @@ export class FormComponent implements OnInit {
     else {
       this.usernameAlreadyTaken = false;
       this.userEmails.controls['primaryEmail'].disable()
+
       this.registerUser(
         this.userEmails.controls['nameCadastro'].value,
         this.userEmails.controls['primaryEmail'].value,
@@ -244,7 +273,6 @@ export class FormComponent implements OnInit {
     }
 
     console.log(this.userEmails.controls['primaryEmail'].value)
-    console.log(this.userList)
 
   }
 
@@ -295,13 +323,19 @@ export class FormComponent implements OnInit {
     this.openModal('cadastro');
   }
 
-  submitForm() {
+  async submitForm() {
+    this.userFound = await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+      params: {
+        "nome": this.loginForm.controls['name'].value,
+        "senha": this.loginForm.controls['senha'].value,
+      }
+    }))
+
     this.successLogin = false;
     this.tryLogin = true
+    console.log(this.userFound)
 
-    var foundUser = this.userList.find((obj) => {
-      return obj.nome === this.loginForm.controls['name'].value;
-    });
+    var isUserFound = this.userFound != null
 
     if (
       this.loginForm.controls['name'].value == "useradm" && this.loginForm.controls['senha'].value == "1234") {
@@ -309,45 +343,16 @@ export class FormComponent implements OnInit {
       this.successLogin = false;
 
     } else {
+      if (isUserFound) {
+        this.appService.userInfos = this.userFound
+        let key ='cache'
+        localStorage.setItem(key, JSON.stringify(this.appService));
+        this.successLogin = true;
 
-      if (foundUser) {
-
-        if (
-          foundUser.nome == this.loginForm.controls['name'].value &&
-          foundUser.senha == this.loginForm.controls['senha'].value) {
-          this.tryLogin = false
-          this.user = this.loginForm.controls['name'].value;
-
-          var found = this.userList.find((obj) => {
-            return obj.nome === this.user;
-          });
-
-          var jogador: Jogador = {
-            dataNasc: found.dataNasc,
-            _id: found._id,
-            nome: this.loginForm.controls['name'].value,
-            saldo: found.saldo,
-            vitoria: found.vitoria
-          }
-
-          this.appService.userInfos = found
-
-          this.successLogin = true;
-          setTimeout(() => {
-            this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
-          }, 3000);
-
-        }
-
-        else if (
-          foundUser.nome == this.loginForm.controls['name'].value &&
-          foundUser.senha != this.loginForm.controls['senha'].value
-        ) {
-          this.successLogin = false;
-          this.openModal('custom-modal-0')
-        }
+        setTimeout(() => {
+          this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+        }, 3000);
       }
-
       else {
         this.successLogin = false;
         this.openModal('custom-modal-1');
@@ -355,11 +360,15 @@ export class FormComponent implements OnInit {
     }
   }
 
-  checkUserModal() {
-    var foundEmail = this.userList.find(({ email }) => email == this.userEmails2.controls['secundaryEmail'].value)
-
-    this.found = foundEmail.nome;
-    if (foundEmail) {
+  async checkUserModal() {
+    var userByEmail:any={}
+    userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+      params: {
+        "email": this.userEmails2.controls['secundaryEmail'].value
+      }
+    }))
+    this.userFoundRecSenha = userByEmail.nome
+    if (userByEmail!=null) {
       this.canResetPwd = true
       this.userEmails2.controls['secundaryEmail'].disable()
     }
@@ -371,31 +380,35 @@ export class FormComponent implements OnInit {
       setTimeout(() => {
         this.neverUsedEmail = false;
       }, 2000);
-
     }
   }
 
-  recSenha() {
+  async recSenha() {
+    var userByEmail:any={}
+    userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+      params: {
+        "email": this.userEmails2.controls['secundaryEmail'].value
+      }
+    }))
     this.canResetPwd = false
 
-    const found = this.userList.find((obj) => {
-      return obj.email === this.userEmails2.controls['secundaryEmail'].value;
-    });
+   
+    console.log(this.userFoundRecSenha)
 
     this.updatePassword(
-      found._id,
+      userByEmail._id,
       this.userEmails2.controls['novaSenha'].value,
-      found.nome,
-      found.saldo,
-      found.email,
-      found.dataNasc,
+      userByEmail.nome,
+      userByEmail.saldo,
+      userByEmail.email,
+      userByEmail.dataNasc,
     )
 
-    found.senha = this.userEmails2.controls['novaSenha'].value
+    userByEmail.senha = this.userEmails2.controls['novaSenha'].value
 
     this.pwdChanged = true;
 
-    console.log(found)
+
 
   }
 

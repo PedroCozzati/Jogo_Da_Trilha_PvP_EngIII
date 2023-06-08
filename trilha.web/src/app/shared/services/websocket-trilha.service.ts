@@ -7,10 +7,12 @@ export class SocketTrilha extends Socket {
   constructor(
     appService: AppService
     ) {
+      let json = localStorage.getItem('cache')
+      let jogadorId =JSON.parse(json!)
     super({
       url: 'http://localhost:90', options: {
         query: {
-          "jogadorId": appService.userInfos._id
+          "jogadorId": jogadorId?.userInfos?._id
         }
       }
     });
