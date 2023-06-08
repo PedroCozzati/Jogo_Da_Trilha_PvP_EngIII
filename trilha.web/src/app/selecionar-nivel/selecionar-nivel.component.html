@@ -12,17 +12,17 @@
     <div *ngIf="div1" class="profile">
 
       <div class="image-cropper">
-        <img class="avatar-img" src="../../assets/{{appService.avatar}}.png">
+        <img class="avatar-img" src="../../assets/{{imageData}}.png">
       </div>
 
       <div class="avatar">
 
-        {{appService.userInfos.nome}}
+        {{siteData.userInfos.nome}}
       </div>
 
       <div class="money">
         <ng-lottie height="30px" [options]="moneyAnimation" resizeMode='center'></ng-lottie>
-        {{appService.userInfos.saldo.toString()}}
+        {{siteData.userInfos.saldo.toString()}}
       </div>
 
     </div>

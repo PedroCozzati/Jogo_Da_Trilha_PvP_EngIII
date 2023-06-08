@@ -25,6 +25,10 @@ export class LoginAuthenticatedComponent {
   avatarImage: string = 'avatar0';
   selectedImage: string = '../../assets/avatar0.png';
 
+  cache = 'cache'
+
+  siteData:any
+
   saldo: string;
   ranking: any[] = new Array(10).fill({ pos: "", name: "", wins: "" })
 
@@ -41,10 +45,21 @@ export class LoginAuthenticatedComponent {
   }
 
   ngOnInit() {
+    
+    console.log(localStorage.getItem('cache'))
     this.imgSelected = '../../assets/avatar2.png'
 
+    if(this.appService){
+      var json =localStorage.getItem('cache')
+      this.siteData = JSON.parse(json!)
+    }
+    else {
+     this.siteData = this.appService
+    }
+
+
     this.getAllUsers()
-    console.log(this.userList)
+    console.log(this.siteData.userInfos)
 
     this.buyCoin = true;
     this.isCoinBought = false;
@@ -123,19 +138,22 @@ export class LoginAuthenticatedComponent {
 
   goToSelectLevelScreen() {
     this.appService.avatar = this.avatarImage
+    localStorage.setItem('cache-image', JSON.stringify(this.appService.avatar));
+    
     this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'));
   }
 
   buyCoins = async (coinQtd: number) => {
 
     this.updateBalance(
-      this.appService.userInfos._id,
+      this.siteData.userInfos._id,
       coinQtd,
     )
 
     this.buyCoin = false;
     this.isCoinBought = true;
-    this.appService.userInfos.saldo = + this.appService.userInfos.saldo + coinQtd
+    this.siteData.userInfos.saldo = + this.siteData.userInfos.saldo + coinQtd
+    localStorage.setItem('cache', JSON.stringify(this.siteData));
 
     setTimeout(() => {
       this.coinsQtd = coinQtd;
@@ -209,7 +227,11 @@ export class LoginAuthenticatedComponent {
 
 
   logoutUser() {
+    console.log(this.siteData)
     // Futura funcao para deslogar usuario e limpar cache
+    localStorage.clear();
+    console.log(this.siteData)
     this.ngZone.run(() => this.router.navigateByUrl(''));
+    console.log(this.siteData)
   }
 }

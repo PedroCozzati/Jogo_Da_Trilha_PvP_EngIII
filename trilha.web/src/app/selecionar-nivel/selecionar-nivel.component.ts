@@ -43,6 +43,9 @@ export class SelecionarNivelComponent implements OnInit {
   random: any
   random2: any
 
+  siteData:any
+  imageData:any
+
   openModal(id: string) {
     this.modalService.open(id);
   }
@@ -63,6 +66,20 @@ export class SelecionarNivelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    if(this.appService){
+      var json =localStorage.getItem('cache')
+      var jsonImage =localStorage.getItem('cache-image')
+      this.siteData = JSON.parse(json!)
+      this.imageData =JSON.parse(jsonImage!)
+    }
+    else {
+     this.imageData = this.appService['avatar']
+     this.siteData = this.appService
+    }
+
+    console.log(this.siteData)
+
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
@@ -98,7 +115,7 @@ export class SelecionarNivelComponent implements OnInit {
   selectLevelButton(valorDeAposta: number, nomeNivel: string, corTabuleiro: string, peca: any, nivel_id: string) {
     this.selectedNivelId = nivel_id
 
-    var nivel = {
+    let nivel = {
       id: nivel_id,
       nome: nomeNivel,
       corTab: corTabuleiro,
@@ -106,11 +123,15 @@ export class SelecionarNivelComponent implements OnInit {
       valorDeAposta: valorDeAposta,
     }
 
-    if (this.appService.userInfos.saldo >= valorDeAposta) {
+    if (this.siteData.userInfos.saldo >= valorDeAposta) {
 
-      this.updateBalance(this.appService.userInfos._id, -valorDeAposta)
+      this.updateBalance(this.siteData.userInfos._id, -valorDeAposta)
 
       this.appService.gameInfo = nivel
+
+      alert(JSON.stringify(this.appService.gameInfo))
+      
+      localStorage.setItem('cache-game', JSON.stringify(this.appService.gameInfo))
 
       this.ngZone.run(() => this.router.navigateByUrl('loader'));
 
@@ -135,11 +156,13 @@ export class SelecionarNivelComponent implements OnInit {
                 this.div1 = true
                 this.div3 = false
                 this.tabuleiro = response
+                
 
                 this.tabuleiros.sort((a, b) => a._created_at.localeCompare(b._created_at))
                 this.tabuleiros.push(this.tabuleiro);
 
                 this.niveis[i].tab = this.tabuleiro
+                console.log(this.tabuleiro)
               },
                 (error) => {
                   this.openModal('custom-modal-2');

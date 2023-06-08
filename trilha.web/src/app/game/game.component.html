@@ -47,7 +47,7 @@
 
                     <div *ngIf="isThePlayer2Active" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
                         <div>
-                            <button (click)="openModal('gameemoji')" class="button" style="align-self: center;width: 100%;">
+                            <button (click)="openModal('gameemoji2')" class="button" style="align-self: center;width: 100%;">
                                 <img src="../../assets/emoji-icon.png" style="height: 80%;">
                             </button>
                         </div>
@@ -138,41 +138,15 @@
 
             <!--PEÇAS-->
 
-
             <!--PECA B-->
-            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,0),'stoneRemoved': verificaPecaRemovida(coordenada,0)}" *ngFor="let coordenada of tabuleiro[0]" [@fadeAnimation]="{params: {coordenada: 0,coordenada1:0}}" (click)="stoneClick(coordenada,0)" class="stoneBlack"
+            <div [ngClass]="{'stoneBlocked':!isThePlayer1Active,'stoneSelected': isThePlayer1Active?verificaSelecaoPeca(coordenada,0):pecaBloqueada(coordenada,0),'stoneRemoved': verificaPecaRemovida(coordenada,0)}"  *ngFor="let coordenada of tabuleiro[0]"  (click)="stoneClick(coordenada,0)" class="stoneBlack"
                 style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};"></div>
 
             <!--PECA A-->
-            <div [ngClass]="{'stoneSelected': verificaSelecaoPeca(coordenada,1),'stoneRemoved': verificaPecaRemovida(coordenada,1)}" *ngFor="let coordenada of tabuleiro[1]" [@fadeAnimation]="{params: {coordenada: 0,coordenada1:0}}" (click)="stoneClick(coordenada,1)" class="stoneWhite"
+            <div [ngClass]="{'stoneBlocked':!isThePlayer2Active,'stoneSelected': isThePlayer2Active?verificaSelecaoPeca(coordenada,1):pecaBloqueada(coordenada,1),'stoneRemoved': verificaPecaRemovida(coordenada,1)}"  *ngFor="let coordenada of tabuleiro[1]"  (click)="stoneClick2(coordenada,1)" class="stoneWhite"
                 style="transform: translate({{coordenada[0]*10}}vmin, {{coordenada[1]*getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-            <!-- <div (click)="stoneClick(1,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -22.5vmin);background-color: {{nivelPeca.corLadoB}};">
-            </div>
-            <div (click)="stoneClick(2,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -15vmin);background-color: {{nivelPeca.corLadoB}};"></div>
-            <div (click)="stoneClick(3,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, -7.5vmin);background-color: {{nivelPeca.corLadoB}};">
-            </div>
-            <div (click)="stoneClick(4,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 0vmin);background-color: {{nivelPeca.corLadoB}};"></div>
-            <div (click)="stoneClick(5,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 7.5vmin);background-color: {{nivelPeca.corLadoB}};"></div>
-            <div (click)="stoneClick(6,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 15vmin);background-color: {{nivelPeca.corLadoB}};"></div>
-            <div (click)="stoneClick(7,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 22.5vmin);background-color: {{nivelPeca.corLadoB}};">
-            </div>
-            <div (click)="stoneClick(8,'.stoneBlack')" class="stoneBlack" style="transform: translate(40vmin, 30vmin);background-color: {{nivelPeca.corLadoB}};"></div>
-            <div (click)="stoneClick2(0,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -30vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(1,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -22.5vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(2,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -15vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(3,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, -7.5vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(4,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 0vmin);background-color: {{nivelPeca.corLadoA}};"></div>
-            <div (click)="stoneClick2(5,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 7.5vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(6,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 15vmin);background-color: {{nivelPeca.corLadoA}};"></div>
-            <div (click)="stoneClick2(7,'.stoneWhite')"class="stoneWhite" style="transform: translate(-40vmin, 22.5vmin);background-color: {{nivelPeca.corLadoA}};">
-            </div>
-            <div (click)="stoneClick2(8,'.stoneWhite')" class="stoneWhite" style="transform: translate(-40vmin, 30vmin);background-color: {{nivelPeca.corLadoA}};"></div> -->
+           
         </div>
         <div class="infos" *ngIf="showInfo">
             {{infoTitle}}
@@ -182,14 +156,14 @@
                 style="background-color: {{nivelPeca.corLadoA}};border:2px solid {{nivelPeca.corLadoA}}">
 
                 <div class="card-body">
-                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
+                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{imageData}}.png"
                         alt="Card image cap">
                     <h5 class="card-title text-center">{{jogador1.nome}} {{isThePlayer1Active?'(Você)':''}} </h5>
                    
-                    <div class="timer">
+                    <!-- <div class="timer">
 
                         <img class="ampulheta" src="../../assets/clock.gif">
-                    </div>
+                    </div> -->
                     <div class="peca-col">
                         <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
                             Peças roubadas</div>
@@ -262,9 +236,6 @@
     <jw-modal id="gameemoji" class="modal2">
         <b>EMOJIS</b>
         <div class="flex-column-emoji">
-
-
-
             <div class="row-emoji">
                 <div class="emoji" (click)="closeModal('gameemoji')">
                     😂
@@ -275,7 +246,6 @@
                 <div class="emoji">
                     😎
                 </div>
-
             </div>
 
             <div class="row-emoji">
@@ -301,15 +271,52 @@
                 <div class="emoji">
                     🥸
                 </div>
+            </div>
+        </div>
+        <button (click)="closeModal('gameemoji')" class="button">VOLTAR</button>
+    </jw-modal>
+
+    <jw-modal id="gameemoji2" class="modal22">
+        <b>EMOJIS</b>
+        <div class="flex-column-emoji">
+            <div class="row-emoji">
+                <div class="emoji" (click)="closeModal('gameemoji')">
+                    😂
+                </div>
+                <div class="emoji">
+                    😭
+                </div>
+                <div class="emoji">
+                    😎
+                </div>
+            </div>
+
+            <div class="row-emoji">
+                <div class="emoji">
+                    🤬
+                </div>
+                <div class="emoji">
+                    😈
+                </div>
+                <div class="emoji">
+                    🤡
+                </div>
 
             </div>
 
-
+            <div class="row-emoji">
+                <div class="emoji">
+                    💀
+                </div>
+                <div class="emoji">
+                    🖕
+                </div>
+                <div class="emoji">
+                    🥸
+                </div>
+            </div>
         </div>
-
-
-
-        <button (click)="closeModal('gameemoji')" class="button">VOLTAR</button>
+        <button (click)="closeModal('gameemoji2')" class="button">VOLTAR</button>
     </jw-modal>
     <div class="ad2" style="background-image: url('../../assets/anuncio.jpg');"></div>
 </section>

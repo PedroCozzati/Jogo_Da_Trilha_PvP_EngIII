@@ -22,7 +22,28 @@ export class LoaderComponent {
   tips: any = []
   random: any
 
+  siteData:any
+  gameData:any
+  imageData:any
+
   ngOnInit() {
+
+    if(this.appService){
+      var json =localStorage.getItem('cache')
+      var jsonImage =localStorage.getItem('cache-image')
+      var gameImage =localStorage.getItem('cache-game')
+      this.siteData = JSON.parse(json!)
+      this.imageData =JSON.parse(jsonImage!)
+      this.gameData = JSON.parse(gameImage!)
+    }
+    else {
+     this.imageData = this.appService['avatar']
+     this.siteData = this.appService
+     this.gameData =this.appService['gameInfo']
+    }
+
+    // alert(JSON.stringify(this.gameData))
+
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
       'Não coloque todas as peças nos cantos pois você pode acabar se bloqueando nas próximas jogadas.',
@@ -34,12 +55,37 @@ export class LoaderComponent {
     this.random = Math.floor(Math.random() * this.tips.length);
 
 
-    this.websocketService.partidaModificada$.subscribe(data => {
+   
+    var teste ="'AAAAAA':'AAAAAAAAA'"
+  
+
+    this.websocketService.partidaModificada$.subscribe(async data => {
+      await localStorage.setItem('cache-partida',teste)
+
+
       if (data.partida?.jogador2_id) {
         this.appService.gameInfo.tabuleiro = data.tabuleiro;
         this.appService.gameInfo.partida = data.partida;
+
+        
+      this.gameData = this.appService.gameInfo
+      var test = this.appService.gameInfo.tabuleiro
+
+      var partida = data.partida
+
+        
+
+    
+
+
+      
         this.ngZone.run(() => this.router.navigateByUrl('game'));
+      
+  
       }
+
+      
+      // alert(JSON.stringify(this.gameData))
     })
 
     this.registraPartida();
@@ -48,8 +94,8 @@ export class LoaderComponent {
   registraPartida() {
     this.http.post(`http://localhost:90/partida`,
       {
-        jogador_id: this.appService.userInfos._id,
-        nivel_id: this.appService.gameInfo.nivel_id,
+        jogador_id: this.siteData.userInfos._id,
+        nivel_id: this.gameData.nivel_id,
       },
       { headers: { "Content-Type": 'application/json' } })
       .subscribe()
