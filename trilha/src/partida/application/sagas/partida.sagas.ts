@@ -7,6 +7,7 @@ import { PartidaService } from '../services/partida.service';
 import { PartidaGateway } from 'src/partida/gateway/partida.gateway';
 import { JogadaEfetuadaEvent } from 'src/partida/domain/events/impl/jogada-efetuada.event';
 import { PartidaRegistradaEvent } from 'src/partida/domain/events/impl/partida-registrada.event';
+import { MoinhoEfetuadoEvent } from 'src/partida/domain/events/impl/moinho-efetuado.event';
 
 @Injectable()
 export class PartidaSagas {
@@ -26,7 +27,7 @@ export class PartidaSagas {
                     this._logger.log("inside saga", { event: JSON.stringify(event) });
 
                     this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador1_id }), event.partidaDto.jogador1_id);
-                    
+
                     if (event.partidaDto.jogador2_id)
                         this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
                 })
@@ -44,6 +45,20 @@ export class PartidaSagas {
 
                     this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador1_id }), event.partidaDto.jogador1_id);
                     this.partidaGateway.emiteEstadoAtual(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.partidaDto.jogador2_id }), event.partidaDto.jogador2_id);
+                })
+            )
+    }
+
+    @Span()
+    @Saga()
+    moinhoEfetuado(events$: Observable<any>): Observable<void> {
+        return events$
+            .pipe(
+                ofType(MoinhoEfetuadoEvent),
+                map(event => {
+                    this._logger.log("inside saga", { event: JSON.stringify(event) });
+
+                    this.partidaGateway.emiteMoinho(this.partidaService.buscaPartidaPorJogador({ id_jogador: event.moinhoEfetuadoDto.jogador_id }), event.moinhoEfetuadoDto.jogador_id);
                 })
             )
     }

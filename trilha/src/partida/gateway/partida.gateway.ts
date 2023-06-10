@@ -32,6 +32,11 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
     }
 
+    async emiteMoinho(body, jogadorId: string) {
+        const webSocketClientId = await this._cacheService.get(jogadorId.toString());
+        this.server.to(webSocketClientId.toString()).emit('moinhoEfetuado', await body);
+    }
+
     @SubscribeMessage('emojiEnviado')
     async escutaEmoji(@MessageBody() data: any) {
         this._logger.log("emoji acionado", { data: JSON.stringify(data) });
