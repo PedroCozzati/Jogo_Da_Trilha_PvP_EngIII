@@ -55,6 +55,6 @@ export class JogadorPartidaDto {
     @IsString()
     @IsNotEmpty()
     readonly id_jogador: string
-
 }
+
 

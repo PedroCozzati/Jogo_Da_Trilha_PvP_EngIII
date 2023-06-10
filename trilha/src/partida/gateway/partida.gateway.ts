@@ -4,6 +4,8 @@ import {
     OnGatewayInit,
     OnGatewayConnection,
     OnGatewayDisconnect,
+    MessageBody,
+    SubscribeMessage,
 } from '@nestjs/websockets';
 import { Logger } from 'nestjs-pino';
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
@@ -28,6 +30,14 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     async emiteEstadoAtual(body, jogadorId: string) {
         const webSocketClientId = await this._cacheService.get(jogadorId.toString());
         this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
+    }
+
+    @SubscribeMessage('emojiEnviado')
+    async escutaEmoji(@MessageBody() data: any) {
+        this._logger.log("emoji acionado", { data: JSON.stringify(data) });
+
+        const webSocketClientId = await this._cacheService.get(data.jogadorId);
+        this.server.emit('emojiEmitido', await data);
     }
 
     async handleConnection(client: Socket, ...args: any[]) {

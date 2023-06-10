@@ -7,5 +7,5 @@ export const EventHandlers = [
   PartidaRegistradaHandler,
   JogadaEfetuadaHandler,
   MoinhoEfetuadoHandler,
-  PartidaFinalizadaHandler
+  PartidaFinalizadaHandler,
 ];
