@@ -25,9 +25,9 @@ export class LoginAuthenticatedComponent {
   avatarImage: string = 'avatar0';
   selectedImage: string = '../../assets/avatar0.png';
 
-  cache = 'cache'
+  // cache = 'cache'
 
-  siteData:any
+  // siteData:any
 
   saldo: string;
   ranking: any[] = new Array(10).fill({ pos: "", name: "", wins: "" })
@@ -45,21 +45,22 @@ export class LoginAuthenticatedComponent {
   }
 
   ngOnInit() {
+
     
-    console.log(localStorage.getItem('cache'))
+    // console.log(localStorage.getItem('cache'))
     this.imgSelected = '../../assets/avatar2.png'
 
-    if(this.appService){
-      var json =localStorage.getItem('cache')
-      this.siteData = JSON.parse(json!)
-    }
-    else {
-     this.siteData = this.appService
-    }
+    // if(this.appService){
+    //   var json =localStorage.getItem('cache')
+    //   this.siteData = JSON.parse(json!)
+    // }
+    // else {
+    //  this.siteData = this.appService
+    // }
 
 
     this.getAllUsers()
-    console.log(this.siteData.userInfos)
+    // console.log(this.siteData.userInfos)
 
     this.buyCoin = true;
     this.isCoinBought = false;
@@ -95,17 +96,39 @@ export class LoginAuthenticatedComponent {
   openModalRanking() {
     var vitorias: any = [];
 
-    this.userList.forEach(rank => {
-      if (rank.vitoria == null) {
-        rank.vitoria = 0
-      }
-      vitorias.push(rank.vitoria)
 
+    this.userList.forEach(rank => {
+      if(rank.vitorias==null){
+        rank.vitorias=0
+      }
+      vitorias.push(rank.vitorias)    
+  
     });
+  
+    var sortedArray: Jogador[] = this.userList.sort((n1,n2) => {
+      if (n1.vitorias > n2.vitorias) {
+          return 1;
+      }
+  
+      if (n1.vitorias < n2.vitorias) {
+          return -1;
+      }
+  
+      return 0;
+  });
+    // var vitorias: any = [];
+
+    // this.userList.forEach(rank => {
+    //   if (rank.vitorias == null) {
+    //     rank.vitorias = 0
+    //   }
+    //   vitorias.push(rank.vitorias)
+
+    // });
 
     var data = vitorias;
 
-    var rank = data.map(function (rank) {
+    var rank = sortedArray.reverse().map(function (rank) {
       return function (a, i, aa) {
         return [rank = i + 1];
       };
@@ -138,7 +161,7 @@ export class LoginAuthenticatedComponent {
 
   goToSelectLevelScreen() {
     this.appService.avatar = this.avatarImage
-    localStorage.setItem('cache-image', JSON.stringify(this.appService.avatar));
+    // localStorage.setItem('cache-image', JSON.stringify(this.appService.avatar));
     
     this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'));
   }
@@ -146,14 +169,14 @@ export class LoginAuthenticatedComponent {
   buyCoins = async (coinQtd: number) => {
 
     this.updateBalance(
-      this.siteData.userInfos._id,
+      this.appService.userInfos._id,
       coinQtd,
     )
 
     this.buyCoin = false;
     this.isCoinBought = true;
-    this.siteData.userInfos.saldo = + this.siteData.userInfos.saldo + coinQtd
-    localStorage.setItem('cache', JSON.stringify(this.siteData));
+    this.appService.userInfos.saldo = + this.appService.userInfos.saldo + coinQtd
+    // localStorage.setItem('cache', JSON.stringify(this.siteData));
 
     setTimeout(() => {
       this.coinsQtd = coinQtd;
@@ -227,11 +250,11 @@ export class LoginAuthenticatedComponent {
 
 
   logoutUser() {
-    console.log(this.siteData)
+    // console.log(this.siteData)
     // Futura funcao para deslogar usuario e limpar cache
-    localStorage.clear();
-    console.log(this.siteData)
+    // localStorage.clear();
+    // console.log(this.siteData)
     this.ngZone.run(() => this.router.navigateByUrl(''));
-    console.log(this.siteData)
+    // console.log(this.siteData)
   }
 }

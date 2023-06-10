@@ -1362,3 +1362,75 @@ blockquote.electric span {
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+.modal3 ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 10vw !important;
+    border-radius: 100%;
+    height: 10vh;
+    font-size: xx-large;
+    /* background-image: url("../../assets/bg.png"); */
+  
+
+  
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  border: none !important;
+  align-self: center;
+  align-items: center;
+  border-radius: 0px !important;
+  align-content: center;
+  width: 30%;
+  padding: 0px !important;
+  background-image: none !important;
+  background-blend-mode: multiply;
+  background-color: none !important;
+  background-size: none !important;
+  
+    /* margin exposes part of the modal background */
+  }
+  
+  
+  .modal3  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 55%;
+    left: 20%;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 1000;
+    
+    /* enables scrolling for tall modals */
+    overflow: auto;
+  }
+
+  .modal3 ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    /* semi-transparent black  */
+    background-color: #0d0018;
+    opacity: 0;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: 900;
+}

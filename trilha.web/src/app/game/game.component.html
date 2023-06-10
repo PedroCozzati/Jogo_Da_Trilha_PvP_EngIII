@@ -5,7 +5,7 @@
 
 
 
-    <div class="ad" style="background-image: url('../../assets/anuncio.jpg');"></div>
+    <div class="ad" style="background-image: url('../../assets/{{adImages[randomImages]}}.jpg');"></div>
 
 
     <div class="gameFlex">
@@ -25,9 +25,8 @@
                 <div class="card-body">
                    
 
-                    <img class="card-img-top"
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Breezeicons-actions-22-im-user.svg/1200px-Breezeicons-actions-22-im-user.svg.png"
-                        alt="Card image cap">
+                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
+                    alt="Card image cap">
                     <!-- <section> -->
                     <!-- </section> -->
 
@@ -156,7 +155,7 @@
                 style="background-color: {{nivelPeca.corLadoA}};border:2px solid {{nivelPeca.corLadoA}}">
 
                 <div class="card-body">
-                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{imageData}}.png"
+                    <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
                         alt="Card image cap">
                     <h5 class="card-title text-center">{{jogador1.nome}} {{isThePlayer1Active?'(Você)':''}} </h5>
                    
@@ -236,42 +235,13 @@
     <jw-modal id="gameemoji" class="modal2">
         <b>EMOJIS</b>
         <div class="flex-column-emoji">
-            <div class="row-emoji">
-                <div class="emoji" (click)="closeModal('gameemoji')">
-                    😂
-                </div>
-                <div class="emoji">
-                    😭
-                </div>
-                <div class="emoji">
-                    😎
+            <div class="row-emoji" *ngFor="let emoji of emojiList" >
+                <div class="emoji" (click)="onEmojiClick('gameemoji',emoji)">
+                    {{emoji}}
                 </div>
             </div>
 
-            <div class="row-emoji">
-                <div class="emoji">
-                    🤬
-                </div>
-                <div class="emoji">
-                    😈
-                </div>
-                <div class="emoji">
-                    🤡
-                </div>
-
-            </div>
-
-            <div class="row-emoji">
-                <div class="emoji">
-                    💀
-                </div>
-                <div class="emoji">
-                    🖕
-                </div>
-                <div class="emoji">
-                    🥸
-                </div>
-            </div>
+            
         </div>
         <button (click)="closeModal('gameemoji')" class="button">VOLTAR</button>
     </jw-modal>
@@ -318,5 +288,11 @@
         </div>
         <button (click)="closeModal('gameemoji2')" class="button">VOLTAR</button>
     </jw-modal>
+
+
+    <jw-modal id="emoji-click" class="modal3">
+        {{selectedEmoji}}
+    </jw-modal>
+
     <div class="ad2" style="background-image: url('../../assets/anuncio.jpg');"></div>
 </section>

@@ -3,5 +3,5 @@ export interface Jogador{
     dataNasc:string;
     nome:string;
     saldo:number;
-    vitoria:number;
+    vitorias:number;
 }

@@ -12,17 +12,18 @@
     <div *ngIf="div1" class="profile">
 
       <div class="image-cropper">
-        <img class="avatar-img" src="../../assets/{{imageData}}.png">
+        <img class="avatar-img" src="../../assets/{{appService.avatar}}.png">
       </div>
 
       <div class="avatar">
 
-        {{siteData.userInfos.nome}}
+        {{appService.userInfos.nome}}
       </div>
 
       <div class="money">
-        <ng-lottie height="30px" [options]="moneyAnimation" resizeMode='center'></ng-lottie>
-        {{siteData.userInfos.saldo.toString()}}
+        <div style="height: 2.5rem;width: 2.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')"></div>
+        <div style="align-items: center;">
+          {{appService.userInfos.saldo.toString()}}</div>
       </div>
 
     </div>
@@ -46,13 +47,13 @@
 
           <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
             <div class="items_text" style="display: flex;flex-direction: column;">
-              <div style="height: 10vh;display: flex;flex-direction: row;justify-content: space-around;">
+              <div style="height: 10vh;width: 20vw;display: flex;flex-direction: row;justify-content: space-around;">
                 <div class="items_text" style="display: flex;flex-direction: column;">
                   <div style="filter: blur(0) !important;">{{ nivel.nome }}</div>
 
                   <div style="display: flex;flex-direction: row;justify-content: space-around;">
                     <div style="filter: blur(0) !important;"> Aposta: {{nivel.valorDeAposta}}</div>
-                    <div style="height:1rem;width:1rem;background-image: url('../../assets/coinvitao.jpeg')"></div>
+                    <div style="height: 1.5rem;width: 1.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')"></div>
                   </div>
 
                 </div>

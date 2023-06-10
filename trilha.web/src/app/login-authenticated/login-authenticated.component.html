@@ -38,7 +38,7 @@
 
 
                 <div class="flex-column">
-                  <P>{{siteData.userInfos.nome}}</P>
+                  <P>{{appService.userInfos.nome}}</P>
                   <!-- <div class="input-group">
                       <input required="" formControlName="name" type="text" name="text" autocomplete="off" class="input">
                       <label class="user-label">Usuário</label>
@@ -46,9 +46,10 @@
                 </div>
               </div>
               <div class="money">
+                <div style="height: 3.5rem;width: 3.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')"></div>
 
-                 <div style="max-height: 50px;max-width: 70px;margin-bottom: 1rem;"><ng-lottie height="30px" [options]="options1"  style="max-height: 30px;"></ng-lottie></div>
-                <p>{{siteData.userInfos.saldo.toString()}}</p>
+                 <!-- <div style="max-height: 50px;max-width: 70px;margin-bottom: 1rem;"><ng-lottie height="30px" [options]="options1"  style="max-height: 30px;"></ng-lottie></div> -->
+                <p>{{appService.userInfos.saldo.toString()}}</p>
               </div>
             </form>
 
@@ -56,9 +57,7 @@
 
 
             <div class="descricao">
-              <div>Partidas jogadas: 3</div>
-              <div>Vitórias: {{siteData.userInfos.vitoria}}</div>
-              <div>+ Detalhes</div>
+              <div>Vitórias: {{appService.userInfos.vitorias??0}}</div>
             </div>
 
           </form>
@@ -144,7 +143,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let rank of userList.reverse();let i = index;">
+                  <tr *ngFor="let rank of userList;let i = index;">
                     <td scope="row">
                       <div *ngIf="position[i]==1"
                         style="border: 0.2rem solid rgb(221, 201, 88);background-color: rgba(255, 255, 0, 0.322);border-radius:2rem;width: 2.5rem;text-align: center;padding: 0.4rem;">
@@ -163,7 +162,7 @@
                         {{position[i]}}
                       </div>
                     </td>
-                    <td scope="row" *ngIf="rank.nome==siteData.userInfos.nome"
+                    <td scope="row" *ngIf="rank.nome==appService.userInfos.nome"
                       style="padding: 0.4rem;font-weight: bold;color: rgb(17, 0, 58);">
 
 
@@ -173,14 +172,14 @@
                       </div>
 
                     </td>
-                    <td scope="row" style="padding: 0.4rem;" *ngIf="!(rank.nome==siteData.userInfos.nome)">
+                    <td scope="row" style="padding: 0.4rem;" *ngIf="!(rank.nome==appService.userInfos.nome)">
                       <div style="padding: 0.4rem;">
                         {{rank.nome}}
                       </div>
                     </td>
                     <td scope="row" style="padding: 0.4rem;">
                       <div style="padding: 0.4rem;">
-                        {{rank.vitoria || 0}}
+                        {{rank.vitorias || 0}}
                       </div>
                     </td>
 
@@ -243,7 +242,7 @@
       <div *ngFor='let item of shop' class="shop-row">
         <div class="shop-item" (click)="buyCoins(item.coins)">
           <div class="buy-money">
-            <div style="font-weight: bolder;">{{item.name}}</div>
+            <div style="font-size: small;font-weight: bolder;">{{item.name}}</div>
             <div class="coin-flex">
               <div class="coin-bg">
                 <div class="test5">{{item.coins.toString()}}</div>

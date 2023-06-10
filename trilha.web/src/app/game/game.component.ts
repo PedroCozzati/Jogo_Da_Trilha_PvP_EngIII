@@ -8,6 +8,7 @@ import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.serv
 import { AppService } from '../shared/services/app.service';
 import { Subscription, lastValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators'
+import { Howl } from 'howler';
 
 
 @Component({
@@ -35,24 +36,36 @@ export class GameComponent {
   playerStone: any = '';
   gameSides: any = []
 
-  siteData:any
-  imageData:any
-  gameData:any
-  partidaData:any
+  selectedEmoji:any
+
+  adImages: any[]
+
+  randomImages: any
+
+  emojiList: any[]
+  emoji:any
+  // siteData:any
+  // imageData:any
+  // gameData:any
+  // partidaData:any
+
   browserRefresh = false;
 
+  sound = new Howl({
+    src: ['../../assets/sb_aurora.mp3']
+  });
 
   matrixString: string;
   subscription: Subscription;
   constructor(
-    private appService: AppService,
     private webSocket: WebSocketTrilhaService,
+    private appService: AppService,
     private ngZone: NgZone,
     private http: HttpClient,
     private router: Router,
     private modalService: ModalService
   ) {
-    
+
     router.canceledNavigationResolution = 'computed';
   }
 
@@ -62,15 +75,15 @@ export class GameComponent {
     });
   }
 
-  test(){
+  test() {
     this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'))
   }
   // @HostListener('unload', ['$event'])
   // async unloadHandler(event) {
   //   await this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'))
   // }
- 
-  
+
+
 
   tabuleiro: any = this.appService.gameInfo.tabuleiro
 
@@ -93,29 +106,24 @@ export class GameComponent {
 
 
   async ngOnInit() {
-    window.onbeforeunload = null
-    function unloadPage() {
-      alert("unload event detected!");
-      return false
-      
-   }
-   
 
-  
-  //  function onunload (){ this.test()}
-  //   window.onunload =  unloadPage
+    // this.sound.play();
+    // Howler.volume(0.2);
 
-    this.router.events
-    .pipe(filter((rs): rs is NavigationEnd => rs instanceof NavigationEnd))
-    .subscribe(event => {
-      if (
-        event.id === 1 &&
-        event.url === event.urlAfterRedirects
-      ) {
-        
-          // Your code here for when the page is refreshd
-      }
-    })
+
+    // Change global volume.
+    this.adImages = [
+      'anuncio0', 'anuncio1', 'anuncio2', 'anuncio3'
+    ]
+
+
+    this.randomImages = Math.floor(Math.random() * this.adImages.length);
+    //  function onunload (){ this.test()}
+    //   window.onunload =  unloadPage
+
+    this.emojiList = [
+      '😂', '😭', '😎', '🤬', '😈', '🤡', '💀', '🖕', '🥸'
+    ]
 
     // window.addEventListener("beforeunload", function (e) {
     //     var confirmationMessage = "\o/";
@@ -124,32 +132,35 @@ export class GameComponent {
     //     return null;       // Gecko, WebKit, Chrome <34
     // });
 
-    
-    
-    if(this.appService){
-      var json =await localStorage.getItem('cache')
-      var jsonImage =await localStorage.getItem('cache-image')
-      var gameImage =localStorage.getItem('cache-game')
-      this.siteData = await JSON.parse(json!)
-      this.imageData =await JSON.parse(jsonImage!)
-      this.gameData = JSON.parse(gameImage!)
-    
-      console.log(localStorage.getItem('cache-game'))
 
-    }
-    else {
-     this.imageData = this.appService['avatar']
-     this.siteData = this.appService
-     this.gameData =this.appService['gameInfo']
 
-    }
+    // if(this.appService){
+    //   var json =await localStorage.getItem('cache')
+    //   var jsonImage =await localStorage.getItem('cache-image')
+    //   var gameImage =localStorage.getItem('cache-game')
+    //   this.siteData = await JSON.parse(json!)
+    //   this.imageData =await JSON.parse(jsonImage!)
+    //   this.gameData = JSON.parse(gameImage!)
+
+    //   console.log(localStorage.getItem('cache-game'))
+
+    // }
+    // else {
+    //  this.imageData = this.appService['avatar']
+    //  this.siteData = this.appService
+    //  this.gameData =this.appService['gameInfo']
+
+    // }
 
 
     this.jogador1 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador1_id)
     this.jogador2 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador2_id)
 
-    this.isThePlayer1Active = this.siteData.userInfos.nome == this.jogador1.nome
-    this.isThePlayer2Active = this.siteData.userInfos.nome == this.jogador2.nome
+
+    console.log(this.jogador1)
+
+    this.isThePlayer1Active = this.appService.userInfos.nome == this.jogador1.nome
+    this.isThePlayer2Active = this.appService.userInfos.nome == this.jogador2.nome
 
 
     this.gameSides = ['.stoneBlack', '.stoneWhite']
@@ -157,10 +168,10 @@ export class GameComponent {
     this.playerStone = this.gameSides[random]
     this.infoTitle = 'Primeira Fase - Posicione suas peças livremente!'
 
-    this.nivel = this.gameData;
-    this.nivelPeca = this.gameData.peca;
-    this.avatar = this.imageData;//this.route.snapshot.params['image'];
-    this.avatar = this.imageData.avatar;//this.route.snapshot.params['image'];
+    this.nivel = this.appService.gameInfo;
+    this.nivelPeca = this.appService.gameInfo.peca;
+    this.avatar = this.appService.avatar;//this.route.snapshot.params['image'];
+    // this.avatar = this.imageData.avatar;//this.route.snapshot.params['image'];
 
     history.pushState(null, '', location.href);
     window.onpopstate = function () {
@@ -171,7 +182,7 @@ export class GameComponent {
   }
 
   ngAfterViewInit() {
-  
+
     // you'll get your through 'elements' below code
   }
 
@@ -226,13 +237,13 @@ export class GameComponent {
 
   verificaSelecaoPeca(coordenada: any[], indexJogador: number) {
 
-    var test = this.siteData.userInfos.nome == this.jogador1.nome
-    var test2 = this.siteData.userInfos.nome == this.jogador2.nome
+    // var test = this.siteData.userInfos.nome == this.jogador1.nome
+    // var test2 = this.siteData.userInfos.nome == this.jogador2.nome
     if (coordenada == this.pecaSelecionada?.coordenada && indexJogador == this.pecaSelecionada?.indexJogador) {
       return true
     }
-    
-    
+
+
   }
 
 
@@ -241,8 +252,8 @@ export class GameComponent {
     if (coordenada == this.pecaSelecionada?.coordenada && indexJogador == this.pecaSelecionada?.indexJogador) {
       return false
     }
-    
-    
+
+
   }
   async efetuaJogada(jogador_id: string, coordenada_atual: any[], coordenada_nova: any[], partida_id: string) {
     return await lastValueFrom(
@@ -284,7 +295,7 @@ export class GameComponent {
 
     var validClick = this.isThePlayer1Active
 
-    if(validClick){
+    if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
 
@@ -306,7 +317,7 @@ export class GameComponent {
 
     var validClick = this.isThePlayer2Active
 
-    if(validClick){
+    if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
 
@@ -315,11 +326,11 @@ export class GameComponent {
 
 
   async movePeca(coordenada: any) {
-    this.getTabuleiro()
-    var a =this.pecaSelecionada?.coordenada.toString()
-    var b = a.toString().split(',').map(function(item) {
-      return parseInt(item, 10);
-  });
+    // this.getTabuleiro()
+    var a = this.pecaSelecionada?.coordenada.toString()
+    var b = a.split(',').map(function (item) {
+      return parseInt(item);
+    });
 
 
     if (!this.validaMovimentacao(this.pecaSelecionada?.coordenada, coordenada))
@@ -329,29 +340,30 @@ export class GameComponent {
       this.pecaSelecionada?.coordenada.splice(index, 1, ponto)
     })
 
-    var c =coordenada.toString()
-    var d = c.toString().split(',').map(function(item) {
-      return parseInt(item, 10);
-  });
+    var c = coordenada.toString()
+    var d = c.split(',').map(function (item) {
+      return parseInt(item);
+    });
 
 
-    
 
-//   var c = coordenada.split(',').map(function(item) {
-//     return parseInt(item, 10);
-// });
+
+    //   var c = coordenada.split(',').map(function(item) {
+    //     return parseInt(item, 10);
+    // });
 
     console.log(b)
     await this.efetuaJogada(
-      this.siteData.userInfos._id,
+      this.appService.userInfos._id,
       b,
       d,
       this.appService.gameInfo.partida._id
     )
 
-    this.getTabuleiro()
-    console.log( this.efetuaJogada(
-      this.siteData.userInfos._id,
+    // this.getTabuleiro()
+
+    console.log(this.efetuaJogada(
+      this.appService.userInfos._id,
       coordenada,
       this.pecaSelecionada?.coordenada,
       this.appService.gameInfo.partida._id
@@ -410,6 +422,19 @@ export class GameComponent {
   closeModalGame(id: string) {
 
     this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+  }
+
+
+
+  onEmojiClick(id:string, selectedEmoji:string){
+
+    this.selectedEmoji = selectedEmoji
+    this.closeModal(id)
+    this.openModal('emoji-click')
+
+    setTimeout(() => {
+      this.closeModal('emoji-click')
+    }, 1000);
   }
 
   corLadoA = 'red'

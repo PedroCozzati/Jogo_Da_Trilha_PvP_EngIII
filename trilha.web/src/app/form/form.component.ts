@@ -141,7 +141,7 @@ export class FormComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(localStorage.getItem('cache'))
+    // console.log(localStorage.getItem('cache'))
 
     this.pwdChanged = false;
     this.canResetPwd = false
@@ -345,8 +345,8 @@ export class FormComponent implements OnInit {
     } else {
       if (isUserFound) {
         this.appService.userInfos = this.userFound
-        let key ='cache'
-        localStorage.setItem(key, JSON.stringify(this.appService));
+        // let key ='cache'
+        // localStorage.setItem(key, JSON.stringify(this.appService));
         this.successLogin = true;
 
         setTimeout(() => {

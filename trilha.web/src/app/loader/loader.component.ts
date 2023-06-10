@@ -3,6 +3,7 @@ import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.serv
 import { AppService } from '../shared/services/app.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-loader',
@@ -22,25 +23,32 @@ export class LoaderComponent {
   tips: any = []
   random: any
 
-  siteData:any
-  gameData:any
-  imageData:any
+  // siteData:any
+  // gameData:any
+  // imageData:any
+
+  sound = new Howl({
+    src: ['../../assets/xaropinho-ratinho-rapaz.mp3']
+ });
+
 
   ngOnInit() {
 
-    if(this.appService){
-      var json =localStorage.getItem('cache')
-      var jsonImage =localStorage.getItem('cache-image')
-      var gameImage =localStorage.getItem('cache-game')
-      this.siteData = JSON.parse(json!)
-      this.imageData =JSON.parse(jsonImage!)
-      this.gameData = JSON.parse(gameImage!)
-    }
-    else {
-     this.imageData = this.appService['avatar']
-     this.siteData = this.appService
-     this.gameData =this.appService['gameInfo']
-    }
+    this.sound.play();
+
+    // if(this.appService){
+    //   var json =localStorage.getItem('cache')
+    //   var jsonImage =localStorage.getItem('cache-image')
+    //   var gameImage =localStorage.getItem('cache-game')
+    //   this.siteData = JSON.parse(json!)
+    //   this.imageData =JSON.parse(jsonImage!)
+    //   this.gameData = JSON.parse(gameImage!)
+    // }
+    // else {
+    //  this.imageData = this.appService['avatar']
+    //  this.siteData = this.appService
+    //  this.gameData =this.appService['gameInfo']
+    // }
 
     // alert(JSON.stringify(this.gameData))
 
@@ -59,32 +67,21 @@ export class LoaderComponent {
     var teste ="'AAAAAA':'AAAAAAAAA'"
   
 
-    this.websocketService.partidaModificada$.subscribe(async data => {
-      await localStorage.setItem('cache-partida',teste)
+    this.websocketService.partidaModificada$.subscribe(data => {
+      // await localStorage.setItem('cache-partida',teste)
 
 
       if (data.partida?.jogador2_id) {
         this.appService.gameInfo.tabuleiro = data.tabuleiro;
         this.appService.gameInfo.partida = data.partida;
 
-        
-      this.gameData = this.appService.gameInfo
-      var test = this.appService.gameInfo.tabuleiro
+      // this.gameData = this.appService.gameInfo
+      // var test = this.appService.gameInfo.tabuleiro
 
-      var partida = data.partida
-
-        
-
-    
-
-
-      
+      // var partida = data.partida
         this.ngZone.run(() => this.router.navigateByUrl('game'));
-      
-  
+    
       }
-
-      
       // alert(JSON.stringify(this.gameData))
     })
 
@@ -94,8 +91,8 @@ export class LoaderComponent {
   registraPartida() {
     this.http.post(`http://localhost:90/partida`,
       {
-        jogador_id: this.siteData.userInfos._id,
-        nivel_id: this.gameData.nivel_id,
+        jogador_id: this.appService.userInfos._id,
+        nivel_id: this.appService.gameInfo.nivel_id,
       },
       { headers: { "Content-Type": 'application/json' } })
       .subscribe()

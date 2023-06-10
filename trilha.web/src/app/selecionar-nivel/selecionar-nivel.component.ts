@@ -9,6 +9,7 @@ import { ModalService } from '../_modal';
 import { Jogador } from '../shared/services/jogador';
 import { AppService } from '../shared/services/app.service';
 import { WebSocketTrilhaService } from '../shared/services/websocket-trilha.service';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-selecionar-nivel',
@@ -43,8 +44,13 @@ export class SelecionarNivelComponent implements OnInit {
   random: any
   random2: any
 
-  siteData:any
-  imageData:any
+  sound = new Howl({
+    src: ['../../assets/xaropinho-ratinho-rapaz.mp3']
+ });
+
+
+  // siteData:any
+  // imageData:any
 
   openModal(id: string) {
     this.modalService.open(id);
@@ -67,18 +73,18 @@ export class SelecionarNivelComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.appService){
-      var json =localStorage.getItem('cache')
-      var jsonImage =localStorage.getItem('cache-image')
-      this.siteData = JSON.parse(json!)
-      this.imageData =JSON.parse(jsonImage!)
-    }
-    else {
-     this.imageData = this.appService['avatar']
-     this.siteData = this.appService
-    }
+    // if(this.appService){
+    //   var json =localStorage.getItem('cache')
+    //   var jsonImage =localStorage.getItem('cache-image')
+    //   this.siteData = JSON.parse(json!)
+    //   this.imageData =JSON.parse(jsonImage!)
+    // }
+    // else {
+    //  this.imageData = this.appService['avatar']
+    //  this.siteData = this.appService
+    // }
 
-    console.log(this.siteData)
+    // console.log(this.siteData)
 
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
@@ -123,19 +129,20 @@ export class SelecionarNivelComponent implements OnInit {
       valorDeAposta: valorDeAposta,
     }
 
-    if (this.siteData.userInfos.saldo >= valorDeAposta) {
+    if (this.appService.userInfos.saldo >= valorDeAposta) {
 
-      this.updateBalance(this.siteData.userInfos._id, -valorDeAposta)
+      this.updateBalance(this.appService.userInfos._id, -valorDeAposta)
 
       this.appService.gameInfo = nivel
 
       alert(JSON.stringify(this.appService.gameInfo))
       
-      localStorage.setItem('cache-game', JSON.stringify(this.appService.gameInfo))
+      // localStorage.setItem('cache-game', JSON.stringify(this.appService.gameInfo))
 
       this.ngZone.run(() => this.router.navigateByUrl('loader'));
 
     } else {
+      this.sound.play();
       this.openModal('selectedLevel')
     }
   }
