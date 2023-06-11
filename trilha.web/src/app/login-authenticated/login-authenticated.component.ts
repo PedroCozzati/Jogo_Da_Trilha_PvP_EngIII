@@ -6,6 +6,7 @@ import { Jogador } from '../shared/services/jogador';
 import { HttpClient } from '@angular/common/http';
 import { AppService } from '../shared/services/app.service';
 import { Router } from '@angular/router';
+import { Howl } from 'howler';
 
 
 @Component({
@@ -28,6 +29,10 @@ export class LoginAuthenticatedComponent {
   // cache = 'cache'
 
   // siteData:any
+  sound = new Howl({
+    src: ['../../assets/aee-pensou-hein.mp3']
+ });
+
 
   saldo: string;
   ranking: any[] = new Array(10).fill({ pos: "", name: "", wins: "" })
@@ -182,9 +187,14 @@ export class LoginAuthenticatedComponent {
       this.coinsQtd = coinQtd;
       this.modalService.close('shop');
       this.modalService.open('buy');
+    this.sound.play()
+
       this.buyCoin = true;
       this.isCoinBought = false;
     }, 4000);
+
+
+
 
   }
 
@@ -254,6 +264,8 @@ export class LoginAuthenticatedComponent {
     // Futura funcao para deslogar usuario e limpar cache
     // localStorage.clear();
     // console.log(this.siteData)
+
+    Howler.stop()
     this.ngZone.run(() => this.router.navigateByUrl(''));
     // console.log(this.siteData)
   }

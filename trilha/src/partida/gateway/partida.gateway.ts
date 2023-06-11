@@ -53,6 +53,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
             this._logger.log("emoji acionado", { data: JSON.stringify(data) });
 
             const webSocketClientId = await this._cacheService.get(data.jogadorId);
+            // sadasfsdfsdfds
             this.server.emit('emojiEmitido', await data);
         }
         catch (exception) {

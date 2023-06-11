@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BugService } from '../shared/services/bug.service';
 import { AnimationOptions } from 'ngx-lottie';
+import { Howl } from 'howler';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +11,34 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent{
+export class LoginComponent {
   issueForm: FormGroup;
   IssueArr: any = [];
 
+
+
+
+
+
+  ngAfterViewInit() {
+
+    var sound = new Howl({
+      src: ['../../assets/bg-music.mp3'],
+      autoplay: true,
+  loop: true,
+  volume: 0.1,
+       
+      })
+
+
+      sound.play();
+
   
-
-
-
-  ngOnInit() {
+   
   }
 
   constructor(
+
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,

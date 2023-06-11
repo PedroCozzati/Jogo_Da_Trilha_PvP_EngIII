@@ -93,6 +93,7 @@ export class GameComponent {
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
+      this.appService.gameInfo.tabuleiro = data.tabuleiro
 
 
       this.deselectStone()
@@ -111,9 +112,14 @@ export class GameComponent {
   }
 
   async moinhoEfetuado() {
+    var info2 = this.infoTitle
     this.webSocket.moinhoEfetuado$.subscribe(data => {
-     
       this.infoTitle = "VOCÊ FEZ UM MOINHO! REMOVA UMA PEÇA DO SEU OPONENTE"
+     
+      setTimeout(() => {
+        this.infoTitle = info2
+        
+      }, 3000);
       this.isMoinhoEfetuado =true
     })
   }
