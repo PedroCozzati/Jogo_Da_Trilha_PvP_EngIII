@@ -28,39 +28,64 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     ) { }
 
     async emiteEstadoAtual(body, jogadorId: string) {
-        const webSocketClientId = await this._cacheService.get(jogadorId.toString());
-        this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
+        try {
+            const webSocketClientId = await this._cacheService.get(jogadorId.toString());
+            this.server.to(webSocketClientId.toString()).emit('partidaModificada', await body);
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
     async emiteMoinho(body, jogadorId: string) {
-        const webSocketClientId = await this._cacheService.get(jogadorId.toString());
-        this.server.to(webSocketClientId.toString()).emit('moinhoEfetuado', await body);
+        try {
+            const webSocketClientId = await this._cacheService.get(jogadorId.toString());
+            this.server.to(webSocketClientId.toString()).emit('moinhoEfetuado', await body);
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
     @SubscribeMessage('emojiEnviado')
     async escutaEmoji(@MessageBody() data: any) {
-        this._logger.log("emoji acionado", { data: JSON.stringify(data) });
+        try {
+            this._logger.log("emoji acionado", { data: JSON.stringify(data) });
 
-        const webSocketClientId = await this._cacheService.get(data.jogadorId);
-        this.server.emit('emojiEmitido', await data);
+            const webSocketClientId = await this._cacheService.get(data.jogadorId);
+            this.server.emit('emojiEmitido', await data);
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
     async handleConnection(client: Socket, ...args: any[]) {
-        const idJogador = client.handshake.query.jogadorId.toString();
+        try {
+            const idJogador = client.handshake.query.jogadorId.toString();
 
-        if (!idJogador)
-            return
+            if (!idJogador)
+                return
 
-        await this._cacheService.set(idJogador, client.id)
-        this.server.to(client.id).emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
+            await this._cacheService.set(idJogador, client.id)
+            this.server.to(client.id).emit('partidaModificada', await this._partidaService.buscaPartidaPorJogador({ id_jogador: idJogador }));
 
-        this._logger.log("cliente conectado", { client_id: client.id, jogador_id: idJogador });
+            this._logger.log("cliente conectado", { client_id: client.id, jogador_id: idJogador });
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
     async handleDisconnect(client: any) {
-        const idJogador = client.handshake.query.jogadorId.toString();
-        this._logger.log("cliente desconectado", { client_id: client.id });
-        await this._cacheService.del(idJogador);
+        try {
+            const idJogador = client.handshake.query.jogadorId.toString();
+            this._logger.log("cliente desconectado", { client_id: client.id });
+            await this._cacheService.del(idJogador);
+
+        } catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
     afterInit(server: Server) {
