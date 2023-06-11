@@ -69,11 +69,11 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transition: transform 0.3s ease-out, z-index 0.4s step-end;
+    transition: transform 0.6s ease-out, z-index 0.4s step-end;
 }
 
 .stoneMoveFast {
-    transition: transform 0.2s, z-index 0.2s step-end;
+    transition: transform 0.6s, z-index 0.2s step-end;
 }
 
 .stoneMoveInstant {
@@ -105,6 +105,10 @@
     opacity: 0;
     transform: translate(-40vmin,0vmin);
 
+}
+
+.playerTurn{
+    border:  1rem solid white !important;
 }
 
 #winnerScreen {
@@ -1363,7 +1367,7 @@ blockquote.electric span {
     background-repeat: no-repeat;
 }
 
-.modal3 ::ng-deep .jw-modal-body {
+.modal-emoji-player1 ::ng-deep .jw-modal-body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -1372,10 +1376,10 @@ blockquote.electric span {
     align-self: center;
     align-items: center;
     align-content: center;
-    width: 10vw !important;
+    width: 8rem !important;
     border-radius: 100%;
-    height: 10vh;
-    font-size: xx-large;
+    height: 8rem;
+    font-size:3rem;
     /* background-image: url("../../assets/bg.png"); */
   
 
@@ -1391,46 +1395,139 @@ blockquote.electric span {
   align-items: center;
   border-radius: 0px !important;
   align-content: center;
-  width: 30%;
-  padding: 0px !important;
-  background-image: none !important;
+  padding-bottom: 3rem !important;
+  background-size: contain;
   background-blend-mode: multiply;
-  background-color: none !important;
+  background-repeat: no-repeat;
+
+  background-color: transparent !important;
   background-size: none !important;
+  background-image: url('../../assets/balao.png');
   
     /* margin exposes part of the modal background */
   }
+
+
   
   
-  .modal3  ::ng-deep  .jw-modal {
+  
+  .modal-emoji-player1  ::ng-deep  .jw-modal {
     justify-content: center;
         align-self: center;
         align-items: center;
         align-content: space-around;
     /* modal container fixed across whole screen */
     position: fixed;
-    top: 55%;
-    left: 20%;
-  
+    top:22%;
+    left: 13%;
+    width: 8rem !important;
+    border-radius: 0%;
+    height:8rem;
+    background-image: url('../../assets/balao.png');
     /* z-index must be higher than .jw-modal-background */
-    z-index: 1000;
+    z-index: 10;
     
     /* enables scrolling for tall modals */
-    overflow: auto;
+    overflow: hidden;
   }
 
-  .modal3 ::ng-deep .jw-modal-background {
+  .modal-emoji-player1 ::ng-deep .jw-modal-background {
     /* modal background fixed across whole screen */
     position: fixed;
     top: 0;
     right: 0;
+
+    bottom: 0;
+    left: 0;
+    background-image: url('../../assets/balao.png');
+
+    /* semi-transparent black  */
+    background-color: #891fdf00;
+    opacity: 0;
+    
+    /* z-index must be below .jw-modal and above everything else  */
+    z-index: -1000;
+}
+
+
+
+.modal-emoji-player2 ::ng-deep .jw-modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-self: center;
+    justify-items: center;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+    width: 8rem !important;
+    border-radius: 100%;
+    height: 8rem;
+    font-size:3rem;
+    /* background-image: url("../../assets/bg.png"); */
+  
+
+  
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  border: none !important;
+  align-self: center;
+  align-items: center;
+  border-radius: 0px !important;
+  align-content: center;
+  padding-bottom: 3rem !important;
+  background-size: contain;
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+
+  background-color: transparent !important;
+  background-size: none !important;
+  background-image: url('../../assets/balao-invertido2.png');
+  
+    /* margin exposes part of the modal background */
+  }
+
+
+  
+  
+  
+  .modal-emoji-player2  ::ng-deep  .jw-modal {
+    justify-content: center;
+        align-self: center;
+        align-items: center;
+        align-content: space-around;
+    /* modal container fixed across whole screen */
+    position: fixed;
+    top: 3%;
+    left: 78%;
+    width: 8rem !important;
+    border-radius: 0%;
+    height:8rem;
+  
+    /* z-index must be higher than .jw-modal-background */
+    z-index: 10;
+    
+    /* enables scrolling for tall modals */
+    overflow: hidden;
+  }
+
+  .modal-emoji-player2 ::ng-deep .jw-modal-background {
+    /* modal background fixed across whole screen */
+    position: fixed;
+    top: 0;
+    right: 0;
+
     bottom: 0;
     left: 0;
 
     /* semi-transparent black  */
-    background-color: #0d0018;
+    background-color: #881fdf;
     opacity: 0;
     
     /* z-index must be below .jw-modal and above everything else  */
-    z-index: 900;
+    z-index: -1000;
 }

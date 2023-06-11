@@ -34,7 +34,7 @@ export class LoaderComponent {
 
   ngOnInit() {
 
-    this.sound.play();
+    // this.sound.play();
 
     // if(this.appService){
     //   var json =localStorage.getItem('cache')

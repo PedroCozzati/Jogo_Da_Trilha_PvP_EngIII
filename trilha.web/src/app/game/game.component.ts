@@ -36,14 +36,17 @@ export class GameComponent {
   playerStone: any = '';
   gameSides: any = []
 
-  selectedEmoji:any
+  isPlayer1Move: boolean
+  // isPlayer2Move:boolean
+
+  selectedEmoji: any
 
   adImages: any[]
 
   randomImages: any
-
+  showEmoji: boolean
   emojiList: any[]
-  emoji:any
+  emoji: any
   // siteData:any
   // imageData:any
   // gameData:any
@@ -57,6 +60,7 @@ export class GameComponent {
 
   matrixString: string;
   subscription: Subscription;
+  isMoinhoEfetuado: boolean;
   constructor(
     private webSocket: WebSocketTrilhaService,
     private appService: AppService,
@@ -89,13 +93,90 @@ export class GameComponent {
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
+
+
       this.deselectStone()
       data.tabuleiro.forEach(async (coordenadas, index) => {
         await new Promise((resolve) => setTimeout(resolve, 200))
+
         this.tabuleiro[index] = coordenadas.filter(coordenada => coordenada)
       });
+
+      if (data.partida.versaoPartida.length <= 1) {
+        this.isPlayer1Move = true
+        return
+      }
+      this.isPlayer1Move = this.jogador1._id != data.partida.versaoPartida.at(-1)[2]
     })
   }
+
+  async moinhoEfetuado() {
+    this.webSocket.moinhoEfetuado$.subscribe(data => {
+     
+      this.infoTitle = "VOCÊ FEZ UM MOINHO! REMOVA UMA PEÇA DO SEU OPONENTE"
+      this.isMoinhoEfetuado =true
+    })
+  }
+
+
+  async emojiEmitido() {
+    this.webSocket.emojiEnviado$.subscribe(data => {
+
+      console.log(data)
+      // this.closeModal(id)
+      this.selectedEmoji = data.emoji
+
+      if (this.jogador1._id == data.jogadorId) {
+        this.openModal('emoji-click')
+        setTimeout(() => {
+          this.closeModal('emoji-click')
+        }, 3000);
+      }
+
+
+      if (this.jogador2._id == data.jogadorId) {
+        this.openModal('emoji-click2')
+        setTimeout(() => {
+          this.closeModal('emoji-click2')
+        }, 3000);
+      }
+
+      // this.modalService.open('emoji-click');
+
+      // setTimeout(() => {
+      //   this.closeModal('emoji-click')
+      // }, 3000);
+
+      // if (this.isThePlayer1Active) {
+      //   this.openModal('emoji-click')
+
+      //   setTimeout(() => {
+      //     this.closeModal('emoji-click')
+      //   }, 3000);
+      // }
+      // else if (this.isThePlayer2Active) {
+      //   this.openModal('emoji-click2')
+      //   setTimeout(() => {
+      //     this.closeModal('emoji-click2')
+      //   }, 3000);
+      // }
+
+
+
+      // if(data){
+      //   this.showEmoji =true
+      //   this.openModal('emoji-click')
+
+      //   setTimeout(() => {
+      //   this.closeModal('emoji-click')
+      // }, 3000);
+      // }
+
+    })
+  }
+
+
+
 
 
   async getJogadorByID(jogador_id: string) {
@@ -106,7 +187,7 @@ export class GameComponent {
 
 
   async ngOnInit() {
-
+    this.isMoinhoEfetuado=false
     // this.sound.play();
     // Howler.volume(0.2);
 
@@ -178,7 +259,16 @@ export class GameComponent {
       history.go(1);
     };
 
+
+    this.isPlayer1Move = this.jogador1._id != this.appService.gameInfo.partida.versaoPartida.at(-1)[2]
+
     await this.getTabuleiro()
+
+    await this.emojiEmitido()
+
+
+    await this.moinhoEfetuado()
+
   }
 
   ngAfterViewInit() {
@@ -255,7 +345,7 @@ export class GameComponent {
 
 
   }
-  async efetuaJogada(jogador_id: string, coordenada_atual: any[], coordenada_nova: any[], partida_id: string) {
+  async efetuaJogada(jogador_id: string, coordenada_atual: any, coordenada_nova: any, partida_id: string) {
     return await lastValueFrom(
       this.http.put(`http://localhost:90/partida/${partida_id}`, {
         "versaoPartida": [
@@ -280,8 +370,27 @@ export class GameComponent {
   }
 
 
+  removePeca(){
+    
+  }
 
-  stoneClick(coordenada: any[], indexJogador: number) {
+  async stoneClick(coordenada: any[], indexJogador: number) {
+
+    const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move)
+
+    if(this.isMoinhoEfetuado && validClickMoinho){
+      this.pecaSelecionada = { indexJogador, coordenada }
+      await this.efetuaJogada(
+        this.appService.userInfos._id,
+        this.pecaSelecionada?.coordenada,
+        null,
+        this.appService.gameInfo.partida._id
+      )
+
+      this.isMoinhoEfetuado = false
+      return
+    }
+
     if (!this.isNotPrimeiraFase().every(Boolean)) {
       if (Math.abs(coordenada.at(0)) !== 4) {
         this.infoTitle = "As peças ainda não foram posicionadas!"
@@ -293,7 +402,7 @@ export class GameComponent {
 
     }
 
-    var validClick = this.isThePlayer1Active
+    const validClick = this.isThePlayer1Active && this.isPlayer1Move
 
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -303,7 +412,21 @@ export class GameComponent {
   }
 
 
-  stoneClick2(coordenada: any[], indexJogador: number) {
+  async stoneClick2(coordenada: any[], indexJogador: number) {
+    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)
+
+    if(this.isMoinhoEfetuado && validClickMoinho){
+      this.pecaSelecionada = { indexJogador, coordenada }
+      await this.efetuaJogada(
+        this.appService.userInfos._id,
+        this.pecaSelecionada?.coordenada,
+        null,
+        this.appService.gameInfo.partida._id
+      )
+      this.isMoinhoEfetuado = false
+      return
+    }
+    
     if (!this.isNotPrimeiraFase().every(Boolean)) {
       if (Math.abs(coordenada.at(0)) !== 4) {
         this.infoTitle = "As peças ainda não foram posicionadas!"
@@ -315,7 +438,7 @@ export class GameComponent {
 
     }
 
-    var validClick = this.isThePlayer2Active
+    var validClick = this.isThePlayer2Active && !this.isPlayer1Move
 
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -326,48 +449,20 @@ export class GameComponent {
 
 
   async movePeca(coordenada: any) {
-    // this.getTabuleiro()
-    var a = this.pecaSelecionada?.coordenada.toString()
-    var b = a.split(',').map(function (item) {
-      return parseInt(item);
-    });
-
-
     if (!this.validaMovimentacao(this.pecaSelecionada?.coordenada, coordenada))
       return
 
+
+    await this.efetuaJogada(
+      this.appService.userInfos._id,
+      this.pecaSelecionada?.coordenada,
+      coordenada,
+      this.appService.gameInfo.partida._id
+    )
+    // this.getTabuleiro()
     coordenada.forEach((ponto, index) => {
       this.pecaSelecionada?.coordenada.splice(index, 1, ponto)
     })
-
-    var c = coordenada.toString()
-    var d = c.split(',').map(function (item) {
-      return parseInt(item);
-    });
-
-
-
-
-    //   var c = coordenada.split(',').map(function(item) {
-    //     return parseInt(item, 10);
-    // });
-
-    console.log(b)
-    await this.efetuaJogada(
-      this.appService.userInfos._id,
-      b,
-      d,
-      this.appService.gameInfo.partida._id
-    )
-
-    // this.getTabuleiro()
-
-    console.log(this.efetuaJogada(
-      this.appService.userInfos._id,
-      coordenada,
-      this.pecaSelecionada?.coordenada,
-      this.appService.gameInfo.partida._id
-    ))
 
     this.deselectStone();
   }
@@ -411,7 +506,7 @@ export class GameComponent {
     delete this.pecaSelecionada
   }
 
-  openModal(id: string) {
+  openModal(id: string,) {
     this.modalService.open(id);
   }
 
@@ -426,15 +521,12 @@ export class GameComponent {
 
 
 
-  onEmojiClick(id:string, selectedEmoji:string){
+  async onEmojiClick(id: string, selectedEmoji: string) {
+    this.webSocket.emit({
+      jogadorId: this.appService.userInfos._id,
+      emoji: selectedEmoji
+    }, 'emojiEnviado',)
 
-    this.selectedEmoji = selectedEmoji
-    this.closeModal(id)
-    this.openModal('emoji-click')
-
-    setTimeout(() => {
-      this.closeModal('emoji-click')
-    }, 1000);
   }
 
   corLadoA = 'red'

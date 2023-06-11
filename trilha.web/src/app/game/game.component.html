@@ -19,14 +19,14 @@
             </div>
         </div> -->
         <div class="player-card player-card-oponent">
-            <div class="card-oponent "
+            <div class="card-oponent " [ngClass]="{'playerTurn': !isPlayer1Move}"
                 style="background-color: {{nivelPeca.corLadoB}};border:2px solid {{nivelPeca.corLadoB}}">
 
                 <div class="card-body">
-                   
+
 
                     <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
-                    alt="Card image cap">
+                        alt="Card image cap">
                     <!-- <section> -->
                     <!-- </section> -->
 
@@ -44,13 +44,17 @@
                         </div>
                     </div>
 
-                    <div *ngIf="isThePlayer2Active" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
+                    <h5 *ngIf="!isPlayer1Move" class="card-title text-center">JOGANDO</h5>
+
+                    <div *ngIf="isThePlayer2Active"
+                        style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
                         <div>
-                            <button (click)="openModal('gameemoji2')" class="button" style="align-self: center;width: 100%;">
+                            <button (click)="openModal('gameemoji2')" class="button"
+                                style="align-self: center;width: 100%;">
                                 <img src="../../assets/emoji-icon.png" style="height: 80%;">
                             </button>
                         </div>
-                       
+
                     </div>
                     <!-- <div class="oponent-playing" *ngIf="isPlaying">
                         <div><b>JOGANDO...</b></div>
@@ -88,77 +92,81 @@
             <!-- TABULEIRO -->
             <div (click)="movePeca([-3,-3])" class="field fieldMoveable"
                 style="transform: translate(-30vmin, -30vmin);"></div>
-            <div (click)="movePeca([0,-3])" class="field fieldMoveable"
-                style="transform: translate(0vmin, -30vmin);"></div>
-            <div (click)="movePeca([3,-3])" class="field fieldMoveable"
-                style="transform: translate(30vmin, -30vmin);"></div>
+            <div (click)="movePeca([0,-3])" class="field fieldMoveable" style="transform: translate(0vmin, -30vmin);">
+            </div>
+            <div (click)="movePeca([3,-3])" class="field fieldMoveable" style="transform: translate(30vmin, -30vmin);">
+            </div>
             <div (click)="movePeca([-2,-2])" class="field fieldMoveable"
                 style="transform: translate(-20vmin, -20vmin);"></div>
-            <div (click)="movePeca([0,-2])" class="field fieldMoveable"
-                style="transform: translate(0vmin, -20vmin);"></div>
-            <div (click)="movePeca([2,-2])" class="field fieldMoveable"
-                style="transform: translate(20vmin, -20vmin);"></div>
+            <div (click)="movePeca([0,-2])" class="field fieldMoveable" style="transform: translate(0vmin, -20vmin);">
+            </div>
+            <div (click)="movePeca([2,-2])" class="field fieldMoveable" style="transform: translate(20vmin, -20vmin);">
+            </div>
             <div (click)="movePeca([-1,-1])" class="field fieldMoveable"
                 style="transform: translate(-10vmin, -10vmin);"></div>
-            <div (click)="movePeca([0,-1])" class="field fieldMoveable"
-                style="transform: translate(0vmin, -10vmin);"></div>
-            <div (click)="movePeca([1,-1])" class="field fieldMoveable"
-                style="transform: translate(10vmin, -10vmin);"></div>
-            <div (click)="movePeca([-3,0])" class="field fieldMoveable"
-                style="transform: translate(-30vmin, 0vmin);"></div>
-            <div (click)="movePeca([-2,0])" class="field fieldMoveable"
-                style="transform: translate(-20vmin, 0vmin);"></div>
-            <div (click)="movePeca([-1,0])" class="field fieldMoveable"
-                style="transform: translate(-10vmin, 0vmin);"></div>
-            <div (click)="movePeca([1,0])" class="field fieldMoveable"
-                style="transform: translate(10vmin, 0vmin);"></div>
-            <div (click)="movePeca([2,0])" class="field fieldMoveable"
-                style="transform: translate(20vmin, 0vmin);"></div>
-            <div (click)="movePeca([3,0])" class="field fieldMoveable"
-                style="transform: translate(30vmin, 0vmin);"></div>
-            <div (click)="movePeca([-1,1])" class="field fieldMoveable"
-                style="transform: translate(-10vmin, 10vmin);"></div>
-            <div (click)="movePeca([0,1])" class="field fieldMoveable"
-                style="transform: translate(0vmin, 10vmin);"></div>
-            <div (click)="movePeca([1,1])" class="field fieldMoveable"
-                style="transform: translate(10vmin, 10vmin);"></div>
-            <div (click)="movePeca([-2,2])" class="field fieldMoveable"
-                style="transform: translate(-20vmin, 20vmin);"></div>
-            <div (click)="movePeca([0,2])" class="field fieldMoveable"
-                style="transform: translate(0vmin, 20vmin);"></div>
-            <div (click)="movePeca([2,2])" class="field fieldMoveable"
-                style="transform: translate(20vmin, 20vmin);"></div>
-            <div (click)="movePeca([-3,3])" class="field fieldMoveable"
-                style="transform: translate(-30vmin, 30vmin);"></div>
-            <div (click)="movePeca([0,3])" class="field fieldMoveable"
-                style="transform: translate(0vmin, 30vmin);"></div>
-            <div (click)="movePeca([3,3])" class="field fieldMoveable"
-                style="transform: translate(30vmin, 30vmin);"></div>
+            <div (click)="movePeca([0,-1])" class="field fieldMoveable" style="transform: translate(0vmin, -10vmin);">
+            </div>
+            <div (click)="movePeca([1,-1])" class="field fieldMoveable" style="transform: translate(10vmin, -10vmin);">
+            </div>
+            <div (click)="movePeca([-3,0])" class="field fieldMoveable" style="transform: translate(-30vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([-2,0])" class="field fieldMoveable" style="transform: translate(-20vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([-1,0])" class="field fieldMoveable" style="transform: translate(-10vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([1,0])" class="field fieldMoveable" style="transform: translate(10vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([2,0])" class="field fieldMoveable" style="transform: translate(20vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([3,0])" class="field fieldMoveable" style="transform: translate(30vmin, 0vmin);">
+            </div>
+            <div (click)="movePeca([-1,1])" class="field fieldMoveable" style="transform: translate(-10vmin, 10vmin);">
+            </div>
+            <div (click)="movePeca([0,1])" class="field fieldMoveable" style="transform: translate(0vmin, 10vmin);">
+            </div>
+            <div (click)="movePeca([1,1])" class="field fieldMoveable" style="transform: translate(10vmin, 10vmin);">
+            </div>
+            <div (click)="movePeca([-2,2])" class="field fieldMoveable" style="transform: translate(-20vmin, 20vmin);">
+            </div>
+            <div (click)="movePeca([0,2])" class="field fieldMoveable" style="transform: translate(0vmin, 20vmin);">
+            </div>
+            <div (click)="movePeca([2,2])" class="field fieldMoveable" style="transform: translate(20vmin, 20vmin);">
+            </div>
+            <div (click)="movePeca([-3,3])" class="field fieldMoveable" style="transform: translate(-30vmin, 30vmin);">
+            </div>
+            <div (click)="movePeca([0,3])" class="field fieldMoveable" style="transform: translate(0vmin, 30vmin);">
+            </div>
+            <div (click)="movePeca([3,3])" class="field fieldMoveable" style="transform: translate(30vmin, 30vmin);">
+            </div>
 
             <!--PEÇAS-->
 
             <!--PECA B-->
-            <div [ngClass]="{'stoneBlocked':!isThePlayer1Active,'stoneSelected': isThePlayer1Active?verificaSelecaoPeca(coordenada,0):pecaBloqueada(coordenada,0),'stoneRemoved': verificaPecaRemovida(coordenada,0)}"  *ngFor="let coordenada of tabuleiro[0]"  (click)="stoneClick(coordenada,0)" class="stoneBlack"
-                style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};"></div>
+            <div [ngClass]="{'stoneBlocked':!isThePlayer1Active || !isPlayer1Move,'stoneSelected': isThePlayer1Active?verificaSelecaoPeca(coordenada,0):pecaBloqueada(coordenada,0),'stoneRemoved': verificaPecaRemovida(coordenada,0)}"
+                *ngFor="let coordenada of tabuleiro[0]" (click)="stoneClick(coordenada,0)" class="stoneBlack"
+                style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};">
+            </div>
 
             <!--PECA A-->
-            <div [ngClass]="{'stoneBlocked':!isThePlayer2Active,'stoneSelected': isThePlayer2Active?verificaSelecaoPeca(coordenada,1):pecaBloqueada(coordenada,1),'stoneRemoved': verificaPecaRemovida(coordenada,1)}"  *ngFor="let coordenada of tabuleiro[1]"  (click)="stoneClick2(coordenada,1)" class="stoneWhite"
+            <div [ngClass]="{'stoneBlocked':!isThePlayer2Active || isPlayer1Move,'stoneSelected': isThePlayer2Active?verificaSelecaoPeca(coordenada,1):pecaBloqueada(coordenada,1),'stoneRemoved': verificaPecaRemovida(coordenada,1)}"
+                *ngFor="let coordenada of tabuleiro[1]" (click)="stoneClick2(coordenada,1)" class="stoneWhite"
                 style="transform: translate({{coordenada[0]*10}}vmin, {{coordenada[1]*getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
-           
+
         </div>
         <div class="infos" *ngIf="showInfo">
             {{infoTitle}}
         </div>
         <div class="player-card player-card-me">
             <div class="card-me"
+            [ngClass]="{'playerTurn': isPlayer1Move}"
                 style="background-color: {{nivelPeca.corLadoA}};border:2px solid {{nivelPeca.corLadoA}}">
 
                 <div class="card-body">
                     <img class="card-img-top" [class.error]="isError()" src="../../assets/{{avatar}}.png"
                         alt="Card image cap">
                     <h5 class="card-title text-center">{{jogador1.nome}} {{isThePlayer1Active?'(Você)':''}} </h5>
-                   
+
                     <!-- <div class="timer">
 
                         <img class="ampulheta" src="../../assets/clock.gif">
@@ -175,15 +183,19 @@
 
                         </div>
                     </div>
-                    <div *ngIf="isThePlayer1Active" style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
+
+                    <h5 *ngIf="isPlayer1Move" class="card-title text-center">JOGANDO</h5>
+                    <div *ngIf="isThePlayer1Active"
+                        style="display: flex;flex-direction: row;align-items: center;align-self: center;justify-content: center;justify-items: center;">
                         <div>
-                            <button (click)="openModal('gameemoji')" class="button" style="align-self: center;width: 100%;">
+                            <button (click)="openModal('gameemoji')" class="button"
+                                style="align-self: center;width: 100%;">
                                 <img src="../../assets/emoji-icon.png" style="height: 80%;">
                             </button>
                         </div>
-                       
+
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -194,23 +206,26 @@
         </div> -->
 
     </div>
-    
+
     <jw-modal id="game-win" class="game-win">
-        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
-           <div style="font-size: medium;"> <b>Você GANHOU!</b></div>
-           <div>+10 MOEDAS</div>    
+        <div
+            style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+            <div style="font-size: medium;"> <b>Você GANHOU!</b></div>
+            <div>+10 MOEDAS</div>
             <div class="win-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button style="margin-right: 2rem;" (click)="closeModal('game-win')" class="button">ACEITAR REVANCHE</button>
+            <button style="margin-right: 2rem;" (click)="closeModal('game-win')" class="button">ACEITAR
+                REVANCHE</button>
             <button style="margin-left: 2rem;" (click)="closeModalGame('game-win')" class="button">VOLTAR</button>
         </div>
     </jw-modal>
 
     <jw-modal id="game-lose" class="game-lose">
-        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
-           <div style="font-size: medium;"> <b>Você PERDEU!</b></div>
-           <div>-{{nivel.valorDeAposta}} MOEDAS</div>    
+        <div
+            style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+            <div style="font-size: medium;"> <b>Você PERDEU!</b></div>
+            <div>-{{nivel.valorDeAposta}} MOEDAS</div>
             <div class="lose-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
@@ -220,9 +235,10 @@
     </jw-modal>
 
     <jw-modal id="game-draw" class="game-draw">
-        <div style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
-           <div style="font-size: medium;"> <b>EMPATE!</b></div>
-           <div>+ 10 MOEDAS</div>    
+        <div
+            style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
+            <div style="font-size: medium;"> <b>EMPATE!</b></div>
+            <div>+ 10 MOEDAS</div>
             <div class="draw-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
@@ -235,13 +251,42 @@
     <jw-modal id="gameemoji" class="modal2">
         <b>EMOJIS</b>
         <div class="flex-column-emoji">
-            <div class="row-emoji" *ngFor="let emoji of emojiList" >
-                <div class="emoji" (click)="onEmojiClick('gameemoji',emoji)">
-                    {{emoji}}
+            <div class="row-emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji','😂')">
+                    😂
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','😭')">
+                    😭
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','😎')">
+                    😎
                 </div>
             </div>
 
-            
+            <div class="row-emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji','🤬')">
+                    🤬
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','😈')">
+                    😈
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','🤡')">
+                    🤡
+                </div>
+
+            </div>
+
+            <div class="row-emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji','💀')">
+                    💀
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','🖕')">
+                    🖕
+                </div>
+                <div class="emoji" (click)="onEmojiClick('gameemoji','🥸')">
+                    🥸
+                </div>
+            </div>
         </div>
         <button (click)="closeModal('gameemoji')" class="button">VOLTAR</button>
     </jw-modal>
@@ -250,38 +295,38 @@
         <b>EMOJIS</b>
         <div class="flex-column-emoji">
             <div class="row-emoji">
-                <div class="emoji" (click)="closeModal('gameemoji')">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','😂')">
                     😂
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','😭')">
                     😭
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','😎')">
                     😎
                 </div>
             </div>
 
             <div class="row-emoji">
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','🤬')">
                     🤬
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','😈')">
                     😈
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','🤡')">
                     🤡
                 </div>
 
             </div>
 
             <div class="row-emoji">
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','💀')">
                     💀
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','🖕')">
                     🖕
                 </div>
-                <div class="emoji">
+                <div class="emoji" (click)="onEmojiClick('gameemoji2','🥸')">
                     🥸
                 </div>
             </div>
@@ -290,9 +335,16 @@
     </jw-modal>
 
 
-    <jw-modal id="emoji-click" class="modal3">
+    <jw-modal id="emoji-click" class="modal-emoji-player1">
         {{selectedEmoji}}
     </jw-modal>
+
+
+    <jw-modal id="emoji-click2" class="modal-emoji-player2">
+        {{selectedEmoji}}
+    </jw-modal>
+
+
 
     <div class="ad2" style="background-image: url('../../assets/anuncio.jpg');"></div>
 </section>

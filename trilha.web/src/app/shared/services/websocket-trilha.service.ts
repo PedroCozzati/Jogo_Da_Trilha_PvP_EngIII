@@ -22,8 +22,13 @@ export class SocketTrilha extends Socket {
 @Injectable()
 export class WebSocketTrilhaService {
   partidaModificada$ = this.socket.fromEvent<any>('partidaModificada');
-
+  emojiEnviado$ = this.socket.fromEvent<any>('emojiEmitido');
+  moinhoEfetuado$ = this.socket.fromEvent<any>('moinhoEfetuado');
   constructor(private socket: SocketTrilha) { }
+
+  emit(data:any,event:string){
+    this.socket.emit(event,data)
+  }
 
   disconnect = () => this.socket.disconnect();
 }
