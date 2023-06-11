@@ -22,16 +22,16 @@ export class LoginComponent {
 
   ngAfterViewInit() {
 
-    var sound = new Howl({
-      src: ['../../assets/bg-music.mp3'],
-      autoplay: true,
-  loop: true,
-  volume: 0.1,
+  //   var sound = new Howl({
+  //     src: ['../../assets/bg-music.mp3'],
+  //     autoplay: true,
+  // loop: true,
+  // volume: 0.1,
        
-      })
+  //     })
 
 
-      sound.play();
+  //     sound.play();
 
   
    
