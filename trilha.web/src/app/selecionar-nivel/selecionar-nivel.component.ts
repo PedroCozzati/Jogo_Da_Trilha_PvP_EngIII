@@ -135,10 +135,6 @@ export class SelecionarNivelComponent implements OnInit {
 
       this.appService.gameInfo = nivel
 
-      alert(JSON.stringify(this.appService.gameInfo))
-      
-      // localStorage.setItem('cache-game', JSON.stringify(this.appService.gameInfo))
-
       this.ngZone.run(() => this.router.navigateByUrl('loader'));
 
     } else {
