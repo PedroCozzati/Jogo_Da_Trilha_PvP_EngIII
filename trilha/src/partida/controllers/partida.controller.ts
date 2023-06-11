@@ -39,6 +39,19 @@ export class PartidaController {
   }
 
   @Span()
+  @Get("por-jogador/:id")
+  async getByJogador(@Param('id') id: string, @Res() response: Response): Promise<any> {
+    try {
+      this._logger.log("starting request")
+
+      return response.status(HttpStatus.OK).json(await this.partidaService.buscaPartidaPorJogador({ id_jogador: id }))
+    } catch (exception) {
+      this._logger.error("error on request", { ...exception })
+      return response.status(HttpStatus.BAD_REQUEST).json(exception)
+    }
+  }
+
+  @Span()
   @Post()
   async post(@Body() params: RegistraPartidaDto, @Res() response: Response, @Req() request: Request): Promise<any> {
     try {
@@ -76,6 +89,4 @@ export class PartidaController {
       return response.status(HttpStatus.BAD_REQUEST).json(exception)
     }
   }
-
-
 }

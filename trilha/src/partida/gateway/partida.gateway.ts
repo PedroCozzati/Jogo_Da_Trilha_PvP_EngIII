@@ -51,11 +51,11 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     async escutaEmoji(@MessageBody() data: any) {
         try {
             this._logger.log("emoji acionado", { data: JSON.stringify(data) });
-            
-            const partida = await this._partidaService.buscaPartidaPorJogador({ id_jogador: data.jogadorId });
 
-            const idJogador1 = await this._cacheService.get(partida.jogador1_id);
-            const idJogador2 = await this._cacheService.get(partida.jogador2_id);
+            const { partida } = await this._partidaService.buscaPartidaPorJogador({ id_jogador: data.jogadorId });
+
+            const idJogador1 = await this._cacheService.get(partida.jogador1_id.toString());
+            const idJogador2 = await this._cacheService.get(partida.jogador2_id.toString());
 
             this.server.to([idJogador1.toString(), idJogador2.toString()]).emit('emojiEmitido', await data);
         }

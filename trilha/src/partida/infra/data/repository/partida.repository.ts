@@ -112,7 +112,15 @@ export class PartidaRepository {
     try {
       this._logger.log("executing repository method")
 
-      const partida = await this.repositoryBase.findOne({ $or: [{ jogador1_id: id }, { jogador2_id: id }] })
+      const partida = await this.repositoryBase.findOne({
+        $and: [{
+          $or: [
+            { jogador1_id: id },
+            { jogador2_id: id }
+          ]
+        }],
+        resultado: null
+      })
 
       if (partida)
         return new Partida(partida)

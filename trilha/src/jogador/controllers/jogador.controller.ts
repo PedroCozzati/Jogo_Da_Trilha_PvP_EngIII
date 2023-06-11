@@ -106,9 +106,6 @@ export class JogadorController {
     try {
       this._logger.log("starting request")
 
-      // const { saldo } = queryParams;
-      // const saldoAtualizado = Number(saldo) + Number(saldo_novo);
-
       return response.status(HttpStatus.OK).json(await this.jogadorService.atualizaSaldoJogador({ ...params, ...queryParams }))
     } catch (exception) {
       this._logger.error("error on request", { ...exception })

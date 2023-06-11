@@ -61,6 +61,8 @@ export class GameComponent {
   matrixString: string;
   subscription: Subscription;
   isMoinhoEfetuado: boolean;
+  isMoinhoEfetuadoByPlayer1: boolean;
+  isMoinhoEfetuadoByPlayer2: boolean;
   constructor(
     private webSocket: WebSocketTrilhaService,
     private appService: AppService,
@@ -107,6 +109,7 @@ export class GameComponent {
         this.isPlayer1Move = true
         return
       }
+
       this.isPlayer1Move = this.jogador1._id != data.partida.versaoPartida.at(-1)[2]
     })
   }
@@ -115,12 +118,13 @@ export class GameComponent {
     var info2 = this.infoTitle
     this.webSocket.moinhoEfetuado$.subscribe(data => {
       this.infoTitle = "VOCÊ FEZ UM MOINHO! REMOVA UMA PEÇA DO SEU OPONENTE"
-     
       setTimeout(() => {
         this.infoTitle = info2
-        
+
       }, 3000);
-      this.isMoinhoEfetuado =true
+      this.isMoinhoEfetuado = true
+      this.isMoinhoEfetuadoByPlayer1 = this.jogador1._id.toString() == data.partida.versaoPartida.at(-1)[2].toString()
+      this.isMoinhoEfetuadoByPlayer2 = !this.isMoinhoEfetuadoByPlayer1
     })
   }
 
@@ -193,7 +197,9 @@ export class GameComponent {
 
 
   async ngOnInit() {
-    this.isMoinhoEfetuado=false
+    this.isMoinhoEfetuado = false
+    this.isMoinhoEfetuadoByPlayer1 = false
+    this.isMoinhoEfetuadoByPlayer2 = false
     // this.sound.play();
     // Howler.volume(0.2);
 
@@ -376,15 +382,17 @@ export class GameComponent {
   }
 
 
-  removePeca(){
-    
+  removePeca() {
+
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
+    if (!this.isPlayer1Move)
+      return;
 
     const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move)
 
-    if(this.isMoinhoEfetuado && validClickMoinho){
+    if (this.isMoinhoEfetuado && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
       await this.efetuaJogada(
         this.appService.userInfos._id,
@@ -394,6 +402,8 @@ export class GameComponent {
       )
 
       this.isMoinhoEfetuado = false
+      this.isMoinhoEfetuadoByPlayer1 = false
+      this.isMoinhoEfetuadoByPlayer2 = false
       return
     }
 
@@ -419,9 +429,12 @@ export class GameComponent {
 
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
+    if (this.isPlayer1Move)
+      return;
+
     const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)
 
-    if(this.isMoinhoEfetuado && validClickMoinho){
+    if (this.isMoinhoEfetuado && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
       await this.efetuaJogada(
         this.appService.userInfos._id,
@@ -430,9 +443,11 @@ export class GameComponent {
         this.appService.gameInfo.partida._id
       )
       this.isMoinhoEfetuado = false
+      this.isMoinhoEfetuadoByPlayer1 = false
+      this.isMoinhoEfetuadoByPlayer2 = false
       return
     }
-    
+
     if (!this.isNotPrimeiraFase().every(Boolean)) {
       if (Math.abs(coordenada.at(0)) !== 4) {
         this.infoTitle = "As peças ainda não foram posicionadas!"
@@ -495,6 +510,15 @@ export class GameComponent {
   }
 
   validaMovimentacao(origem: any[], destino: any[]) {
+    if (!origem)
+      return false;
+
+    if (this.isThePlayer1Active && !this.isPlayer1Move)
+      return false;
+
+    if (this.isThePlayer2Active && this.isPlayer1Move)
+      return false;
+
     if (destino && Math.abs(origem?.at(0)) < 4) {
       this.infoTitle = 'Segunda Fase'
 

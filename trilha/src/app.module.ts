@@ -3,7 +3,6 @@ import { Module, CacheModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JogadorModule } from './jogador/jogador.module';
 import { PecaModule } from './peca/peca.module';
-import { TransacaoModule } from './transacao/transacao.module';
 import { TabuleiroModule } from './tabuleiro/tabuleiro.module';
 import { NivelModule } from './nivel/nivel.module';
 import { PartidaModule } from './partida/partida.module';
@@ -20,7 +19,6 @@ import * as redisStore from 'cache-manager-redis-store';
     }),
     CoreModule,
     JogadorModule,
-    TransacaoModule,
     PecaModule,
     TabuleiroModule,
     NivelModule,
