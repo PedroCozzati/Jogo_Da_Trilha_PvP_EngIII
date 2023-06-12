@@ -6,9 +6,7 @@ import { AppService } from "./app.service";
 export class SocketTrilha extends Socket {
   constructor(
     appService: AppService
-    ) {
-      // let json = localStorage.getItem('cache')
-      // let jogadorId =JSON.parse(json!)
+  ) {
     super({
       url: 'http://localhost:90', options: {
         query: {
@@ -24,10 +22,12 @@ export class WebSocketTrilhaService {
   partidaModificada$ = this.socket.fromEvent<any>('partidaModificada');
   emojiEnviado$ = this.socket.fromEvent<any>('emojiEmitido');
   moinhoEfetuado$ = this.socket.fromEvent<any>('moinhoEfetuado');
+  partidaFinalizada$ = this.socket.fromEvent<any>('partidaFinalizada');
+
   constructor(private socket: SocketTrilha) { }
 
-  emit(data:any,event:string){
-    this.socket.emit(event,data)
+  emit(data: any, event: string) {
+    this.socket.emit(event, data)
   }
 
   disconnect = () => this.socket.disconnect();

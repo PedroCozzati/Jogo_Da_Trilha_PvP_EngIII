@@ -14,31 +14,19 @@ import { Howl } from 'howler';
 export class LoginComponent {
   issueForm: FormGroup;
   IssueArr: any = [];
-
-
-
-
-
-
+  
   ngAfterViewInit() {
-
     var sound = new Howl({
       src: ['../../assets/bg-music.mp3'],
       autoplay: true,
-  loop: true,
-  volume: 0.02,
-       
-      })
+      loop: true,
+      volume: 0.01,
+    })
 
-
-      sound.play();
-
-  
-   
+    sound.play();
   }
 
   constructor(
-
     public fb: FormBuilder,
     private ngZone: NgZone,
     private router: Router,
@@ -55,14 +43,11 @@ export class LoginComponent {
     path: 'https://assets4.lottiefiles.com/packages/lf20_lvftzthk.json', // download the JSON version of animation in your project directory and add the path to it like ./assets/animations/example.json
   };
   
-
   submitForm() {
     // if (this.issueForm.value == 'adm') {
-      this.bugService.CreateBug(this.issueForm.value).subscribe((res) => {
-        console.log('Issue added!');
-        this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
-      });
-    }
-  
-
+    this.bugService.CreateBug(this.issueForm.value).subscribe((res) => {
+      console.log('Issue added!');
+      this.ngZone.run(() => this.router.navigateByUrl('/adm-page'));
+    });
+  }
 }

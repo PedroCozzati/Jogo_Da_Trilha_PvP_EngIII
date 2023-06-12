@@ -84,13 +84,11 @@ export class Partida extends BaseModel {
   @Span()
   registraNovaJogada(registraJogada: PartidaDto, logger: Logger) {
     this.versaoPartida.push(registraJogada.versaoPartida)
-
-    const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
     const mapaTabuleiro = this.montaTabuleiro();
 
     if (this.versaoPartida.at(-1).at(1) === null) {
       this.redefineMoinhoAtivo(logger)
-      this.finalizaPartida(versaoPartidaClone, mapaTabuleiro)
+      this.finalizaPartida(mapaTabuleiro, logger)
       this.aguardandoResolucaoMoinho = null;
       return
     }
@@ -98,7 +96,7 @@ export class Partida extends BaseModel {
     const moinhoEncontrado = [];
 
     mapaTabuleiro.forEach(mapaLadoAutor => moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor)));
-    
+
     this.redefineMoinhoAtivo(logger)
 
     if (moinhoEncontrado.length > 0) {
@@ -111,9 +109,14 @@ export class Partida extends BaseModel {
   @Span()
   private finalizaPartida(mapaTabuleiro: any, logger: Logger) {
     mapaTabuleiro.forEach(ladoTabuleiro => {
-      if (ladoTabuleiro.filter(coordenada => !coordenada).length > 3) {
-        this.apply(new PartidaFinalizadaEvent({ jogador_vencedor_id: this.versaoPartida.at(-1).at(2) }))
+      logger.log("resultado da condição", { filter: JSON.stringify(ladoTabuleiro.filter(coordenada => coordenada)) })
+      if (ladoTabuleiro.filter(coordenada => coordenada).length < 3) {
         this.resultado = this.versaoPartida.at(-1).at(2)
+        this.apply(new PartidaFinalizadaEvent({
+          jogador_vencedor_id: this.resultado,
+          jogador_perdedor_id: this.resultado == this.jogador1_id ? this.jogador2_id : this.jogador1_id,
+          partida: this.getData()
+        }))
       }
     });
   }

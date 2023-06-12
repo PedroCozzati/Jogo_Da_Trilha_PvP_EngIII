@@ -53,17 +53,16 @@ export class GameComponent {
     src: ['../../assets/sb_aurora.mp3']
   });
 
-   
-    sound2:string='../../assets/nossa-tu-eh-ruim.mp3'
-    sound3:string ='../../assets/voce-tem-ensino-medio.mp3'
-    sound4:string='../../assets/aff-depois-quer-ser-promovido.mp3'
+  sound2: string = '../../assets/nossa-tu-eh-ruim.mp3'
+  sound3: string = '../../assets/voce-tem-ensino-medio.mp3'
+  sound4: string = '../../assets/aff-depois-quer-ser-promovido.mp3'
 
 
-    loseSounds=[
-      this.sound2,this.sound3,this.sound4
-    ]
+  loseSounds = [
+    this.sound2, this.sound3, this.sound4
+  ]
 
-     randomSound = Math.floor(Math.random() * this.loseSounds.length);
+  randomSound = Math.floor(Math.random() * this.loseSounds.length);
 
 
   soundLose = new Howl({
@@ -71,18 +70,22 @@ export class GameComponent {
   });
 
   soundDraw = new Howl({
-    src:['../../assets/muito-bom-nota-zero.mp3']
+    src: ['../../assets/muito-bom-nota-zero.mp3']
   })
 
   soundWin = new Howl({
-    src:['../../assets/aee-pensou-hein.mp3']
+    src: ['../../assets/aee-pensou-hein.mp3']
   })
 
   matrixString: string;
   subscription: Subscription;
   telaTravadaParaMoinho: string;
+
   isMoinhoEfetuadoByPlayer1 = () => this.telaTravadaParaMoinho == this.jogador1._id;
   isMoinhoEfetuadoByPlayer2 = () => this.telaTravadaParaMoinho == this.jogador2._id;
+
+  numeroDePecasFora = (index) => this.tabuleiro.at(index).filter(peca => !peca).length
+
   constructor(
     private webSocket: WebSocketTrilhaService,
     private appService: AppService,
@@ -104,15 +107,16 @@ export class GameComponent {
   test() {
     this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'))
   }
-  
+
   tabuleiro: any = this.appService.gameInfo.tabuleiro
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
+      if(!data.partida)
+        return
       this.appService.gameInfo.tabuleiro = data.tabuleiro
 
       this.telaTravadaParaMoinho = data.partida.aguardandoResolucaoMoinho;
-
 
       this.deselectStone()
       data.tabuleiro.forEach(async (coordenadas, index) => {
@@ -141,6 +145,11 @@ export class GameComponent {
     })
   }
 
+  async initSocketResultadoPartida() {
+    this.webSocket.partidaFinalizada$.subscribe(data => {
+      this.openModalEndGame(data);
+    })
+  }
 
   async emojiEmitido() {
     this.webSocket.emojiEnviado$.subscribe(data => {
@@ -163,25 +172,20 @@ export class GameComponent {
     })
   }
 
-
-
-
-
   async getJogadorByID(jogador_id: string) {
     return await lastValueFrom(
       this.http.get(`http://localhost:90/jogador/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
     )
   }
 
-
-  openModalEndGame(modal:string){
-    if(modal=='game-lose'){
+  openModalEndGame(modal: string) {
+    if (modal == 'game-lose') {
       this.soundLose.play()
     }
-    if(modal=='game-draw'){
+    if (modal == 'game-draw') {
       this.soundDraw.play()
     }
-    if(modal=='game-win'){
+    if (modal == 'game-win') {
       this.soundWin.play()
     }
     this.modalService.open(modal)
@@ -192,7 +196,6 @@ export class GameComponent {
       'anuncio0', 'anuncio1', 'anuncio2', 'anuncio3'
     ]
 
-
     this.randomImages = Math.floor(Math.random() * this.adImages.length);
 
     this.emojiList = [
@@ -201,9 +204,6 @@ export class GameComponent {
 
     this.jogador1 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador1_id)
     this.jogador2 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador2_id)
-
-
-    console.log(this.jogador1)
 
     this.isThePlayer1Active = this.appService.userInfos.nome == this.jogador1.nome
     this.isThePlayer2Active = this.appService.userInfos.nome == this.jogador2.nome
@@ -223,16 +223,15 @@ export class GameComponent {
       history.go(1);
     };
 
-
     this.isPlayer1Move = this.jogador1._id != this.appService.gameInfo.partida.versaoPartida.at(-1)[2]
 
     await this.getTabuleiro()
 
     await this.emojiEmitido()
 
-
     await this.moinhoEfetuado()
 
+    await this.initSocketResultadoPartida();
   }
 
   isError() {
@@ -287,7 +286,6 @@ export class GameComponent {
     )
   }
 
-
   isNotPrimeiraFase() {
     return this.tabuleiro.map(coordenadasPorJogador => {
       return coordenadasPorJogador.every(coordenada => Math.abs(coordenada.at(0)) !== 4)
@@ -319,7 +317,6 @@ export class GameComponent {
         }, 2500);
         return
       }
-
     }
 
     const validClick = this.isThePlayer1Active && this.isPlayer1Move
@@ -328,7 +325,6 @@ export class GameComponent {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
   }
-
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
     if (this.isPlayer1Move && !(!this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer1()))
@@ -362,8 +358,7 @@ export class GameComponent {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
   }
-
-
+  
   async movePeca(coordenada: any) {
     if (!this.validaMovimentacao(this.pecaSelecionada?.coordenada, coordenada))
       return
@@ -439,18 +434,14 @@ export class GameComponent {
   }
 
   closeModalGame(id: string) {
-
     this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
   }
-
-
 
   async onEmojiClick(id: string, selectedEmoji: string) {
     this.webSocket.emit({
       jogadorId: this.appService.userInfos._id,
       emoji: selectedEmoji
     }, 'emojiEnviado',)
-
   }
 
   corLadoA = 'red'
@@ -461,4 +452,3 @@ export class GameComponent {
 
   stoneStyle = ''
 }
-

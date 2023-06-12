@@ -12,6 +12,7 @@ import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Server, Socket } from 'socket.io';
 import { PartidaService } from '../application/services/partida.service';
+import { Span } from 'nestjs-otel';
 
 @WebSocketGateway({
     cors: { origin: '*' },
@@ -27,6 +28,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         private readonly _partidaService: PartidaService,
     ) { }
 
+    @Span()
     async emiteEstadoAtual(body, jogadorId: string) {
         try {
             const webSocketClientId = await this._cacheService.get(jogadorId.toString());
@@ -37,6 +39,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         }
     }
 
+    @Span()
     async emiteMoinho(body, jogadorId: string) {
         try {
             const webSocketClientId = await this._cacheService.get(jogadorId.toString());
@@ -45,8 +48,43 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         catch (exception) {
             this._logger.error("gateway error", { ...exception })
         }
+    }    
+
+    @Span()
+    async emiteResultadoVencedorPartida(vencedor: string) {
+        try {
+            const webSocketClientId = await this._cacheService.get(vencedor.toString());
+            this.server.to(webSocketClientId.toString()).emit('partidaFinalizada', 'game-win');
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
+    }
+    
+    @Span()
+    async emiteResultadoPerdedorPartida(perdedor: string) {
+        try {
+            const webSocketClientId = await this._cacheService.get(perdedor.toString());
+            this.server.to(webSocketClientId.toString()).emit('partidaFinalizada', 'game-lose');
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
+    }
+    
+    @Span()
+    async emiteResultadoEmpatePartida(jogador1: string, jogador2: string) {
+        try {
+            const jogador1Id = await this._cacheService.get(jogador1.toString());
+            const jogador2Id = await this._cacheService.get(jogador2.toString());
+            this.server.to([jogador1Id.toString(), jogador2Id.toString()]).emit('partidaFinalizada', 'game-draw');
+        }
+        catch (exception) {
+            this._logger.error("gateway error", { ...exception })
+        }
     }
 
+    @Span()
     @SubscribeMessage('emojiEnviado')
     async escutaEmoji(@MessageBody() data: any) {
         try {
@@ -64,6 +102,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         }
     }
 
+    @Span()
     async handleConnection(client: Socket, ...args: any[]) {
         try {
             const idJogador = client.handshake.query.jogadorId.toString();
@@ -81,6 +120,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         }
     }
 
+    @Span()
     async handleDisconnect(client: any) {
         try {
             const idJogador = client.handshake.query.jogadorId.toString();
@@ -92,6 +132,7 @@ export class PartidaGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         }
     }
 
+    @Span()
     afterInit(server: Server) {
         this._logger.log("gateway inicializado");
     }

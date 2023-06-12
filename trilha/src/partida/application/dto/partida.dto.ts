@@ -50,7 +50,12 @@ export class PartidaFinalizadaDto {
     @IsString()
     @IsNotEmpty()
     readonly jogador_vencedor_id: string
+    
+    @IsString()
+    @IsNotEmpty()
+    readonly jogador_perdedor_id: string
 
+    readonly partida: PartidaDto
 }
 
 export class JogadorPartidaDto {
