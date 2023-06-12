@@ -47,6 +47,8 @@ export class GameComponent {
   emojiList: any[]
   emoji: any
 
+  saldo:any
+
   browserRefresh = false;
 
   sound = new Howl({
@@ -182,20 +184,52 @@ export class GameComponent {
     )
   }
 
+
+  updateBalance(jogador_id: string, saldo: number) {
+    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
+      saldo: saldo,
+    }, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+      }, err => {
+      })
+  }
+
+  updateWins(jogado_id:string, vitorias:number){
+    this.http.put(`http://localhost:90/jogador/atualiza-vitorias/${jogador_id}`, {
+      vitorias:vitorias,
+    }, { headers: { "Content-Type": 'application/json' } })
+      .subscribe(response => {
+      }, err => {
+      })
+  }
+
   openModalEndGame(modal: string) {
     if (modal == 'game-lose') {
+      this.updateBalance(this.appService.userInfos._id,-this.appService.gameInfo.valorDeAposta)
+      this.saldo = this.appService.userInfos.saldo
       this.soundLose.play()
     }
     if (modal == 'game-draw') {
+      this.updateBalance(this.appService.userInfos._id,this.appService.gameInfo.valorDeAposta)
+      this.saldo = this.appService.userInfos.saldo
+      this.appService.userInfos.saldo = this.saldo
       this.soundDraw.play()
     }
     if (modal == 'game-win') {
+      this.updateBalance(this.appService.userInfos._id,this.appService.gameInfo.valorDeAposta*2)
+      this.saldo = this.appService.userInfos.saldo+(this.appService.gameInfo.valorDeAposta*2)
+      this.appService.userInfos.saldo = this.saldo
+
+
+
+
       this.soundWin.play()
     }
     this.modalService.open(modal)
   }
 
   async ngOnInit() {
+
 
     this.sound5.play()
 
@@ -281,6 +315,9 @@ export class GameComponent {
 
 
   }
+
+ 
+
   async efetuaJogada(jogador_id: string, coordenada_atual: any, coordenada_nova: any, partida_id: string) {
     return await lastValueFrom(
       this.http.put(`http://localhost:90/partida/${partida_id}`, {
@@ -300,6 +337,8 @@ export class GameComponent {
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
+    // this.openModalEndGame('game-win')
+
     if (!this.isPlayer1Move && !(this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer2()))
       return;
 
@@ -440,8 +479,42 @@ export class GameComponent {
     this.modalService.close(id);
   }
 
-  closeModalGame(id: string) {
+  closeModalGameLose(id: string) {
+    var data;
+    if (this.jogador1._id == data.jogadorId) {
+      this.openModal('pedido-revanche')
+     
+    }
+
+
+    if (this.jogador2._id == data.jogadorId) {
+      this.openModal('pedido-revanche2')
+    }
+
+    if(true){
+      this.openModal('revanche')
+    }else{
     this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+    }
+  }
+
+  closeModalGameWin(id: string) {
+    var data;
+    if (this.jogador1._id == data.jogadorId) {
+      this.openModal('aceita-revanche')
+     
+    }
+
+
+    if (this.jogador2._id == data.jogadorId) {
+      this.openModal('aceita-revanche2')
+    }
+
+    if(true){
+      this.openModal('revanche')
+    }else{
+    this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+    }
   }
 
   async onEmojiClick(id: string, selectedEmoji: string) {

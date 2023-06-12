@@ -211,13 +211,13 @@
         <div
             style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
             <div style="font-size: medium;"> <b>Você GANHOU!</b></div>
-            <div>+10 MOEDAS</div>
+            <div>+{{nivel.valorDeAposta*2}} MOEDAS <br> <b>TOTAL: {{saldo}}</b></div>
             <div class="win-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button style="margin-right: 2rem;" (click)="closeModal('game-win')" class="button">ACEITAR
+            <button style="margin-right: 2rem;" (click)="closeModalGame('game-win')" class="button">ACEITAR
                 REVANCHE</button>
-            <button style="margin-left: 2rem;" (click)="closeModalGame('game-win')" class="button">VOLTAR</button>
+            <button style="margin-left: 2rem;" (click)="closeModal('game-win')" class="button">VOLTAR</button>
         </div>
     </jw-modal>
 
@@ -225,11 +225,11 @@
         <div
             style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
             <div style="font-size: medium;"> <b>Você PERDEU!</b></div>
-            <div>-{{nivel.valorDeAposta}} MOEDAS</div>
+            <div>-{{nivel.valorDeAposta}} MOEDAS <br><b>TOTAL: {{saldo}}</b></div>
             <div class="lose-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button style="margin-right: 2rem;" (click)="closeModal('game-lose')" class="button">PEDIR REVANCHE</button>
+            <button style="margin-right: 2rem;" (click)="closeModalGame('game-lose')" class="button">PEDIR REVANCHE</button>
             <button style="margin-left: 2rem;" (click)="closeModalGame('game-lose')" class="button">VOLTAR</button>
         </div>
     </jw-modal>
@@ -238,7 +238,7 @@
         <div
             style="display: flex;flex-direction: column;justify-content: center; justify-self: center;justify-items: center;align-items: center;align-self: center;align-content: center;">
             <div style="font-size: medium;"> <b>EMPATE!</b></div>
-            <div>+ 10 MOEDAS</div>
+            <div><b>TOTAL: {{saldo}}</b></div>
             <div class="draw-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
@@ -342,6 +342,10 @@
 
     <jw-modal id="emoji-click2" class="modal-emoji-player2">
         {{selectedEmoji}}
+    </jw-modal>
+
+    <jw-modal id="revanche" class="modal-revanche">
+        <b>Aceita a revanche ai!</b>
     </jw-modal>
 
 
