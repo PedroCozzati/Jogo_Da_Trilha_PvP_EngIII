@@ -42,9 +42,7 @@ export class Carousel03Component implements OnInit {
     {
       src:"",
       title:`
-      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário, contudo ele não poderá
-        remover uma peça do adversário que faz parte de um moinho dele, a não ser que não exista outra peça para
-        remover.
+      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário.
       `
     },
     {
@@ -104,9 +102,7 @@ export class Carousel03Component implements OnInit {
     this.slides[4] = {
       src:"",
       title:`
-      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário, contudo ele não poderá
-        remover uma peça do adversário que faz parte de um moinho dele, a não ser que não exista outra peça para
-        remover.
+      (2ª FASE) Ao completar um "moinho", o jogador terá o direito de remover uma peça de seu adversário.
       `
     }
     this.slides[5] = {
