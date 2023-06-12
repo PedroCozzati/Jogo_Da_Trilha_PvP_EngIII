@@ -24,7 +24,9 @@ export class PartidaDto {
 
     @IsString()
     readonly resultado: string
-
+    
+    @IsString()
+    readonly aguardandoResolucaoMoinho: string
 }
 
 export class RegistraPartidaDto {

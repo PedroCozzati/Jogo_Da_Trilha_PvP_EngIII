@@ -31,6 +31,8 @@ export class Partida extends BaseModel {
   @Prop({ type: SchemaTypes.String })
   resultado: string
 
+  @Prop({ type: SchemaTypes.String })
+  aguardandoResolucaoMoinho: string
 
   constructor(object: any) {
     super();
@@ -84,58 +86,35 @@ export class Partida extends BaseModel {
     this.versaoPartida.push(registraJogada.versaoPartida)
 
     const versaoPartidaClone = JSON.parse(JSON.stringify(this.versaoPartida));
-    const mapaTabuleiro = versaoPartidaClone.shift();
-
+    const mapaTabuleiro = this.montaTabuleiro();
 
     if (this.versaoPartida.at(-1).at(1) === null) {
       this.redefineMoinhoAtivo(logger)
-      this.finalizaPartida(versaoPartidaClone, mapaTabuleiro, logger)
-
+      this.finalizaPartida(versaoPartidaClone, mapaTabuleiro)
+      this.aguardandoResolucaoMoinho = null;
       return
     }
 
     const moinhoEncontrado = [];
 
-    versaoPartidaClone.forEach((versao, index, array) => {
-
-      const mapaLadoAutor = mapaTabuleiro.at(this.obtemIndiceAutorJogada(versao))
-
-      for (let i = 0; i < mapaLadoAutor.length; i++) {
-        if (mapaLadoAutor[i]?.toString() === versao.at(0)?.toString())
-          mapaLadoAutor[i] = versao.at(1)
-      }
-      if (index === array.length - 1)
-        moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor))
-
-
-    });
-
+    mapaTabuleiro.forEach(mapaLadoAutor => moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor)));
+    
     this.redefineMoinhoAtivo(logger)
 
     if (moinhoEncontrado.length > 0) {
       this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
+      this.aguardandoResolucaoMoinho = this.versaoPartida.at(-1).at(2);
       this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
     }
   }
 
   @Span()
-  private finalizaPartida(versaoPartidaClone: any, mapaTabuleiro: any, logger: Logger) {
-
-    versaoPartidaClone.forEach((versao, index, array) => {
-
-      const mapaLadoOponente = mapaTabuleiro.at(!this.obtemIndiceAutorJogada(versao))
-
-      for (let i = 0; i < mapaLadoOponente.length; i++) {
-        if (mapaLadoOponente[i]?.toString() === versao.at(0)?.toString())
-          mapaLadoOponente[i] = versao.at(1)
+  private finalizaPartida(mapaTabuleiro: any, logger: Logger) {
+    mapaTabuleiro.forEach(ladoTabuleiro => {
+      if (ladoTabuleiro.filter(coordenada => !coordenada).length > 3) {
+        this.apply(new PartidaFinalizadaEvent({ jogador_vencedor_id: this.versaoPartida.at(-1).at(2) }))
+        this.resultado = this.versaoPartida.at(-1).at(2)
       }
-      if (index === array.length - 1) {
-        if (mapaLadoOponente.filter(coordenadas => coordenadas != null).length < 3) {
-          this.apply(new PartidaFinalizadaEvent({ jogador_vencedor_id: this.versaoPartida.at(-1).at(2) }))
-          this.resultado = this.versaoPartida.at(-1).at(2)
-        }
-      }
-
     });
   }
 
@@ -163,12 +142,6 @@ export class Partida extends BaseModel {
     return mapaTabuleiro
   }
 
-
-  @Span()
-  private obtemIndiceAutorJogada(versao: any[]) {
-    return this.jogador1_id.toString() === versao.at(2) ? 0 : 1
-  }
-
   @Span()
   private groupBy(xs, key) {
     return xs.filter(x => x.at(0) > -4 && x.at(0) < 4 && x.at(1) > -4 && x.at(1) < 4).reduce(function (rv, x) {
@@ -191,7 +164,6 @@ export class Partida extends BaseModel {
   async deletaPartida() {
     this.apply(new PartidaDeletadaEvent(this.getData()));
   }
-
 }
 
 export const PartidaSchema = SchemaFactory.createForClass(Partida);

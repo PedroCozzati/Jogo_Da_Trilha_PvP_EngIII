@@ -37,7 +37,6 @@ export class GameComponent {
   gameSides: any = []
 
   isPlayer1Move: boolean
-  // isPlayer2Move:boolean
 
   selectedEmoji: any
 
@@ -47,10 +46,6 @@ export class GameComponent {
   showEmoji: boolean
   emojiList: any[]
   emoji: any
-  // siteData:any
-  // imageData:any
-  // gameData:any
-  // partidaData:any
 
   browserRefresh = false;
 
@@ -60,9 +55,9 @@ export class GameComponent {
 
   matrixString: string;
   subscription: Subscription;
-  isMoinhoEfetuado: boolean;
-  isMoinhoEfetuadoByPlayer1: boolean;
-  isMoinhoEfetuadoByPlayer2: boolean;
+  telaTravadaParaMoinho: string;
+  isMoinhoEfetuadoByPlayer1 = () => this.telaTravadaParaMoinho == this.jogador1._id;
+  isMoinhoEfetuadoByPlayer2 = () => this.telaTravadaParaMoinho == this.jogador2._id;
   constructor(
     private webSocket: WebSocketTrilhaService,
     private appService: AppService,
@@ -84,18 +79,14 @@ export class GameComponent {
   test() {
     this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'))
   }
-  // @HostListener('unload', ['$event'])
-  // async unloadHandler(event) {
-  //   await this.ngZone.run(() => this.router.navigateByUrl('selecionar-nivel'))
-  // }
-
-
-
+  
   tabuleiro: any = this.appService.gameInfo.tabuleiro
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
       this.appService.gameInfo.tabuleiro = data.tabuleiro
+
+      this.telaTravadaParaMoinho = data.partida.aguardandoResolucaoMoinho;
 
 
       this.deselectStone()
@@ -122,18 +113,12 @@ export class GameComponent {
         this.infoTitle = info2
 
       }, 3000);
-      this.isMoinhoEfetuado = true
-      this.isMoinhoEfetuadoByPlayer1 = this.jogador1._id.toString() == data.partida.versaoPartida.at(-1)[2].toString()
-      this.isMoinhoEfetuadoByPlayer2 = !this.isMoinhoEfetuadoByPlayer1
     })
   }
 
 
   async emojiEmitido() {
     this.webSocket.emojiEnviado$.subscribe(data => {
-
-      console.log(data)
-      // this.closeModal(id)
       this.selectedEmoji = data.emoji
 
       if (this.jogador1._id == data.jogadorId) {
@@ -150,38 +135,6 @@ export class GameComponent {
           this.closeModal('emoji-click2')
         }, 3000);
       }
-
-      // this.modalService.open('emoji-click');
-
-      // setTimeout(() => {
-      //   this.closeModal('emoji-click')
-      // }, 3000);
-
-      // if (this.isThePlayer1Active) {
-      //   this.openModal('emoji-click')
-
-      //   setTimeout(() => {
-      //     this.closeModal('emoji-click')
-      //   }, 3000);
-      // }
-      // else if (this.isThePlayer2Active) {
-      //   this.openModal('emoji-click2')
-      //   setTimeout(() => {
-      //     this.closeModal('emoji-click2')
-      //   }, 3000);
-      // }
-
-
-
-      // if(data){
-      //   this.showEmoji =true
-      //   this.openModal('emoji-click')
-
-      //   setTimeout(() => {
-      //   this.closeModal('emoji-click')
-      // }, 3000);
-      // }
-
     })
   }
 
@@ -197,54 +150,16 @@ export class GameComponent {
 
 
   async ngOnInit() {
-    this.isMoinhoEfetuado = false
-    this.isMoinhoEfetuadoByPlayer1 = false
-    this.isMoinhoEfetuadoByPlayer2 = false
-    // this.sound.play();
-    // Howler.volume(0.2);
-
-
-    // Change global volume.
     this.adImages = [
       'anuncio0', 'anuncio1', 'anuncio2', 'anuncio3'
     ]
 
 
     this.randomImages = Math.floor(Math.random() * this.adImages.length);
-    //  function onunload (){ this.test()}
-    //   window.onunload =  unloadPage
 
     this.emojiList = [
       '😂', '😭', '😎', '🤬', '😈', '🤡', '💀', '🖕', '🥸'
     ]
-
-    // window.addEventListener("beforeunload", function (e) {
-    //     var confirmationMessage = "\o/";
-    //     console.log("cond");
-    //     e.returnValue = void(1);     // Gecko, Trident, Chrome 34+
-    //     return null;       // Gecko, WebKit, Chrome <34
-    // });
-
-
-
-    // if(this.appService){
-    //   var json =await localStorage.getItem('cache')
-    //   var jsonImage =await localStorage.getItem('cache-image')
-    //   var gameImage =localStorage.getItem('cache-game')
-    //   this.siteData = await JSON.parse(json!)
-    //   this.imageData =await JSON.parse(jsonImage!)
-    //   this.gameData = JSON.parse(gameImage!)
-
-    //   console.log(localStorage.getItem('cache-game'))
-
-    // }
-    // else {
-    //  this.imageData = this.appService['avatar']
-    //  this.siteData = this.appService
-    //  this.gameData =this.appService['gameInfo']
-
-    // }
-
 
     this.jogador1 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador1_id)
     this.jogador2 = await this.getJogadorByID(this.appService.gameInfo.partida.jogador2_id)
@@ -263,8 +178,7 @@ export class GameComponent {
 
     this.nivel = this.appService.gameInfo;
     this.nivelPeca = this.appService.gameInfo.peca;
-    this.avatar = this.appService.avatar;//this.route.snapshot.params['image'];
-    // this.avatar = this.imageData.avatar;//this.route.snapshot.params['image'];
+    this.avatar = this.appService.avatar;
 
     history.pushState(null, '', location.href);
     window.onpopstate = function () {
@@ -281,11 +195,6 @@ export class GameComponent {
 
     await this.moinhoEfetuado()
 
-  }
-
-  ngAfterViewInit() {
-
-    // you'll get your through 'elements' below code
   }
 
   isError() {
@@ -313,39 +222,10 @@ export class GameComponent {
     return coordenadas.filter(coordenada => coordenada)
   }
 
-  verificaPecaRemovida(coordenada: any[], indexJogador: number) {
-
-    // var isMill = true;
-
-    // if (isMill) {
-    //   alert(this.pecaSelecionada.coordenada[0])
-    // return coordenada.forEach((ponto, index) => {
-    //   this.pecaSelecionada?.coordenada.splice(0,1)
-    // })
-    // }
-    // else
-    // if (coordenada == this.pecaSelecionada?.coordenada && indexJogador == this.pecaSelecionada?.indexJogador) {
-    // this.deselectStone();
-    // var hasAnyMill = true
-    // if(hasAnyMill){
-    //   this.infoTitle="Você formou um moinho! - Selecione uma peça do seu adversário para removê-la"
-    //   if(this.pecaSelecionada){
-    //    return true
-
-    //   }
-    // }
-    // }
-  }
-
   verificaSelecaoPeca(coordenada: any[], indexJogador: number) {
-
-    // var test = this.siteData.userInfos.nome == this.jogador1.nome
-    // var test2 = this.siteData.userInfos.nome == this.jogador2.nome
     if (coordenada == this.pecaSelecionada?.coordenada && indexJogador == this.pecaSelecionada?.indexJogador) {
       return true
     }
-
-
   }
 
 
@@ -371,28 +251,18 @@ export class GameComponent {
 
 
   isNotPrimeiraFase() {
-
-
     return this.tabuleiro.map(coordenadasPorJogador => {
-
       return coordenadasPorJogador.every(coordenada => Math.abs(coordenada.at(0)) !== 4)
-
     });
-
-  }
-
-
-  removePeca() {
-
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
-    if (!this.isPlayer1Move)
+    if (!this.isPlayer1Move && !(this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer2()))
       return;
 
     const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move)
 
-    if (this.isMoinhoEfetuado && validClickMoinho) {
+    if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
       await this.efetuaJogada(
         this.appService.userInfos._id,
@@ -400,10 +270,6 @@ export class GameComponent {
         null,
         this.appService.gameInfo.partida._id
       )
-
-      this.isMoinhoEfetuado = false
-      this.isMoinhoEfetuadoByPlayer1 = false
-      this.isMoinhoEfetuadoByPlayer2 = false
       return
     }
 
@@ -429,12 +295,12 @@ export class GameComponent {
 
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
-    if (this.isPlayer1Move)
+    if (this.isPlayer1Move && !(!this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer1()))
       return;
 
     const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)
 
-    if (this.isMoinhoEfetuado && validClickMoinho) {
+    if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
       await this.efetuaJogada(
         this.appService.userInfos._id,
@@ -442,9 +308,6 @@ export class GameComponent {
         null,
         this.appService.gameInfo.partida._id
       )
-      this.isMoinhoEfetuado = false
-      this.isMoinhoEfetuadoByPlayer1 = false
-      this.isMoinhoEfetuadoByPlayer2 = false
       return
     }
 
@@ -480,7 +343,6 @@ export class GameComponent {
       coordenada,
       this.appService.gameInfo.partida._id
     )
-    // this.getTabuleiro()
     coordenada.forEach((ponto, index) => {
       this.pecaSelecionada?.coordenada.splice(index, 1, ponto)
     })
@@ -566,11 +428,5 @@ export class GameComponent {
   showInfo = true
 
   stoneStyle = ''
-
-  // selectStone(){
-  //   style={}
-  // }
-
-
 }
 
