@@ -49,6 +49,11 @@ export class SelecionarNivelComponent implements OnInit {
  });
 
 
+ sound2 = new Howl({
+  src: ['../../assets/joga-joga-joga.mp3']
+});
+
+
   // siteData:any
   // imageData:any
 
@@ -72,6 +77,7 @@ export class SelecionarNivelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sound2.play()
 
     // if(this.appService){
     //   var json =localStorage.getItem('cache')

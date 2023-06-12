@@ -21,7 +21,9 @@
       </div>
 
       <div class="money">
-        <div style="height: 2.5rem;width: 2.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')"></div>
+        <div
+          style="height: 2.5rem;width: 2.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')">
+        </div>
         <div style="align-items: center;">
           {{appService.userInfos.saldo.toString()}}</div>
       </div>
@@ -53,7 +55,9 @@
 
                   <div style="display: flex;flex-direction: row;justify-content: space-around;">
                     <div style="filter: blur(0) !important;"> Aposta: {{nivel.valorDeAposta}}</div>
-                    <div style="height: 1.5rem;width: 1.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')"></div>
+                    <div
+                      style="height: 1.5rem;width: 1.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')">
+                    </div>
                   </div>
 
                 </div>
@@ -85,7 +89,7 @@
         </div>
 
       </ng-template>
-     
+
     </p-carousel>
 
     <p *ngIf="div1" class="tip">Conforme for avançando de nível, mais moedas você poderá conseguir :)</p>
@@ -98,7 +102,7 @@
     <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
       Você pode comprar mais moedas na loja
     </div>
-    <button class="buttonShop" (click)="closeModal('selectedLevel');">VOLTAR</button>
+    <button class="button" (click)="closeModal('selectedLevel');">VOLTAR</button>
   </jw-modal>
 
   <jw-modal id="custom-modal-2" class="modal">

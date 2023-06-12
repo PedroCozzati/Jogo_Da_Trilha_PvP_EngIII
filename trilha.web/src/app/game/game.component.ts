@@ -58,6 +58,31 @@ export class GameComponent {
     src: ['../../assets/sb_aurora.mp3']
   });
 
+   
+    sound2:string='../../assets/nossa-tu-eh-ruim.mp3'
+    sound3:string ='../../assets/voce-tem-ensino-medio.mp3'
+    sound4:string='../../assets/aff-depois-quer-ser-promovido.mp3'
+
+
+    loseSounds=[
+      this.sound2,this.sound3,this.sound4
+    ]
+
+     randomSound = Math.floor(Math.random() * this.loseSounds.length);
+
+
+  soundLose = new Howl({
+    src: [this.loseSounds[this.randomSound]]
+  });
+
+  soundDraw = new Howl({
+    src:['../../assets/muito-bom-nota-zero.mp3']
+  })
+
+  soundWin = new Howl({
+    src:['../../assets/aee-pensou-hein.mp3']
+  })
+
   matrixString: string;
   subscription: Subscription;
   isMoinhoEfetuado: boolean;
@@ -140,7 +165,7 @@ export class GameComponent {
         this.openModal('emoji-click')
         setTimeout(() => {
           this.closeModal('emoji-click')
-        }, 3000);
+        }, 1000);
       }
 
 
@@ -148,7 +173,7 @@ export class GameComponent {
         this.openModal('emoji-click2')
         setTimeout(() => {
           this.closeModal('emoji-click2')
-        }, 3000);
+        }, 1000);
       }
 
       // this.modalService.open('emoji-click');
@@ -196,7 +221,21 @@ export class GameComponent {
   }
 
 
+  openModalEndGame(modal:string){
+    if(modal=='game-lose'){
+      this.soundLose.play()
+    }
+    if(modal=='game-draw'){
+      this.soundDraw.play()
+    }
+    if(modal=='game-win'){
+      this.soundWin.play()
+    }
+    this.modalService.open(modal)
+  }
+
   async ngOnInit() {
+
     this.isMoinhoEfetuado = false
     this.isMoinhoEfetuadoByPlayer1 = false
     this.isMoinhoEfetuadoByPlayer2 = false
@@ -387,6 +426,9 @@ export class GameComponent {
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
+
+    this.openModalEndGame('game-draw')
+
     if (!this.isPlayer1Move)
       return;
 
@@ -423,12 +465,12 @@ export class GameComponent {
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
-
-
   }
 
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
+
+    this.openModalEndGame('game-lose')
     if (this.isPlayer1Move)
       return;
 
@@ -456,16 +498,12 @@ export class GameComponent {
         }, 2500);
         return
       }
-
     }
-
     var validClick = this.isThePlayer2Active && !this.isPlayer1Move
 
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
-
-
   }
 
 
@@ -552,6 +590,8 @@ export class GameComponent {
 
 
   async onEmojiClick(id: string, selectedEmoji: string) {
+
+    // this.openModalEndGame('game-win')
     this.webSocket.emit({
       jogadorId: this.appService.userInfos._id,
       emoji: selectedEmoji

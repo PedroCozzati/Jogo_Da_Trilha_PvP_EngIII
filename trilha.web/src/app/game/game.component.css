@@ -1189,7 +1189,7 @@ blockquote.electric span {
     bottom: 0;
     left: 0;
 
-    background-image: url("../../assets/ampulheta.gif");
+    background-image: none;
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.4;
@@ -1248,10 +1248,10 @@ blockquote.electric span {
     bottom: 0;
     left: 0;
 
-    background-image: url("../../assets/clock.gif");
+    background-image: url("../../assets/lose3.gif");
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.4;
+    opacity: 0.7;
     
     /* z-index must be below .jw-modal and above everything else  */
     z-index: 900;
@@ -1310,7 +1310,7 @@ blockquote.electric span {
     background-image: url("../../assets/win-gif.gif");
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.4;
+    opacity: 0.7;
     
     /* z-index must be below .jw-modal and above everything else  */
     z-index: 900;
