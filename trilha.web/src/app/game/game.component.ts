@@ -116,7 +116,7 @@ export class GameComponent {
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
-      if(!data.partida)
+      if (!data.partida)
         return
       this.appService.gameInfo.tabuleiro = data.tabuleiro
 
@@ -300,9 +300,6 @@ export class GameComponent {
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
-    if (!this.isPlayer1Move && !(this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer2()))
-      return;
-
     const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move) && Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
@@ -326,7 +323,7 @@ export class GameComponent {
       }
     }
 
-    const validClick = this.isThePlayer1Active && this.isPlayer1Move
+    const validClick = this.isThePlayer1Active && this.isPlayer1Move && !this.isMoinhoEfetuadoByPlayer2()
 
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -334,10 +331,7 @@ export class GameComponent {
   }
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
-    if (this.isPlayer1Move && !(!this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer1()))
-      return;
-
-    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)&& Math.abs(coordenada.at(0)) !== 4
+    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move) && Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -359,13 +353,13 @@ export class GameComponent {
         return
       }
     }
-    var validClick = this.isThePlayer2Active && !this.isPlayer1Move
+    var validClick = this.isThePlayer2Active && !this.isPlayer1Move && !this.isMoinhoEfetuadoByPlayer1()
 
     if (validClick) {
       this.pecaSelecionada = { indexJogador, coordenada }
     }
   }
-  
+
   async movePeca(coordenada: any) {
     if (!this.validaMovimentacao(this.pecaSelecionada?.coordenada, coordenada))
       return
