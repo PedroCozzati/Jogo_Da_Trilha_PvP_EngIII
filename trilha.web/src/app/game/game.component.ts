@@ -427,8 +427,6 @@ export class GameComponent {
 
   async stoneClick(coordenada: any[], indexJogador: number) {
 
-    this.openModalEndGame('game-draw')
-
     if (!this.isPlayer1Move)
       return;
 
@@ -470,7 +468,6 @@ export class GameComponent {
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
 
-    this.openModalEndGame('game-lose')
     if (this.isPlayer1Move)
       return;
 
@@ -590,8 +587,6 @@ export class GameComponent {
 
 
   async onEmojiClick(id: string, selectedEmoji: string) {
-
-    // this.openModalEndGame('game-win')
     this.webSocket.emit({
       jogadorId: this.appService.userInfos._id,
       emoji: selectedEmoji
