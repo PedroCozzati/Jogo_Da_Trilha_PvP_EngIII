@@ -34,6 +34,9 @@ export class Partida extends BaseModel {
   @Prop({ type: SchemaTypes.String })
   aguardandoResolucaoMoinho: string
 
+  @Prop({ type: SchemaTypes.Number, default: 0 })
+  turnosSemMoinho: number
+
   constructor(object: any) {
     super();
 
@@ -42,8 +45,6 @@ export class Partida extends BaseModel {
 
   @Span()
   async registraPosicoesIniciais() {
-    // [cor da posicao, x axis, y axis]
-
     this.versaoPartida.push([
       [
         [-4, 4],
@@ -119,8 +120,6 @@ export class Partida extends BaseModel {
     const moinhoEncontrado = [];
     mapaTabuleiro.forEach(ladoTabuleiro => {
       moinhoEncontrado.push(...this.verificaMoinho(ladoTabuleiro.filter(coordenada => coordenada), logger))
-
-      logger.log('moinhos encontrados logo depois de sair', { moinhos: JSON.stringify(moinhoEncontrado) })
     });
 
     this.redefineMoinhoAtivo(logger)
@@ -131,13 +130,26 @@ export class Partida extends BaseModel {
       this.moinhosAtivos.push(moinhoEncontrado.at(0))
       this.aguardandoResolucaoMoinho = this.versaoPartida.at(-1).at(2);
       this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
+      return
+    }
+
+    if (mapaTabuleiro.every(ladoTabuleiro => ladoTabuleiro.filter(coordenada => coordenada).length == 3)) {
+      this.turnosSemMoinho++;
+      if (this.turnosSemMoinho > 10) {
+        this.resultado = "empate";
+        this.apply(new PartidaFinalizadaEvent({
+          jogador_vencedor_id: null,
+          jogador_perdedor_id: null,
+          partida: this.getData()
+        }))
+        return
+      }
     }
   }
 
   @Span()
   private finalizaPartida(mapaTabuleiro: any, logger: Logger) {
     mapaTabuleiro.forEach(ladoTabuleiro => {
-      logger.log("resultado da condição", { filter: JSON.stringify(ladoTabuleiro.filter(coordenada => coordenada)) })
       if (ladoTabuleiro.filter(coordenada => coordenada).length < 3) {
         this.resultado = this.versaoPartida.at(-1).at(2)
         this.apply(new PartidaFinalizadaEvent({
