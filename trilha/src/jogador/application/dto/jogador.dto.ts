@@ -16,9 +16,6 @@ export class JogadorDto {
     @IsNumber()
     readonly saldo: number
 
-    @IsDate()
-    readonly dataNasc: Date
-
     @IsNumber()
     readonly vitorias: number
 
@@ -39,6 +36,6 @@ export class AtualizaVitoriaJogadorDto {
     readonly _id: string
 
     @IsNumber()
-    readonly vitoria: number
+    readonly vitorias: number
 
 }

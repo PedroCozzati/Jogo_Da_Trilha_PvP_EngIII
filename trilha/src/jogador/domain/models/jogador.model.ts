@@ -25,11 +25,8 @@ export class Jogador extends BaseModel {
   @Prop({ type: SchemaTypes.Number, default: 0 })
   saldo: number
 
-  @Prop({ type: SchemaTypes.Date })
-  dataNasc: Date
-
   @Prop({ type: SchemaTypes.Number })
-  vitoria: number
+  vitorias: number
 
 
   constructor(object: any) {
@@ -45,7 +42,7 @@ export class Jogador extends BaseModel {
 
   @Span()
   async modificaVitoria(vitoria: number) {
-    this.vitoria += vitoria
+    this.vitorias += vitoria
   }
 
   @Span()
