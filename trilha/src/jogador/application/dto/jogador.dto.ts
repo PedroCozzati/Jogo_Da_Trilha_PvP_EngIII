@@ -35,7 +35,4 @@ export class AtualizaVitoriaJogadorDto {
     @IsString()
     readonly _id: string
 
-    @IsNumber()
-    readonly vitorias: number
-
 }

@@ -41,8 +41,8 @@ export class Jogador extends BaseModel {
   }
 
   @Span()
-  async modificaVitoria(vitoria: number) {
-    this.vitorias += vitoria
+  async modificaVitoria() {
+    this.vitorias += 1
   }
 
   @Span()

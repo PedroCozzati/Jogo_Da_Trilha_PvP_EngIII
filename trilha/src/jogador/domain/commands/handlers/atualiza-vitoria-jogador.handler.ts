@@ -22,7 +22,7 @@ export class AtualizaVitoriaJogadorHandler
 
     const jogadorParaAtualizarVitoria = await this.repository.buscaJogadorPorId(atualizaVitoriaJogador._id);
 
-    jogadorParaAtualizarVitoria.modificaVitoria(atualizaVitoriaJogador.vitorias)
+    jogadorParaAtualizarVitoria.modificaVitoria()
 
 
     const jogador = this.publisher.mergeObjectContext(
