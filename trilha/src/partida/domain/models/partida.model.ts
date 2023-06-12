@@ -71,14 +71,37 @@ export class Partida extends BaseModel {
   }
 
   @Span()
-  verificaMoinho(mapaLadoAutor: any[]): any[] {
-    const agrupamentoPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '0'))
-    const agrupamentoPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '1'))
+  verificaMoinho(mapaLadoAutor: any[], logger: Logger): any[] {
+    const lambdaMap = (grupoObject: any) => {
+      const grupo = grupoObject.grupo;
 
-    return [
-      ...agrupamentoPorEixoX.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4 && !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() === grupo.at(1).toString())),
-      ...agrupamentoPorEixoY.filter(grupo => grupo.at(1).length === 3 && parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4 && !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() === grupo.at(1).toString()))
-    ]
+      if (!(parseInt(grupo.at(0)) < 4 && parseInt(grupo.at(0)) > -4))
+        return
+
+      if (grupo.at(1).length >= 3 && parseInt(grupo.at(0)) == 0) {
+        const ladoNegativo = grupo.at(1).filter(coordenada => coordenada.at(grupoObject.indexCoordenada) < 0)
+        const ladoPositivo = grupo.at(1).filter(coordenada => coordenada.at(grupoObject.indexCoordenada) > 0)
+
+        if (ladoNegativo.length == 3 && ladoPositivo.length == 3)
+          return [ladoNegativo, ladoPositivo]
+
+        if (ladoPositivo.length == 3)
+          return [ladoPositivo]
+
+        if (ladoNegativo.length == 3)
+          return [ladoNegativo]
+      }
+
+      if (grupo.at(1).length == 3 && parseInt(grupo.at(0)) != 0)
+        return [grupo.at(1)]
+    };
+
+    const moinhosPorEixoX: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '0')).map(grupo => { return { indexCoordenada: 1, grupo: grupo } }).flatMap(lambdaMap)
+    const moinhosPorEixoY: any = Object.entries(this.groupBy(mapaLadoAutor.filter(item => item), '1')).map(grupo => { return { indexCoordenada: 0, grupo: grupo } }).flatMap(lambdaMap)
+
+    const moinhosExecutados = moinhosPorEixoX.concat(moinhosPorEixoY).filter(moinho => moinho && moinho.length).filter(moinho => !this.moinhosAtivos.some(moinhoAtivo => moinhoAtivo.toString() == moinho.toString()))
+
+    return moinhosExecutados;
   }
 
   @Span()
@@ -94,13 +117,18 @@ export class Partida extends BaseModel {
     }
 
     const moinhoEncontrado = [];
+    mapaTabuleiro.forEach(ladoTabuleiro => {
+      moinhoEncontrado.push(...this.verificaMoinho(ladoTabuleiro.filter(coordenada => coordenada), logger))
 
-    mapaTabuleiro.forEach(mapaLadoAutor => moinhoEncontrado.push(...this.verificaMoinho(mapaLadoAutor)));
+      logger.log('moinhos encontrados logo depois de sair', { moinhos: JSON.stringify(moinhoEncontrado) })
+    });
 
     this.redefineMoinhoAtivo(logger)
 
-    if (moinhoEncontrado.length > 0) {
-      this.moinhosAtivos.push(moinhoEncontrado.at(0).at(1))
+    logger.log('moinhos encontrados', { agrupamentoPorEixoX: JSON.stringify(moinhoEncontrado) })
+
+    if (moinhoEncontrado?.length) {
+      this.moinhosAtivos.push(moinhoEncontrado.at(0))
       this.aguardandoResolucaoMoinho = this.versaoPartida.at(-1).at(2);
       this.apply(new MoinhoEfetuadoEvent({ jogador_id: this.versaoPartida.at(-1).at(2) }));
     }

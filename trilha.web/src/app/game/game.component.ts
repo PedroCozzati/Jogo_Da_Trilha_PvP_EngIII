@@ -300,7 +300,7 @@ export class GameComponent {
   }
 
   async stoneClick(coordenada: any[], indexJogador: number) {
-    const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move) && Math.abs(coordenada.at(0)) !== 4
+    const validClickMoinho = this.isThePlayer2Active && this.isMoinhoEfetuadoByPlayer2() && Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -331,7 +331,7 @@ export class GameComponent {
   }
 
   async stoneClick2(coordenada: any[], indexJogador: number) {
-    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move) && Math.abs(coordenada.at(0)) !== 4
+    const validClickMoinho = this.isThePlayer1Active && this.isMoinhoEfetuadoByPlayer1() && Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
