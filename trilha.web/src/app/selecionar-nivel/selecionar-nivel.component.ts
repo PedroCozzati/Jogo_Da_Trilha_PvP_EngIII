@@ -77,7 +77,7 @@ export class SelecionarNivelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sound2.play()
+    
 
     // if(this.appService){
     //   var json =localStorage.getItem('cache')

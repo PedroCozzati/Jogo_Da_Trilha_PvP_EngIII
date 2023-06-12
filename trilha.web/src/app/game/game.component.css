@@ -108,7 +108,15 @@
 }
 
 .playerTurn{
-    border:  1rem solid white !important;
+    border:  1rem solid rgba(255, 255, 255, 0.753) !important;
+}
+
+
+.telaTravada{
+    border: 0.6vmin solid #fcfcfc !important;
+    margin: -4.6vmin 0 0 -4.6vmin !important;
+    box-shadow: 0.8vmin 0.4vmin 0.4vmin rgba(0, 0, 0, 0.8),
+        inset 0 0 0 1000px rgba(255, 255, 255, 0.404) !important;
 }
 
 #winnerScreen {

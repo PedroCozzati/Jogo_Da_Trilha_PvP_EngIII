@@ -142,13 +142,13 @@
             <!--PEÇAS-->
 
             <!--PECA B-->
-            <div [ngClass]="{'stoneBlocked':!isThePlayer1Active || !isPlayer1Move,'stoneSelected': isThePlayer1Active?verificaSelecaoPeca(coordenada,0):pecaBloqueada(coordenada,0)}"
+            <div [ngClass]="{'telaTravada':isMoinhoEfetuadoByPlayer2(),'stoneBlocked':!isThePlayer1Active || !isPlayer1Move,'stoneSelected': isThePlayer1Active?verificaSelecaoPeca(coordenada,0):pecaBloqueada(coordenada,0)}"
                 *ngFor="let coordenada of tabuleiro[0]" (click)="stoneClick(coordenada,0)" class="stoneBlack"
                 style="transform:translate({{coordenada[0]*10}}vmin, {{coordenada[1]* getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoA}};">
             </div>
 
             <!--PECA A-->
-            <div [ngClass]="{'stoneBlocked':!isThePlayer2Active || isPlayer1Move,'stoneSelected': isThePlayer2Active?verificaSelecaoPeca(coordenada,1):pecaBloqueada(coordenada,1)}"
+            <div [ngClass]="{'telaTravada':isMoinhoEfetuadoByPlayer1(),'stoneBlocked':!isThePlayer2Active || isPlayer1Move,'stoneSelected': isThePlayer2Active?verificaSelecaoPeca(coordenada,1):pecaBloqueada(coordenada,1)}"
                 *ngFor="let coordenada of tabuleiro[1]" (click)="stoneClick2(coordenada,1)" class="stoneWhite"
                 style="transform: translate({{coordenada[0]*10}}vmin, {{coordenada[1]*getMultiplicadorEixoY(coordenada)}}vmin);background-color: {{nivelPeca.corLadoB}};">
             </div>
