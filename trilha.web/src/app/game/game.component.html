@@ -215,7 +215,7 @@
             <div class="win-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button style="margin-right: 2rem;" (click)="closeModalGame('game-win')" class="button">ACEITAR
+            <button style="margin-right: 2rem;" (click)="closeModalGameWin('game-win')" class="button">ACEITAR
                 REVANCHE</button>
             <button style="margin-left: 2rem;" (click)="closeModal('game-win')" class="button">VOLTAR</button>
         </div>
@@ -229,8 +229,8 @@
             <div class="lose-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button style="margin-right: 2rem;" (click)="closeModalGame('game-lose')" class="button">PEDIR REVANCHE</button>
-            <button style="margin-left: 2rem;" (click)="closeModalGame('game-lose')" class="button">VOLTAR</button>
+            <button style="margin-right: 2rem;" (click)="closeModalGameLose('game-lose')" class="button">PEDIR REVANCHE</button>
+            <button style="margin-left: 2rem;" (click)="closeModalGameLose('game-lose')" class="button">VOLTAR</button>
         </div>
     </jw-modal>
 
@@ -242,7 +242,7 @@
             <div class="draw-image"></div>
         </div>
         <div style="display: flex;flex-direction: row;justify-content: space-around;">
-            <button (click)="closeModalGame('game-draw')" class="button">VOLTAR</button>
+            <button (click)="closeModal('game-draw')" class="button">VOLTAR</button>
         </div>
     </jw-modal>
 

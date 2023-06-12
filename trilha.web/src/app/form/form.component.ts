@@ -107,14 +107,13 @@ export class FormComponent implements OnInit {
     }))
   }
 
-  registerUser(nome: string, email: string, senha: string, saldo: 100, dataNasc: Date, vitorias: 0) {
+  registerUser(nome: string, email: string, senha: string, saldo: 100, vitorias: 0) {
     this.http.post(`http://localhost:90/jogador`, {
       nome: nome,
       senha: senha,
       saldo: saldo,
       email: email,
-      dataNasc: dataNasc,
-      vitorias: 1,
+      vitorias: 0,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.successRegister = true;
@@ -123,13 +122,12 @@ export class FormComponent implements OnInit {
       })
   }
 
-  updatePassword(jogador_id: string, senha: string, nome: string, saldo: 100, email: string, dataNasc: Date) {
+  updatePassword(jogador_id: string, senha: string, nome: string, saldo: 100, email: string) {
     this.http.put(`http://localhost:90/jogador/${jogador_id}`, {
       nome: nome,
       senha: senha,
       saldo: saldo,
       email: email,
-      dataNasc: dataNasc,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.successRegister = true;
@@ -267,7 +265,6 @@ export class FormComponent implements OnInit {
         this.userEmails.controls['primaryEmail'].value,
         this.userEmails.controls['senhaCadastro'].value,
         100,
-        now,
         0
       )
 
@@ -402,7 +399,6 @@ export class FormComponent implements OnInit {
       userByEmail.nome,
       userByEmail.saldo,
       userByEmail.email,
-      userByEmail.dataNasc,
     )
 
     userByEmail.senha = this.userEmails2.controls['novaSenha'].value

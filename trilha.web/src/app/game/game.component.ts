@@ -35,6 +35,7 @@ export class GameComponent {
   infoTitle: string;
   playerStone: any = '';
   gameSides: any = []
+  vitorias: any
 
   isPlayer1Move: boolean
 
@@ -47,7 +48,7 @@ export class GameComponent {
   emojiList: any[]
   emoji: any
 
-  saldo:any
+  saldo: any
 
   browserRefresh = false;
 
@@ -194,10 +195,8 @@ export class GameComponent {
       })
   }
 
-  updateWins(jogado_id:string, vitorias:number){
-    this.http.put(`http://localhost:90/jogador/atualiza-vitorias/${jogador_id}`, {
-      vitorias:vitorias,
-    }, { headers: { "Content-Type": 'application/json' } })
+  updateWins(jogador_id: string) {
+    this.http.put(`http://localhost:90/jogador/atualiza-vitoria/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
       }, err => {
       })
@@ -205,23 +204,28 @@ export class GameComponent {
 
   openModalEndGame(modal: string) {
     if (modal == 'game-lose') {
-      this.updateBalance(this.appService.userInfos._id,-this.appService.gameInfo.valorDeAposta)
-      this.saldo = this.appService.userInfos.saldo
+      // this.updateBalance(this.appService.userInfos._id,-this.appService.gameInfo.valorDeAposta)
+      this.saldo = this.appService.userInfos.saldo - this.appService.gameInfo.valorDeAposta
       this.soundLose.play()
     }
     if (modal == 'game-draw') {
-      this.updateBalance(this.appService.userInfos._id,this.appService.gameInfo.valorDeAposta)
+      this.updateBalance(this.appService.userInfos._id, this.appService.gameInfo.valorDeAposta)
       this.saldo = this.appService.userInfos.saldo
       this.appService.userInfos.saldo = this.saldo
       this.soundDraw.play()
     }
     if (modal == 'game-win') {
-      this.updateBalance(this.appService.userInfos._id,this.appService.gameInfo.valorDeAposta*2)
-      this.saldo = this.appService.userInfos.saldo+(this.appService.gameInfo.valorDeAposta*2)
+      this.updateBalance(this.appService.userInfos._id, this.appService.gameInfo.valorDeAposta * 2)
+      this.saldo = this.appService.userInfos.saldo + (this.appService.gameInfo.valorDeAposta)
       this.appService.userInfos.saldo = this.saldo
 
+      this.updateWins(
+        this.appService.userInfos._id
+      )
 
-
+      console.log(this.appService.userInfos)
+      this.vitorias = this.appService.userInfos.vitorias + 1
+      this.appService.userInfos.vitorias = this.vitorias
 
       this.soundWin.play()
     }
@@ -316,7 +320,7 @@ export class GameComponent {
 
   }
 
- 
+
 
   async efetuaJogada(jogador_id: string, coordenada_atual: any, coordenada_nova: any, partida_id: string) {
     return await lastValueFrom(
@@ -475,7 +479,7 @@ export class GameComponent {
     var data;
     if (this.jogador1._id == data.jogadorId) {
       this.openModal('pedido-revanche')
-     
+
     }
 
 
@@ -483,10 +487,10 @@ export class GameComponent {
       this.openModal('pedido-revanche2')
     }
 
-    if(true){
+    if (true) {
       this.openModal('revanche')
-    }else{
-    this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+    } else {
+      this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
     }
   }
 
@@ -494,7 +498,7 @@ export class GameComponent {
     var data;
     if (this.jogador1._id == data.jogadorId) {
       this.openModal('aceita-revanche')
-     
+
     }
 
 
@@ -502,10 +506,10 @@ export class GameComponent {
       this.openModal('aceita-revanche2')
     }
 
-    if(true){
+    if (true) {
       this.openModal('revanche')
-    }else{
-    this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+    } else {
+      this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
     }
   }
 
