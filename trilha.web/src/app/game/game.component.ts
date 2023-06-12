@@ -78,6 +78,10 @@ export class GameComponent {
     src:['../../assets/aee-pensou-hein.mp3']
   })
 
+  sound5 = new Howl({
+    src: ['../../assets/joga-joga-joga.mp3']
+  });
+
   matrixString: string;
   subscription: Subscription;
   telaTravadaParaMoinho: string;
@@ -188,6 +192,9 @@ export class GameComponent {
   }
 
   async ngOnInit() {
+
+    this.sound5.play()
+
     this.adImages = [
       'anuncio0', 'anuncio1', 'anuncio2', 'anuncio3'
     ]
@@ -298,7 +305,7 @@ export class GameComponent {
     if (!this.isPlayer1Move && !(this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer2()))
       return;
 
-    const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move)
+    const validClickMoinho = !(this.isThePlayer1Active && this.isPlayer1Move) && Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
@@ -334,7 +341,7 @@ export class GameComponent {
     if (this.isPlayer1Move && !(!this.isPlayer1Move && this.isMoinhoEfetuadoByPlayer1()))
       return;
 
-    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)
+    const validClickMoinho = !(this.isThePlayer2Active && !this.isPlayer1Move)&& Math.abs(coordenada.at(0)) !== 4
 
     if (this.telaTravadaParaMoinho && validClickMoinho) {
       this.pecaSelecionada = { indexJogador, coordenada }
