@@ -44,6 +44,11 @@ export class Jogador extends BaseModel {
   }
 
   @Span()
+  async modificaVitoria(vitoria: number) {
+    this.vitoria += vitoria
+  }
+
+  @Span()
   async registraJogador() {
     this.apply(new JogadorRegistradoEvent(this.getData()));
   }
@@ -55,6 +60,11 @@ export class Jogador extends BaseModel {
 
   @Span()
   async atualizaSaldoJogador() {
+    this.apply(new SaldoJogadorAtualizadoEvent(this.getData()));
+  }
+
+  @Span()
+  async atualizaVitoriaJogador() {
     this.apply(new SaldoJogadorAtualizadoEvent(this.getData()));
   }
 

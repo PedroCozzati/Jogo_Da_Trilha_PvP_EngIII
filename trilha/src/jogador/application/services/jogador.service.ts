@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { RegistraJogadorCommand } from 'src/jogador/domain/commands/impl/registra-jogador.command';
-import { AtualizaSaldoJogadorDto, JogadorDto } from '../dto/jogador.dto';
+import { AtualizaSaldoJogadorDto, AtualizaVitoriaJogadorDto, JogadorDto } from '../dto/jogador.dto';
 import { Logger } from 'nestjs-pino';
 import { Span } from 'nestjs-otel';
 import { AtualizaJogadorCommand } from '../../domain/commands/impl/atualiza-jogador.command';
@@ -9,6 +9,7 @@ import { DeletaJogadorCommand } from 'src/jogador/domain/commands/impl/deleta-jo
 import { BuscaJogadorsQuery } from 'src/jogador/domain/queries/impl/busca-jogadors.query';
 import { BuscaJogadorPorIdQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-id.query';
 import { AtualizaSaldoJogadorCommand } from 'src/jogador/domain/commands/impl/atualiza-saldo-jogador.command';
+import { AtualizaVitoriaJogadorCommand } from 'src/jogador/domain/commands/impl/atualiza-vitoria-jogador.command';
 import { BuscaJogadorPorNomeESenhaQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-nome-senha.query';
 import { BuscaJogadorPorEmailQuery } from 'src/jogador/domain/queries/impl/busca-jogador-por-email.query';
 
@@ -61,12 +62,19 @@ export class JogadorService {
 
     return await this.commandBus.execute(new AtualizaJogadorCommand(jogador));
   }
-  @Span()
 
+  @Span()
   async atualizaSaldoJogador(atualizaSaldoJogador: AtualizaSaldoJogadorDto) {
     this._logger.log('starting service execution');
 
     return await this.commandBus.execute(new AtualizaSaldoJogadorCommand(atualizaSaldoJogador));
+  }
+
+  @Span()
+  async atualizaVitoriaJogador(atualizaVitoriaJogador: AtualizaVitoriaJogadorDto) {
+    this._logger.log('starting service execution');
+
+    return await this.commandBus.execute(new AtualizaVitoriaJogadorCommand(atualizaVitoriaJogador));
   }
 
   @Span()

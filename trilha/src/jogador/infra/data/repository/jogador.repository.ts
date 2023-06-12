@@ -75,6 +75,22 @@ export class JogadorRepository {
     }
   }
 
+  @Span()
+  public async atualizaVitoriaJogador(jogador: Jogador) {
+    try {
+      this._logger.log("executing repository method")
+
+      const jogadorAtualizado = new Jogador(await this.repositoryBase.updateOne(jogador))
+
+      await jogadorAtualizado.atualizaSaldoJogador()
+
+      return jogadorAtualizado
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
   // @Span()
   // public async atualizaSaldoJogador(id: String, saldo: number) {
   //   try {

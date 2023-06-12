@@ -32,3 +32,13 @@ export class AtualizaSaldoJogadorDto {
     readonly saldo: number
 
 }
+
+
+export class AtualizaVitoriaJogadorDto {
+    @IsString()
+    readonly _id: string
+
+    @IsNumber()
+    readonly vitoria: number
+
+}
