@@ -19,9 +19,43 @@ export class RegistraPartidaHandler
     this._logger.log("executing command handler", { command_data: JSON.stringify(command) });
 
     const { registraPartidaDto } = command;
+
+    if (registraPartidaDto.revanche) {
+      const partidaParaAtualizacao = registraPartidaDto._id ? await this.repository.buscaPartidaPorId(registraPartidaDto._id) : new Partida({
+        jogador1_id: registraPartidaDto.jogador_id,
+        nivel_id: registraPartidaDto.nivel_id,
+        revanche: registraPartidaDto.revanche,
+      });
+
+      if (partidaParaAtualizacao._id)
+        partidaParaAtualizacao.jogador2_id = registraPartidaDto.jogador_id;
+
+      if (!partidaParaAtualizacao._id)
+        partidaParaAtualizacao.registraPosicoesIniciais();
+
+      const partidaModificada = this.publisher.mergeObjectContext(
+        partidaParaAtualizacao._id ? await this.repository.atualizaPartida(partidaParaAtualizacao) : await this.repository.inserePartida(partidaParaAtualizacao)
+      );
+
+      partidaModificada.commit();
+      return partidaModificada;
+    }
+
+    const partidaRevancheEmPareamento = await this.repository.buscaPartidaDeRevancheEmPareamento(registraPartidaDto.jogador_id);
+
+    if (partidaRevancheEmPareamento) {
+      partidaRevancheEmPareamento.registraPartida();
+
+      this.publisher.mergeObjectContext(partidaRevancheEmPareamento);
+
+      partidaRevancheEmPareamento.commit();
+
+      return partidaRevancheEmPareamento;
+    }
+
     const partidaEmAndamento = await this.repository.buscaPartidaPorJogador(registraPartidaDto.jogador_id);
 
-    if (partidaEmAndamento){
+    if (partidaEmAndamento) {
       partidaEmAndamento.registraPartida();
 
       this.publisher.mergeObjectContext(partidaEmAndamento);

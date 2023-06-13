@@ -91,8 +91,6 @@ export class GameComponent {
   isMoinhoEfetuadoByPlayer1 = () => this.telaTravadaParaMoinho == this.jogador1._id;
   isMoinhoEfetuadoByPlayer2 = () => this.telaTravadaParaMoinho == this.jogador2._id;
 
-  numeroDePecasFora = (index) => this.tabuleiro.at(index).filter(peca => !peca).length
-
   constructor(
     private webSocket: WebSocketTrilhaService,
     private appService: AppService,
@@ -119,7 +117,7 @@ export class GameComponent {
 
   async getTabuleiro() {
     this.webSocket.partidaModificada$.subscribe(data => {
-      if (!data.partida)
+      if (!data.partida || !data.tabuleiro)
         return
       this.appService.gameInfo.tabuleiro = data.tabuleiro
 
@@ -154,10 +152,23 @@ export class GameComponent {
 
   async initSocketResultadoPartida() {
     this.webSocket.partidaFinalizada$.subscribe(data => {
-      this.openModalEndGame(data);
+      this.appService.gameInfo.partida = data.partida;
+      this.openModalEndGame(data.modalName);
     })
   }
 
+  async initSocketRecusaRevanche() {
+    this.webSocket.revancheRecusada$.subscribe(data => {
+      this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
+    })
+  }
+  
+  async initSocketAceiteRevanche() {
+    this.webSocket.revancheConfirmada$.subscribe(data => {
+      this.ngZone.run(() => this.router.navigateByUrl('loader'));
+    })
+  }
+  
   async emojiEmitido() {
     this.webSocket.emojiEnviado$.subscribe(data => {
       this.selectedEmoji = data.emoji
@@ -204,7 +215,6 @@ export class GameComponent {
 
   openModalEndGame(modal: string) {
     if (modal == 'game-lose') {
-      // this.updateBalance(this.appService.userInfos._id,-this.appService.gameInfo.valorDeAposta)
       this.saldo = this.appService.userInfos.saldo - this.appService.gameInfo.valorDeAposta
       this.soundLose.play()
     }
@@ -277,6 +287,10 @@ export class GameComponent {
     await this.moinhoEfetuado()
 
     await this.initSocketResultadoPartida();
+
+    await this.initSocketAceiteRevanche();
+
+    await this.initSocketRecusaRevanche();
   }
 
   isError() {
@@ -312,12 +326,9 @@ export class GameComponent {
 
 
   pecaBloqueada(coordenada: any[], indexJogador: number) {
-
     if (coordenada == this.pecaSelecionada?.coordenada && indexJogador == this.pecaSelecionada?.indexJogador) {
       return false
     }
-
-
   }
 
 
@@ -475,42 +486,12 @@ export class GameComponent {
     this.modalService.close(id);
   }
 
-  closeModalGameLose(id: string) {
-    var data;
-    if (this.jogador1._id == data.jogadorId) {
-      this.openModal('pedido-revanche')
-
-    }
-
-
-    if (this.jogador2._id == data.jogadorId) {
-      this.openModal('pedido-revanche2')
-    }
-
-    if (true) {
-      this.openModal('revanche')
-    } else {
-      this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
-    }
-  }
-
-  closeModalGameWin(id: string) {
-    var data;
-    if (this.jogador1._id == data.jogadorId) {
-      this.openModal('aceita-revanche')
-
-    }
-
-
-    if (this.jogador2._id == data.jogadorId) {
-      this.openModal('aceita-revanche2')
-    }
-
-    if (true) {
-      this.openModal('revanche')
-    } else {
-      this.ngZone.run(() => this.router.navigateByUrl('login-authenticated'));
-    }
+  respondeRevanche(aceita) {
+    this.webSocket.emit({
+      jogadorId: this.appService.userInfos._id,
+      partida: this.appService.gameInfo.partida,
+      aceita
+    }, 'respondeRevanche')
   }
 
   async onEmojiClick(id: string, selectedEmoji: string) {

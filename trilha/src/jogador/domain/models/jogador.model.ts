@@ -26,7 +26,7 @@ export class Jogador extends BaseModel {
   saldo: number
 
   @Prop({ type: SchemaTypes.Number })
-  vitorias: number
+  vitorias: number = 0
 
 
   constructor(object: any) {

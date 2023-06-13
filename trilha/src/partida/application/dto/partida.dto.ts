@@ -37,6 +37,12 @@ export class RegistraPartidaDto {
     @IsString()
     @IsNotEmpty()
     readonly nivel_id: string
+
+    readonly revanche: boolean
+
+    @IsString()
+    @IsNotEmpty()
+    readonly _id: string
 }
 
 export class MoinhoEfetuadoDto {

@@ -29,7 +29,7 @@ export class LoaderComponent {
 
   sound = new Howl({
     src: ['../../assets/xaropinho-ratinho-rapaz.mp3']
- });
+  });
 
 
   ngOnInit() {
@@ -62,27 +62,13 @@ export class LoaderComponent {
 
     this.random = Math.floor(Math.random() * this.tips.length);
 
-
-   
-    var teste ="'AAAAAA':'AAAAAAAAA'"
-  
-
     this.websocketService.partidaModificada$.subscribe(data => {
-      // await localStorage.setItem('cache-partida',teste)
-
-
       if (data.partida?.jogador2_id) {
+        debugger;
         this.appService.gameInfo.tabuleiro = data.tabuleiro;
         this.appService.gameInfo.partida = data.partida;
-
-      // this.gameData = this.appService.gameInfo
-      // var test = this.appService.gameInfo.tabuleiro
-
-      // var partida = data.partida
         this.ngZone.run(() => this.router.navigateByUrl('game'));
-    
       }
-      // alert(JSON.stringify(this.gameData))
     })
 
     this.registraPartida();

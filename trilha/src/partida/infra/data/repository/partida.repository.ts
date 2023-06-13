@@ -135,7 +135,44 @@ export class PartidaRepository {
     try {
       this._logger.log("executing repository method")
 
-      const partida = await this.repositoryBase.findOne({ $and: [{ $or: [{ jogador1_id: null }, { jogador2_id: null }] }, { nivel_id: nivel }] })
+      const partida = await this.repositoryBase.findOne({ $and: [{ $or: [{ jogador1_id: null }, { jogador2_id: null }] }, { nivel_id: nivel }, { revanche: false }] })
+
+      if (partida)
+        return new Partida(partida)
+    } catch (exception) {
+      this._logger.error("error on repository method")
+      throw exception
+    }
+  }
+
+  @Span()
+  public async buscaPartidaDeRevancheEmPareamento(jogadorId: string) {
+    try {
+      this._logger.log("executing repository method")
+
+      const partida = await this.repositoryBase.findOne({
+        $and:
+          [
+            {
+              $or: [
+                {
+                  $and: [
+                    { jogador1_id: jogadorId },
+                    { jogador2_id: { $ne: null } },
+                  ]
+                },
+                {
+                  $and: [
+                    { jogador1_id: { $ne: null } },
+                    { jogador2_id: jogadorId },
+                  ]
+                }
+              ]
+            },
+            { revanche: true },
+            { resultado: null },
+          ]
+      })
 
       if (partida)
         return new Partida(partida)

@@ -37,6 +37,9 @@ export class Partida extends BaseModel {
   @Prop({ type: SchemaTypes.Number, default: 0 })
   turnosSemMoinho: number
 
+  @Prop({ type: SchemaTypes.Boolean, default: false })
+  revanche: boolean
+
   constructor(object: any) {
     super();
 

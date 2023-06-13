@@ -18,14 +18,15 @@ export class PartidaFinalizadaHandler
   handle(event: PartidaFinalizadaEvent) {
     this._logger.log("executing event handler", { event_data: JSON.stringify(event) });
     if (event.partidaFinalizadaDto.partida.resultado != "empate") {
-      this._partidaGateway.emiteResultadoPerdedorPartida(event.partidaFinalizadaDto.jogador_perdedor_id);
-      this._partidaGateway.emiteResultadoVencedorPartida(event.partidaFinalizadaDto.jogador_vencedor_id);
+      this._partidaGateway.emiteResultadoPerdedorPartida(event.partidaFinalizadaDto.jogador_perdedor_id, event.partidaFinalizadaDto.partida);
+      this._partidaGateway.emiteResultadoVencedorPartida(event.partidaFinalizadaDto.jogador_vencedor_id, event.partidaFinalizadaDto.partida);
       return
     }
 
     this._partidaGateway.emiteResultadoEmpatePartida(
       event.partidaFinalizadaDto.partida.jogador1_id,
-      event.partidaFinalizadaDto.partida.jogador2_id
+      event.partidaFinalizadaDto.partida.jogador2_id,
+      event.partidaFinalizadaDto.partida
     )
   }
 }

@@ -20,7 +20,7 @@ export class LoginComponent {
       src: ['../../assets/bg-music.mp3'],
       autoplay: true,
       loop: true,
-      volume: 0.01,
+      volume: 0.00,
     })
 
     sound.play();

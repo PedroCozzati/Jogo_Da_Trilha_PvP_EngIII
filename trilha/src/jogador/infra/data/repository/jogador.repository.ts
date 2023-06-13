@@ -82,7 +82,7 @@ export class JogadorRepository {
 
       const jogadorAtualizado = new Jogador(await this.repositoryBase.updateOne(jogador))
 
-      await jogadorAtualizado.atualizaSaldoJogador()
+      await jogadorAtualizado.atualizaVitoriaJogador()
 
       return jogadorAtualizado
     } catch (exception) {

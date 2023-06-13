@@ -16,10 +16,12 @@ export class ConsultaEstadoAtualHandler
     @Span()
     async execute(query: ConsultaEstadoAtualQuery) {
         this._logger.log("executing query handler", { query_data: JSON.stringify(query) });
-
+        
         const { jogadorDto } = query;
-
-        const partidaEncontrada = await this.repository.buscaPartidaPorJogador(jogadorDto.id_jogador)
+        
+        const partidaEncontrada = await this.repository.buscaPartidaPorJogador(jogadorDto.id_jogador)        
+        
+        this._logger.log("tá chegando aqui", { query_data: JSON.stringify(query) });
 
         return { partida: partidaEncontrada, tabuleiro: partidaEncontrada?.montaTabuleiro() };
     }

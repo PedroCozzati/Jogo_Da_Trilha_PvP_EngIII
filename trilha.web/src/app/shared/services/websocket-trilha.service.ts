@@ -23,6 +23,8 @@ export class WebSocketTrilhaService {
   emojiEnviado$ = this.socket.fromEvent<any>('emojiEmitido');
   moinhoEfetuado$ = this.socket.fromEvent<any>('moinhoEfetuado');
   partidaFinalizada$ = this.socket.fromEvent<any>('partidaFinalizada');
+  revancheRecusada$ = this.socket.fromEvent<any>('revancheRecusada');
+  revancheConfirmada$ = this.socket.fromEvent<any>('revancheConfirmada');
 
   constructor(private socket: SocketTrilha) { }
 
