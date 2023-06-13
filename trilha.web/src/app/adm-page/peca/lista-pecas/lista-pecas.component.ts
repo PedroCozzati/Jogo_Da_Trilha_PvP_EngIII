@@ -35,7 +35,7 @@ export class ListaPecasComponent {
 
 
   consultaPecas() {
-    this.http.get("http://localhost:90/peca", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/peca", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.pecas = response
       })
@@ -44,7 +44,7 @@ export class ListaPecasComponent {
   pecas: any = []
 
   deletaPeca(peca: any) {
-    this.http.delete(`http://localhost:90/peca/${peca._id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.delete(`http://15.229.11.82:90/peca/${peca._id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.consultaPecas()
       })

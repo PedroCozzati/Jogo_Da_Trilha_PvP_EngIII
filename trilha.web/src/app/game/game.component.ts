@@ -193,13 +193,13 @@ export class GameComponent {
 
   async getJogadorByID(jogador_id: string) {
     return await lastValueFrom(
-      this.http.get(`http://localhost:90/jogador/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
+      this.http.get(`http://15.229.11.82:90/jogador/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
     )
   }
 
 
   updateBalance(jogador_id: string, saldo: number) {
-    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
+    this.http.put(`http://15.229.11.82:90/jogador/atualiza-saldo/${jogador_id}`, {
       saldo: saldo,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
@@ -208,7 +208,7 @@ export class GameComponent {
   }
 
   updateWins(jogador_id: string) {
-    this.http.put(`http://localhost:90/jogador/atualiza-vitoria/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://15.229.11.82:90/jogador/atualiza-vitoria/${jogador_id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
       }, err => {
       })
@@ -337,7 +337,7 @@ export class GameComponent {
 
   async efetuaJogada(jogador_id: string, coordenada_atual: any, coordenada_nova: any, partida_id: string) {
     return await lastValueFrom(
-      this.http.put(`http://localhost:90/partida/${partida_id}`, {
+      this.http.put(`http://15.229.11.82:90/partida/${partida_id}`, {
         "versaoPartida": [
           coordenada_atual,
           coordenada_nova,

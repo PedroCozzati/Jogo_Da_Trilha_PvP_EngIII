@@ -75,7 +75,7 @@ export class LoaderComponent {
   }
 
   registraPartida() {
-    this.http.post(`http://localhost:90/partida`,
+    this.http.post(`http://15.229.11.82:90/partida`,
       {
         jogador_id: this.appService.userInfos._id,
         nivel_id: this.appService.gameInfo.nivel_id,

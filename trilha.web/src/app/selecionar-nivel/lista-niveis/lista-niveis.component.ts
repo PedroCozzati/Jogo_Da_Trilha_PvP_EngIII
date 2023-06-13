@@ -37,7 +37,7 @@ export class ListaNiveisComponent {
   
 
   consultaNiveis() {
-    this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/nivel", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.niveis = response
       })

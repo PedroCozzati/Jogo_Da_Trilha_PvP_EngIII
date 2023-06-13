@@ -18,7 +18,6 @@ export class JogadorDto {
 
     @IsNumber()
     readonly vitorias: number
-
 }
 
 export class AtualizaSaldoJogadorDto {
@@ -27,7 +26,8 @@ export class AtualizaSaldoJogadorDto {
 
     @IsNumber()
     readonly saldo: number
-
+    
+    readonly comprando: boolean
 }
 
 

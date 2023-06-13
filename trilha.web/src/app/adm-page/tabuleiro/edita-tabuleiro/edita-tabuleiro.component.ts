@@ -22,14 +22,14 @@ export class EditaTabuleiroComponent implements OnInit {
   }
 
   consultaTabuleiro(id: any) {
-    this.http.get(`http://localhost:90/tabuleiro/${id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get(`http://15.229.11.82:90/tabuleiro/${id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.tabuleiro = response
       })
   }
 
   editaTabuleiro(tabuleiro: any) {
-    this.http.put(`http://localhost:90/tabuleiro/${this.tabuleiro._id}`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://15.229.11.82:90/tabuleiro/${this.tabuleiro._id}`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/tabuleiros'));
       })

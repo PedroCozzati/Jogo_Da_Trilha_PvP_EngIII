@@ -122,7 +122,7 @@ export class SelecionarNivelComponent implements OnInit {
   }
 
   updateBalance(jogador_id: string, saldo: number) {
-    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
+    this.http.put(`http://15.229.11.82:90/jogador/atualiza-saldo/${jogador_id}`, {
       saldo: saldo,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
@@ -161,12 +161,12 @@ export class SelecionarNivelComponent implements OnInit {
 
   consultaNiveis() {
     try {
-      this.http.get("http://localhost:90/nivel", { headers: { "Content-Type": 'application/json' } })
+      this.http.get("http://15.229.11.82:90/nivel", { headers: { "Content-Type": 'application/json' } })
         .subscribe(response => {
           this.niveis = response
           for (let i = 0; i < this.niveis.length; i++) {
             let niv = this.niveis[i]
-            this.http.get(`http://localhost:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
+            this.http.get(`http://15.229.11.82:90/tabuleiro/${niv.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
               .subscribe(response => {
                 this.div1 = true
                 this.div3 = false
@@ -183,7 +183,7 @@ export class SelecionarNivelComponent implements OnInit {
                   this.openModal('custom-modal-2');
                 })
 
-            this.http.get(`http://localhost:90/peca/${niv.peca_id}`, { headers: { "Content-Type": 'application/json' } })
+            this.http.get(`http://15.229.11.82:90/peca/${niv.peca_id}`, { headers: { "Content-Type": 'application/json' } })
               .subscribe(response => {
                 this.peca = response
 

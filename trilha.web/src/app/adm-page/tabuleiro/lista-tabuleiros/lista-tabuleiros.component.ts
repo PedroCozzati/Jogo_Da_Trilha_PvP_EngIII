@@ -36,7 +36,7 @@ export class ListaTabuleirosComponent implements OnInit {
   }
 
   consultaTabuleiros() {
-    this.http.get("http://localhost:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.tabuleiros = response
         this.color = response[1].cor;
@@ -66,7 +66,7 @@ export class ListaTabuleirosComponent implements OnInit {
  
 
   deletaTabuleiro(tabuleiro: any) {
-    this.http.delete(`http://localhost:90/tabuleiro/${tabuleiro._id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.delete(`http://15.229.11.82:90/tabuleiro/${tabuleiro._id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.consultaTabuleiros()
       })

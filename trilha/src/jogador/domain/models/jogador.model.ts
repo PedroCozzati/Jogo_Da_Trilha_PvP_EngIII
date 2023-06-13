@@ -6,6 +6,8 @@ import { Span } from 'nestjs-otel';
 import { JogadorAtualizadoEvent } from '../events/impl/jogador-atualizado.event';
 import { JogadorDeletadoEvent } from '../events/impl/jogador-deletado.event';
 import { SaldoJogadorAtualizadoEvent } from '../events/impl/saldo-jogador-atualizado.event';
+import { VitoriaJogadorAtualizadaEvent } from '../events/impl/vitoria-jogador-atualizada.event';
+import { AtualizaSaldoJogadorDto } from 'src/jogador/application/dto/jogador.dto';
 
 @Schema({ collection: 'jogador' })
 export class Jogador extends BaseModel {
@@ -56,13 +58,13 @@ export class Jogador extends BaseModel {
   }
 
   @Span()
-  async atualizaSaldoJogador() {
-    this.apply(new SaldoJogadorAtualizadoEvent(this.getData()));
+  async atualizaSaldoJogador(atualizaSaldoJogadorDto: AtualizaSaldoJogadorDto) {
+    this.apply(new SaldoJogadorAtualizadoEvent(this.getData(), atualizaSaldoJogadorDto));
   }
 
   @Span()
   async atualizaVitoriaJogador() {
-    this.apply(new SaldoJogadorAtualizadoEvent(this.getData()));
+    this.apply(new VitoriaJogadorAtualizadaEvent(this.getData()));
   }
 
   @Span()

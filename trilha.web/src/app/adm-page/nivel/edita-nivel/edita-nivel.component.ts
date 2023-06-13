@@ -27,28 +27,28 @@ export class EditaNivelComponent {
   }
 
   consultaPeca(id: any) {
-    this.http.get(`http://localhost:90/nivel/${id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get(`http://15.229.11.82:90/nivel/${id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.nivel = response
       })
   }
 
   consultaPecas() {
-    this.http.get("http://localhost:90/peca", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/peca", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.pecas = response
       })
   }
 
   consultaTabuleiros() {
-    this.http.get("http://localhost:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.tabuleiros = response
       })
   }
 
   editaNivel(nivel: any) {
-    this.http.put(`http://localhost:90/nivel/${this.nivel._id}`, nivel, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://15.229.11.82:90/nivel/${this.nivel._id}`, nivel, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/niveis'));
       })

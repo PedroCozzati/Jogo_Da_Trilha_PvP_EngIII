@@ -37,7 +37,7 @@ export class AtualizaSaldoJogadorHandler
     jogadorParaAtualizarSaldo.modificaSaldo(atualizaSaldoJogador.saldo)
 
     const jogador = this.publisher.mergeObjectContext(
-      await this.repository.atualizaSaldoJogador(jogadorParaAtualizarSaldo)
+      await this.repository.atualizaSaldoJogador(jogadorParaAtualizarSaldo, atualizaSaldoJogador)
     );
 
     jogador.commit();

@@ -4,6 +4,7 @@ import { Logger } from 'nestjs-pino';
 import { MongooseBaseRepository } from '@gabriel.cora/eng.soft.jogo.da.trilha.core';
 import { Span } from 'nestjs-otel';
 import { Types } from 'mongoose';
+import { AtualizaSaldoJogadorDto } from '../../../application/dto/jogador.dto';
 
 @Injectable()
 export class JogadorRepository {
@@ -60,13 +61,13 @@ export class JogadorRepository {
   }
 
   @Span()
-  public async atualizaSaldoJogador(jogador: Jogador) {
+  public async atualizaSaldoJogador(jogador: Jogador, atualizaSaldoJogadorDto: AtualizaSaldoJogadorDto) {
     try {
       this._logger.log("executing repository method")
 
       const jogadorAtualizado = new Jogador(await this.repositoryBase.updateOne(jogador))
 
-      await jogadorAtualizado.atualizaSaldoJogador()
+      await jogadorAtualizado.atualizaSaldoJogador(atualizaSaldoJogadorDto)
 
       return jogadorAtualizado
     } catch (exception) {

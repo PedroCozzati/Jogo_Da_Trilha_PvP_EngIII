@@ -22,14 +22,14 @@ export class EditaPecaComponent {
   }
 
   consultaPeca(id: any) {
-    this.http.get(`http://localhost:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get(`http://15.229.11.82:90/peca/${id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.peca = response
       })
   }
 
   editaPeca(peca: any) {
-    this.http.put(`http://localhost:90/peca/${this.peca._id}`, peca, { headers: { "Content-Type": 'application/json' } })
+    this.http.put(`http://15.229.11.82:90/peca/${this.peca._id}`, peca, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/pecas'));
       })

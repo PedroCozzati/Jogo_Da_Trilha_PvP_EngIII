@@ -8,7 +8,7 @@ export class SocketTrilha extends Socket {
     appService: AppService
   ) {
     super({
-      url: 'http://localhost:90', options: {
+      url: 'http://15.229.11.82:90', options: {
         query: {
           "jogadorId": appService.userInfos._id
         }

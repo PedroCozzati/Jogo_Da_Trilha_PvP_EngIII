@@ -91,7 +91,7 @@ export class FormComponent implements OnInit {
   }
 
   async getUserByUsername() {
-    return await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+    return await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/login`, {
       params: {
         "nome": this.loginForm.controls['name'].value,
         "senha": this.loginForm.controls['senha'].value,
@@ -100,7 +100,7 @@ export class FormComponent implements OnInit {
   }
 
   async getUserByEmail() {
-    return await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+    return await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/recuperacao`, {
       params: {
         "email": this.userEmails.controls['primaryEmail'].value
       }
@@ -108,7 +108,7 @@ export class FormComponent implements OnInit {
   }
 
   registerUser(nome: string, email: string, senha: string, saldo: 100, vitorias: 0) {
-    this.http.post(`http://localhost:90/jogador`, {
+    this.http.post(`http://15.229.11.82:90/jogador`, {
       nome: nome,
       senha: senha,
       saldo: saldo,
@@ -123,7 +123,7 @@ export class FormComponent implements OnInit {
   }
 
   updatePassword(jogador_id: string, senha: string, nome: string, saldo: 100, email: string) {
-    this.http.put(`http://localhost:90/jogador/${jogador_id}`, {
+    this.http.put(`http://15.229.11.82:90/jogador/${jogador_id}`, {
       nome: nome,
       senha: senha,
       saldo: saldo,
@@ -226,14 +226,14 @@ export class FormComponent implements OnInit {
 
   async registerUserModal() {
     
-    // this.userList = await lastValueFrom(this.http.get(`http://localhost:90/jogador`, { headers: { "Content-Type": 'application/json' } }))
-    this.registerUserByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+    // this.userList = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador`, { headers: { "Content-Type": 'application/json' } }))
+    this.registerUserByEmail = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/login`, {
       params: {
         "nome": this.userEmails.controls['nameCadastro'].value,
         "senha": this.userEmails.controls['senhaCadastro'].value,
       }
     }))
-    var userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+    var userByEmail = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/recuperacao`, {
       params: {
         "email": this.userEmails.controls['primaryEmail'].value
       }
@@ -322,7 +322,7 @@ export class FormComponent implements OnInit {
   }
 
   async submitForm() {
-    this.userFound = await lastValueFrom(this.http.get(`http://localhost:90/jogador/login`, {
+    this.userFound = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/login`, {
       params: {
         "nome": this.loginForm.controls['name'].value,
         "senha": this.loginForm.controls['senha'].value,
@@ -360,7 +360,7 @@ export class FormComponent implements OnInit {
 
   async checkUserModal() {
     var userByEmail:any={}
-    userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+    userByEmail = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/recuperacao`, {
       params: {
         "email": this.userEmails2.controls['secundaryEmail'].value
       }
@@ -383,7 +383,7 @@ export class FormComponent implements OnInit {
 
   async recSenha() {
     var userByEmail:any={}
-    userByEmail = await lastValueFrom(this.http.get(`http://localhost:90/jogador/recuperacao`, {
+    userByEmail = await lastValueFrom(this.http.get(`http://15.229.11.82:90/jogador/recuperacao`, {
       params: {
         "email": this.userEmails2.controls['secundaryEmail'].value
       }

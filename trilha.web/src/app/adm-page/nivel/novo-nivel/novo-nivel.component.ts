@@ -25,21 +25,21 @@ export class NovoNivelComponent implements OnInit {
   }
 
   consultaPecas() {
-    this.http.get("http://localhost:90/peca", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/peca", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.pecas = response
       })
   }
 
   consultaTabuleiros() {
-    this.http.get("http://localhost:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
+    this.http.get("http://15.229.11.82:90/tabuleiro", { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.tabuleiros = response
       })
   }
 
   criaNivel(nivel: any) {
-    this.http.post(`http://localhost:90/nivel`, nivel, { headers: { "Content-Type": 'application/json' } })
+    this.http.post(`http://15.229.11.82:90/nivel`, nivel, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/niveis'));
       })

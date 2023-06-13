@@ -17,7 +17,7 @@ export class NovaPecaComponent {
   ) { }
 
   criaPeca(peca: any) {
-    this.http.post(`http://localhost:90/peca`, peca, { headers: { "Content-Type": 'application/json' } })
+    this.http.post(`http://15.229.11.82:90/peca`, peca, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/pecas'));
       })

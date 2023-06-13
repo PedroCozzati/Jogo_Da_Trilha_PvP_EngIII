@@ -41,7 +41,7 @@ export class LoginAuthenticatedComponent {
 
 
   getAllUsers() {
-    this.http.get<[Jogador]>(`http://localhost:90/jogador`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get<[Jogador]>(`http://15.229.11.82:90/jogador`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => { this.userList = response });
   }
 
@@ -154,8 +154,9 @@ export class LoginAuthenticatedComponent {
   ) { }
 
   updateBalance(jogador_id: string, saldo: number) {
-    this.http.put(`http://localhost:90/jogador/atualiza-saldo/${jogador_id}`, {
+    this.http.put(`http://15.229.11.82:90/jogador/atualiza-saldo/${jogador_id}`, {
       saldo: saldo,
+      comprando: true,
     }, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
 

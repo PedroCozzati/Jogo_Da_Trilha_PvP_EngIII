@@ -29,7 +29,7 @@ export class LinhaApresentacaoNivelComponent {
   nivelDeletado = new EventEmitter<string>();
 
   deletaNivel(nivel: any) {
-    this.http.delete(`http://localhost:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.delete(`http://15.229.11.82:90/nivel/${nivel._id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.nivelDeletado.emit()
       })
@@ -41,14 +41,14 @@ export class LinhaApresentacaoNivelComponent {
   }
 
   consultaTabuleiroPorId(nivel: any) {
-    this.http.get(`http://localhost:90/tabuleiro/${nivel.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get(`http://15.229.11.82:90/tabuleiro/${nivel.tabuleiro_id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.tabuleiro = response
       })
   }
 
   consultaPecaPorId(nivel: any) {
-    this.http.get(`http://localhost:90/peca/${nivel.peca_id}`, { headers: { "Content-Type": 'application/json' } })
+    this.http.get(`http://15.229.11.82:90/peca/${nivel.peca_id}`, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.peca = response
       })

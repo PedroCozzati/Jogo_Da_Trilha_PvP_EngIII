@@ -17,7 +17,7 @@ export class NovoTabuleiroComponent {
   ) { }
 
   criaTabuleiro(tabuleiro: any) {
-    this.http.post(`http://localhost:90/tabuleiro`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
+    this.http.post(`http://15.229.11.82:90/tabuleiro`, tabuleiro, { headers: { "Content-Type": 'application/json' } })
       .subscribe(response => {
         this.ngZone.run(() => this.router.navigateByUrl('/tabuleiros'));
       })
