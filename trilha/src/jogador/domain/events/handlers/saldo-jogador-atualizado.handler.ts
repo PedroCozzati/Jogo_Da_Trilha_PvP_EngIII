@@ -18,7 +18,7 @@ export class SaldoJogadorAtualizadoEventHandler
     this.compraEfetuadaCounter = this.metricService.getCounter('compra_efetuada_por_jogador_count', {
       description: 'Contador para verificar o dinheiro que foi gasto',
     });
-    
+
     this.compraEfetuadaValorPonderadoCounter = this.metricService.getCounter('compra_efetuada_valor_ponderado_count', {
       description: 'Contador para verificar o dinheiro que foi gasto',
     });
@@ -26,11 +26,21 @@ export class SaldoJogadorAtualizadoEventHandler
 
   @Span()
   handle(event: SaldoJogadorAtualizadoEvent) {
-    if (event.atualizaSaldoJogadorDto.comprando){
-      this.compraEfetuadaCounter.add(event.atualizaSaldoJogadorDto.saldo, { jogador: event.jogadorDto.nome, vitorias: event.jogadorDto.vitorias });
+    if (event.atualizaSaldoJogadorDto.comprando) {
+      this.compraEfetuadaCounter.add(this.retornaValorGasto(event.atualizaSaldoJogadorDto.saldo), { jogador: event.jogadorDto.nome, vitorias: event.jogadorDto.vitorias });
       this.compraEfetuadaValorPonderadoCounter.add(event.atualizaSaldoJogadorDto.saldo);
     }
 
     this._logger.log("executing event handler", { event_data: JSON.stringify(event) });
+  }
+  
+  @Span()
+  retornaValorGasto(qtdMoedas: number) {
+    if (qtdMoedas == 100)
+      return 5
+    if (qtdMoedas == 300)
+      return 10
+    if (qtdMoedas == 1000)
+      return 25
   }
 }
