@@ -64,7 +64,7 @@ export class LoaderComponent {
 
     this.websocketService.partidaModificada$.subscribe(data => {
       if (data.partida?.jogador2_id) {
-        debugger;
+        // debugger;
         this.appService.gameInfo.tabuleiro = data.tabuleiro;
         this.appService.gameInfo.partida = data.partida;
         this.ngZone.run(() => this.router.navigateByUrl('game'));

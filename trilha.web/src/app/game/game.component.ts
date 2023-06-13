@@ -44,6 +44,7 @@ export class GameComponent {
   adImages: any[]
 
   randomImages: any
+  randomImages2: any
   showEmoji: boolean
   emojiList: any[]
   emoji: any
@@ -252,6 +253,7 @@ export class GameComponent {
     ]
 
     this.randomImages = Math.floor(Math.random() * this.adImages.length);
+    this.randomImages2 = Math.floor(Math.random() * this.adImages.length);
 
     this.emojiList = [
       '😂', '😭', '😎', '🤬', '😈', '🤡', '💀', '🖕', '🥸'
@@ -487,6 +489,8 @@ export class GameComponent {
   }
 
   respondeRevanche(aceita) {
+    this.updateBalance(this.appService.userInfos._id,-this.appService.gameInfo.valorDeAposta)
+    this.appService.userInfos.saldo = this.appService.userInfos.saldo-this.appService.gameInfo.valorDeAposta
     this.webSocket.emit({
       jogadorId: this.appService.userInfos._id,
       partida: this.appService.gameInfo.partida,

@@ -301,6 +301,15 @@
       /* width: 20vw;
       height: 5vh; */
     }
+    .ad2{
+      position: absolute;
+      bottom: 1%;
+      right: 1%;
+      width: 20vh;
+      height: 20vh;
+      background-size: contain;
+      background-repeat: no-repeat;
+  }
     .test{
       flex-direction: row;
       display: flex;

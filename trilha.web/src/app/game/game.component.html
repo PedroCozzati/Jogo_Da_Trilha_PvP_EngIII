@@ -32,13 +32,13 @@
 
                     <h5 class="card-title text-center">{{jogador2.nome}} {{isThePlayer2Active?'(Você)':''}}</h5>
                     <div class="peca-col">
-                        <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
+                        <!-- <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
                             Peças roubadas</div>
                         <div class="npecas">
 
                             <div class="peca-card-oponent" style="background-color: {{nivelPeca.corLadoA}}"></div>
 
-                        </div>
+                        </div> -->
                     </div>
 
                     <h5 *ngIf="(!isPlayer1Move && !isMoinhoEfetuadoByPlayer1()) || isMoinhoEfetuadoByPlayer2()" class="card-title text-center">JOGANDO</h5>
@@ -169,13 +169,13 @@
                         <img class="ampulheta" src="../../assets/clock.gif">
                     </div> -->
                     <div class="peca-col">
-                        <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
+                        <!-- <div style="font-weight: bold; font-size: 0.79rem;text-align: center;padding-bottom: 0.2rem;">
                             Peças roubadas</div>
                         <div class="npecas">
 
                             <div class="peca-card-oponent" style="background-color: {{nivelPeca.corLadoB}}"></div>
 
-                        </div>
+                        </div> -->
                     </div>
 
                     <h5 *ngIf="(isPlayer1Move && !isMoinhoEfetuadoByPlayer2()) || isMoinhoEfetuadoByPlayer1()" class="card-title text-center">JOGANDO</h5>
@@ -343,5 +343,6 @@
 
 
 
-    <div class="ad2" style="background-image: url('../../assets/anuncio.jpg');"></div>
+    
+    <div class="ad2" style="background-image: url('../../assets/{{adImages[randomImages2]}}.jpg');"></div>
 </section>

@@ -43,6 +43,8 @@ export class SelecionarNivelComponent implements OnInit {
   peca: any = {}
   random: any
   random2: any
+  randomImages:number
+  adImages:any
 
   sound = new Howl({
     src: ['../../assets/xaropinho-ratinho-rapaz.mp3']
@@ -91,6 +93,10 @@ export class SelecionarNivelComponent implements OnInit {
     // }
 
     // console.log(this.siteData)
+    this.adImages = [
+      'anuncio0', 'anuncio1', 'anuncio2', 'anuncio3'
+    ]
+    this.randomImages = Math.floor(Math.random() * this.adImages.length);
 
     this.tips = [
       'Posicione a maioria das pedras no centro do tabuleiro, assim há mais chances de ganhar.',
