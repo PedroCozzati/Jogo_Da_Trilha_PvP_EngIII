@@ -1,0 +1,118 @@
+.product-item {
+    .product-item-content {
+      border: 1px solid var(--surface-d);
+      border-radius: 3px;
+      margin: 0rem;
+      text-align: center;
+    }
+  
+    .product-image {
+      width: 50%;
+      
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+  }
+  
+  .p-carousel {
+    margin-top: 7vh;
+    padding: 30px !important;
+  }
+
+
+  .p-carousel-prev-icon,
+  .pi {
+    display: none !important;
+  }
+  
+  .pi {
+    display: none !important;
+  }
+  
+  .pi-chevron-left:before {
+    content: '' !important;
+  }
+  
+
+ 
+  
+  .p-carousel-next:focus {
+    border-left-style: solid !important;
+    border-top-style: solid !important;
+    border-bottom-style: solid !important;
+    border-left-width: thin !important;
+    color: #1a0350 !important;
+    border-left-color: #6a3ed1;
+    border-top-color: #6a3ed1;
+    border-bottom-color: #6a3ed1;
+    border-top-width: thin !important;
+    border-bottom-width: thin !important;
+    outline: none !important;
+  }
+
+
+ 
+
+  
+
+
+  
+
+  
+ 
+  
+  ::ng-deep .p-disabled {
+    /* visibility: hidden !important; */
+    border-left-color: #6a3ed1;
+    border-right-color: #6a3ed1;
+    border-top-color: #6a3ed1;
+    border-bottom-color: #6a3ed1;
+  }
+
+ 
+
+  ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: #9521f3 !important;
+  }
+  
+
+  ::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    background-color: #ffffff !important;
+    color: #ffffff !important;
+    width: 2rem;
+    height: 0.5rem;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+  }
+
+::ng-deep .p-carousel .p-carousel-indicators .p-carousel-indicator button:hover {
+    background: #bdadb9;
+  }
+
+  
+ .p-carousel-next, .p-carousel-prev {
+  box-shadow: 0px 0px 20px 10px rgb(39, 4, 85) !important;
+  border-width: 1px !important;
+  color: #ffffff !important;
+  background-color: #1f003b ;
+
+  border: 2px solid white !important;
+}
+
+ .p-carousel-prev {
+  box-shadow: 0px 0px 20px 10px rgb(39, 4, 85) !important;
+  border-width: 1px !important;
+  color: #ffffff !important;
+  background-color: #1f003b;
+
+  border: 2px solid white !important;
+}
+
+
+.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #ffffff;
+}
+
+
+

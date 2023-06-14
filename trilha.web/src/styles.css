@@ -1,0 +1,77 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css");
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+
+*{
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+
+::ng-deep .p-carousel-next {
+  box-shadow: none !important;
+  border-width: 1px !important;
+  color: #1f003b;
+  background-color: #1f003b;
+
+  border: transparent !important;
+}
+
+::ng-deep  .p-carousel-prev {
+  box-shadow: none !important;
+  border-width: 1px !important;
+  color: #1f003b;
+  background-color: #1f003b;
+
+  border: transparent !important;
+}
+
+
+.p-carousel .p-carousel-content .p-carousel-prev:focus, .p-carousel .p-carousel-content .p-carousel-next:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+
+
+
+  ::ng-deep .c-carousel 
+  .c-carousel-indicators {
+    
+        size: 30px;
+        
+        padding: 40px;
+        /* border: 0px solid #ff0000 !important; */
+      
+  }
+
+
+  .carousel-dot {
+    size: 30px;
+    padding-left: 30px;
+   
+  background-color: #ffffff !important;;
+}
+
+    .carousel-dot-active {
+        size: 30px;
+        padding-left: 30px;
+       
+      background-color: #6e2beb !important;;
+    }
+
+
+    ::ng-deep .table .table-bordered{
+      border-radius: 20px !important;
+    }
+  
+ 

@@ -1,0 +1,23 @@
+button{
+    font-weight: bold;
+    background-color: rgb(196, 215, 255);
+    border-radius: 20px;
+    box-shadow: 0px 2px black ;
+    width: 100%;
+    border-top: 2px red;
+    border-left: 2px red;
+    border-right: 2px red;
+    border-color: rgb(100, 24, 172);
+    border-width: 7px;
+    transition: all ease 0.1s;
+}
+
+button:hover{
+    background-color: rgb(60, 74, 169);
+    color: white;
+}
+
+button:active {
+    transform: translateY(5px);
+    box-shadow: 0px 0px 0px 0px #a29bfe;
+  }

@@ -1,0 +1,4 @@
+npm run build
+npm init --scope=gabriel.cora
+npm i
+npm publish --access public

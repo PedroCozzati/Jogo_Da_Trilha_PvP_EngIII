@@ -1,0 +1,247 @@
+version: "3"
+
+x-minio-common:
+  &minio-common
+  image: minio/minio:RELEASE.2023-02-17T17-52-43Z
+  command: minio server /data --console-address ":9001"
+  expose:
+    - "9000"
+    - "9001"
+  environment:
+    MINIO_ROOT_USER: trilha
+    MINIO_ROOT_PASSWORD: s9wedR5LEvTR57SUSHUt2WrxIwVyvWkYCTejkpaGUgooYWtj40
+    TZ: America/Sao_Paulo
+  healthcheck:
+    test:
+      [
+        "CMD",
+        "curl",
+        "-f",
+        "http://localhost:9000/minio/health/live"
+      ]
+    interval: 30s
+    timeout: 20s
+    retries: 3
+
+services:
+  trilha-web:
+    container_name: trilha-web
+    image: trilha-web
+    build: ./trilha.web
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+
+  trilha:
+    container_name: trilha
+    image: trilha
+    build: ./trilha
+    restart: on-failure
+    depends_on:
+      - mongo
+    ports:
+      - "90:90"
+      - "3090:3090"
+    volumes:
+      - ./volumes/logs:/app/logs
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MONGODB_URI=mongodb://trilha:rry*UZ*4Xa82DH%5E4%40a0S98MBDN7*MAo9FyBt@mongo:27017/trilha?authSource=admin
+      - PROMETHEUS_EXPORT_PORT=3090
+      - OTEL_SERVICE_NAME=trilha
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://tempo:14268/api/traces
+      - LOG_FILE_NAME=/app/logs/trilha.log
+      - "TZ=America/Sao_Paulo"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.30.3
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - ./volumes/prometheus:/prometheus
+    environment:
+      - "TZ=America/Sao_Paulo"
+    command: --web.enable-lifecycle --web.enable-admin-api --config.file=/etc/prometheus/prometheus.yml
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  tempo:
+    container_name: tempo
+    image: grafana/tempo:1.5.0
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - ./volumes/tempo:/tmp/tempo
+    ports:
+      - "14268" # jaeger ingest, Jaeger - Thrift HTTP
+      - "14250" # Jaeger - GRPC
+      - "55680" # OpenTelemetry
+      - "6831/udp" # Jaeger - Thrift Compact
+      - "6832/udp" # Jaeger - Thrift Binary
+    environment:
+      - "TZ=America/Sao_Paulo"
+    depends_on:
+      - prometheus
+      - minio
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:2.2.1
+    command: -config.file=/etc/promtail/promtail-local.yaml
+    volumes:
+      - ./loki/promtail-config.yaml:/etc/promtail/promtail-local.yaml
+      - ./volumes/logs:/app/logs
+    environment:
+      - "TZ=America/Sao_Paulo"
+    depends_on:
+      - loki
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    container_name: alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/config.yml
+    ports:
+      - 9093:9093
+    environment:
+      - "TZ=America/Sao_Paulo"
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  loki:
+    image: grafana/loki:2.7.3
+    container_name: loki
+    ports:
+      - "3100:3100"
+    entrypoint:
+      - /usr/bin/loki
+      - -config.file=/etc/loki/loki-local.yaml
+    environment:
+      - JAEGER_AGENT_HOST=tempo
+      - JAEGER_ENDPOINT=http://tempo:14268/api/traces
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+      - "TZ=America/Sao_Paulo"
+    depends_on:
+      - alertmanager
+    volumes:
+      - ./loki/loki.yaml:/etc/loki/loki-local.yaml
+      - ./loki/rules.yml:/etc/loki/rules/fake/rules.yml
+      - ./volumes/loki:/tmp/loki
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  volume_exporter:
+    container_name: volume_exporter
+    image: mnadeem/volume_exporter:v0.1.0
+    command:
+      [
+        "--volume-dir=tempo:/tmp/tempo",
+        "--volume-dir=logs:/app/logs",
+        "--volume-dir=loki:/tmp/loki"
+      ]
+    volumes:
+      - ./volumes/logs:/app/logs
+      - ./volumes/tempo:/tmp/tempo
+      - ./volumes/loki:/tmp/loki
+    ports:
+      - 9889:9888
+    environment:
+      - "TZ=America/Sao_Paulo"
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  grafana:
+    image: grafana/grafana:9.3.6
+    container_name: grafana
+    volumes:
+      - ./volumes/grafana:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards-provisioning:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=trilha
+      - GF_SECURITY_ADMIN_PASSWORD=bj0uIVfZAj7O5y94gC1yVPStPfw5xFxQpburWjvUIgnYeFxs7L
+      - "TZ=America/Sao_Paulo"
+    ports:
+      - '3000:3000'
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  mongo:
+    container_name: mongo
+    image: mongo:6.0.4
+    volumes:
+      - ./volumes/mongodb/data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=trilha
+      - MONGO_INITDB_ROOT_PASSWORD=rry*UZ*4Xa82DH^4@a0S98MBDN7*MAo9FyBt
+      - "TZ=America/Sao_Paulo"
+    ports:
+      - '27018:27017'
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis/data:/data
+
+  minio:
+    <<: *minio-common
+    container_name: minio
+    hostname: minio
+    volumes:
+      - ./volumes/minio-data:/data
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push
+
+  minio-balancer:
+    image: nginx:1.19.2-alpine
+    hostname: minio-balancer
+    container_name: minio-balancer
+    volumes:
+      - ./minio/nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+      - "TZ=America/Sao_Paulo"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    depends_on:
+      - minio
+    logging:
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/loki/api/v1/push

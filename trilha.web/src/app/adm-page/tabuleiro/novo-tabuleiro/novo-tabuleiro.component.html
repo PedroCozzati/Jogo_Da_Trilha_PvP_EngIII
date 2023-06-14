@@ -1,0 +1,22 @@
+<div class="box">
+    <div class="form-flex">
+        <div class="row33">
+            <!-- Form -->
+            <div class="col-md-12">
+                <h4>Adicionar Tabuleiro</h4>
+                <div>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" maxlength="20" [(ngModel)]="tabuleiro.nome" />
+                    </div>
+                    <div class="form-group">
+                        <label>Cor</label>
+                        <input type="text" class="form-control" [(ngModel)]="tabuleiro.cor" />
+                    </div>
+                    <button type="submit" class="button" (click)="criaTabuleiro(tabuleiro)">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

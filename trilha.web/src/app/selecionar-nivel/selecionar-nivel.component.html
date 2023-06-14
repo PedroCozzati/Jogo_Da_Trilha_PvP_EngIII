@@ -1,0 +1,115 @@
+<section style="z-index:-100">
+  <div class="wave wave1" style="z-index:-900"></div>
+  <div class="wave wave2" style="z-index:-900"></div>
+  <div class="wave wave3" style="z-index:-900"></div>
+
+
+
+  <p *ngIf="div1" class="form-title">SELECIONE UM NÍVEL</p>
+  <ng-lottie *ngIf="div1" height="80px" [options]="options"></ng-lottie>
+  <div>
+
+    <div *ngIf="div1" class="profile">
+
+      <div class="image-cropper">
+        <img class="avatar-img" src="../../assets/{{appService.avatar}}.png">
+      </div>
+
+      <div class="avatar">
+
+        {{appService.userInfos.nome}}
+      </div>
+
+      <div class="money">
+        <div
+          style="height: 2.5rem;width: 2.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')">
+        </div>
+        <div style="align-items: center;">
+          {{appService.userInfos.saldo.toString()}}</div>
+      </div>
+
+    </div>
+
+    <div *ngIf="div3">
+      <div style="height: 50vh;width:50vw"></div>
+
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </div>
+
+    <p-carousel *ngIf="div1" [value]="niveis" [numVisible]="3" [numScroll]="1" [circular]="true">
+      <ng-template let-nivel pTemplate="item">
+        <div style="box-shadow: inset 0px -200px 187px -91px color-mix(in lch, {{nivel.tab.cor}},rgba(0,0,0,1));"
+          class="item-slide"
+          (click)="selectLevelButton(nivel.valorDeAposta,nivel.nome,nivel.tab.cor,nivel.peca,nivel._id)">
+
+
+          <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+            <div class="items_text" style="display: flex;flex-direction: column;">
+              <div style="height: 10vh;width: 20vw;display: flex;flex-direction: row;justify-content: space-around;">
+                <div class="items_text" style="display: flex;flex-direction: column;">
+                  <div style="filter: blur(0) !important;">{{ nivel.nome }}</div>
+
+                  <div style="display: flex;flex-direction: row;justify-content: space-around;">
+                    <div style="filter: blur(0) !important;"> Aposta: {{nivel.valorDeAposta}}</div>
+                    <div
+                      style="height: 1.5rem;width: 1.5rem;background-size: cover;background-image: url('../../assets/coinvitao2.png')">
+                    </div>
+                  </div>
+
+                </div>
+                <div style="height: 1px;width: 1px;">
+
+                </div>
+
+                <div class="glow"
+                  style="filter: blur(0) !important; border-radius: 1px;box-shadow: none !important;width:40%;height:70%;background-color: {{nivel.tab.cor}};">
+                  <img style="width:100%; height:100%;" src="../../assets/image2.png">
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex;flex-direction: row;justify-content: space-around;">
+
+              <div style="
+              height: 20vh;
+              width: 25vw;
+              background-position:center center;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background:  url(../../assets/{{images[random2]}}.png);">
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </p-carousel>
+
+    <p *ngIf="div1" class="tip">Conforme for avançando de nível, mais moedas você poderá conseguir :)</p>
+    <div class="ad2" style="background-image: url('../../assets/{{adImages[randomImages]}}.jpg');"></div>
+    <button *ngIf="div1" (click)="backButton()" class="button1">VOLTAR</button>
+
+  </div>
+
+  <jw-modal id="selectedLevel" class="selectedLevel">
+    <h3><b>SALDO INSUFICIENTE!</b></h3>
+    <div style="margin-bottom: 1rem;font-weight: bold;font-size: large;">
+      Você pode comprar mais moedas na loja
+    </div>
+    <button class="button" (click)="closeModal('selectedLevel');">VOLTAR</button>
+  </jw-modal>
+
+  <jw-modal id="custom-modal-2" class="modal">
+    <h3>Erro!</h3>
+    <p>Estamos em manutenção, tente novamente mais tarde</p>
+    <button class="button" (click)="closeModal('custom-modal-2');">OK</button>
+  </jw-modal>
+
+</section>
