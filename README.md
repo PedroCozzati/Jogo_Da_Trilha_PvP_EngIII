@@ -1,6 +1,7 @@
 # Jogo_Da_Trilha_PvP_EngIII
 
-<img src="https://user-images.githubusercontent.com/80106385/225188260-2929e6fd-9287-480b-9475-494f312e893b.png" width=100>
+![image](https://github.com/PedroCozzati/Jogo_Da_Trilha_PvP_EngIII/assets/80106385/4d482e91-f19b-4996-bed3-58caadc87c72)
+
 
 
 Repositório referente ao projeto de Engenharia de Software III (FATEC-SP).
