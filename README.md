@@ -9,9 +9,9 @@ Foram aplicados conceitos de engenharia de software, gestão de projetos, entre 
 
 O time de desenvolvimento foi composto por 4 pessoas (na maior parte do tempo), além de outras pessoas responsáveis por testes, documentação, entre outras partes fundamentais do projeto.
 
-As tecnologias utilizadas no projeto foram:
-Angular
-Nest JS
-Docker
-MongoDB
-AWS (o site ficou um período hospedado lá apenas para demonstração)
+As tecnologias utilizadas no projeto foram:<br><br>
+Angular<br>
+Nest JS<br>
+Docker<br>
+MongoDB<br>
+AWS (o site ficou um período hospedado lá apenas para demonstração)<br>
