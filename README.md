@@ -17,7 +17,7 @@ O projeto é composto por diversas pequenas partes que se interligam, com a ajud
 
 No arquivo docker-compose é possível ver mais detalhes de quais imagens estão sendo utilizadas no projeto.
 
-Ao iniciar a aplicação, o usuário deverá criar uma conta para poder acessar o jogo. Após isso, ele poderá ver diversas funcionalidades, como um sistema de ranking, uma loja e claro, procurar outro player na fila de esperar para jogar uma partida de trilha.
+Ao iniciar a aplicação, o usuário deverá criar uma conta para poder acessar o jogo. Após isso, ele poderá ver diversas funcionalidades, como um sistema de ranking, uma loja e claro, procurar outro player na fila de espera para jogar uma partida de trilha.
 
 ## Documentação técnica
 
